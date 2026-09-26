@@ -2,7 +2,7 @@ name: Rawaj CI
 
 on:
   push:
-    branches: [develop, main]
+    branches: [agent-lab, develop, main]
   pull_request:
     branches: [main]
 
