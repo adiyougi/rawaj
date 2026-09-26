@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,5 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build
+      - name: Next.js build
         run: npm run build
+
+      - name: Netlify build simulation
+        run: npx netlify-cli@latest build
