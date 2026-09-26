@@ -158,3 +158,81 @@ export async function getMarketingContent() {
 
   return { departments, services, packages, portfolio, posts };
 }
+
+
+export async function getHeroSlides() {
+  const rows = await readTable<{
+    title: string;
+    kicker: string | null;
+    subtitle: string | null;
+    media_url: string | null;
+    cta_label: string | null;
+    cta_href: string | null;
+    secondary_cta_label: string | null;
+    secondary_cta_href: string | null;
+  }>("hero_slides?select=title,kicker,subtitle,media_url,cta_label,cta_href,secondary_cta_label,secondary_cta_href&is_published=eq.true&order=sort_order.asc");
+
+  if (!rows?.length) {
+    return [
+      { kicker: "رواج منذ 2008", title: "نحوّل الفكرة إلى حضور لا يُنسى.", text: "تصميم، طباعة، إعلان وديكور — من الفكرة حتى اكتمال المشهد.", image: fallbackPortfolio[0].image, href: "/about", cta: "اكتشف رواج" },
+      { kicker: "كتالوج خدمات متكامل", title: "كل ما تحتاجه علامتك. في مكان واحد.", text: "اختر الخدمة كمنتج، حدّد المواصفات، واجمع أكثر من خدمة في طلب واحد.", image: fallbackPosts[1].image, href: "/services", cta: "استكشف الخدمات" },
+      { kicker: "أعمال تتحدث", title: "ما نصنعه يُرى قبل أن يُشرح.", text: "واجهات، لوحات، مطبوعات، هوية وأعمال خاصة.", image: fallbackPortfolio[1].image, href: "/portfolio", cta: "شاهد الأعمال" },
+      { kicker: "باقات تسويقية", title: "أكثر من خدمة. صفقة واحدة.", text: "باقات قابلة للتخصيص تجمع التصميم والطباعة والتنفيذ في عرض واحد.", image: fallbackPackages[0].image, href: "/packages", cta: "استكشف الباقات" }
+    ];
+  }
+
+  return rows.map((row) => ({
+    kicker: row.kicker || "رواج",
+    title: row.title,
+    text: row.subtitle || "",
+    image: row.media_url || fallbackPortfolio[0].image,
+    href: row.cta_href || "/quote",
+    cta: row.cta_label || "اكتشف المزيد",
+    secondaryHref: row.secondary_cta_href || "/quote",
+    secondaryCta: row.secondary_cta_label || "اطلب عرض سعر"
+  }));
+}
+
+export async function getTickerItems() {
+  const rows = await readTable<{ text: string }>(
+    "ticker_items?select=text&is_published=eq.true&order=sort_order.asc"
+  );
+  return rows?.length
+    ? rows.map((row) => row.text)
+    : ["تصميم فني","صناعة محتوى","طباعة ورقية","طباعة رقمية","لوحات ضوئية","واجهات","حروف بارزة","ليزر وأكريليك","باقات مخصصة","تنفيذ متكامل"];
+}
+
+export async function getFeatures() {
+  const rows = await readTable<{ title: string; description: string | null }>(
+    "features?select=title,description&is_published=eq.true&order=sort_order.asc"
+  );
+  return rows?.length
+    ? rows.map((row, index) => ({
+        index: String(index + 1).padStart(2, "0"),
+        title: row.title,
+        text: row.description || ""
+      }))
+    : [
+        { index:"01", title:"حل متكامل", text:"تصميم وإنتاج وتنفيذ ضمن تجربة واحدة." },
+        { index:"02", title:"خبرة عملية", text:"خبرة ممتدة منذ 2008 ومشاريع في قطاعات متنوعة." },
+        { index:"03", title:"مرونة عالية", text:"حلول قابلة للتخصيص بدل القوالب الجاهزة." },
+        { index:"04", title:"جودة تنفيذ", text:"تفاصيل إنتاج وتشطيب ترفع قيمة العمل." },
+        { index:"05", title:"التزام", text:"وضوح في المراحل ومواعيد الإنجاز." },
+        { index:"06", title:"تنوع تقني", text:"طباعة، لوحات، واجهات، ليزر وأكثر." }
+      ];
+}
+
+export async function getHomepageContent() {
+  const [slides, ticker, departments, services, packages, features, portfolio, posts] = await Promise.all([
+    getHeroSlides(),
+    getTickerItems(),
+    getDepartments(),
+    getServices(),
+    getPackages(),
+    getFeatures(),
+    getPortfolio(),
+    getPosts()
+  ]);
+
+  return { slides, ticker, departments, services, packages, features, portfolio, posts };
+}
