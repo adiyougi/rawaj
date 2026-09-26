@@ -1,5 +1,6 @@
 import type { ServiceSpec } from "@/lib/service-specs";
 import { serviceSpecifications } from "@/lib/service-specs";
+import { catalogRouting } from "@/lib/catalog-routing";
 
 export type ServiceTemplate = {
   key:string;
@@ -9,6 +10,9 @@ export type ServiceTemplate = {
   subcategory:string;
   verification:"verified"|"legacy";
   suggestedBadge?:string;
+  departmentSlug:string;
+  categorySlug:string;
+  provenanceDoc:string;
   specs:ServiceSpec[];
 };
 
@@ -88,10 +92,16 @@ const legacy:[string,string,string,string,string,string?][]=[
 ];
 
 const build=(defs:[string,string,string,string,string,string?][],verification:"verified"|"legacy"):ServiceTemplate[] =>
-  defs.map(([key,label,description,family,subcategory,badge])=>({
-    key,label,description,family,subcategory,verification,suggestedBadge:badge,
-    specs:serviceSpecifications[key] || []
-  }));
+  defs.map(([key,label,description,family,subcategory,badge])=>{
+    const route=catalogRouting[key] || {departmentSlug:"",categorySlug:"",provenanceDoc:""};
+    return {
+      key,label,description,family,subcategory,verification,suggestedBadge:badge,
+      departmentSlug:route.departmentSlug,
+      categorySlug:route.categorySlug,
+      provenanceDoc:route.provenanceDoc,
+      specs:serviceSpecifications[key] || []
+    };
+  });
 
 export const serviceTemplates:ServiceTemplate[]=[
   ...build(verifiedPaper,"verified"),

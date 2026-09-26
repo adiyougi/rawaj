@@ -25,12 +25,15 @@ type ServiceForm={
   seo_title:string;
   seo_description:string;
   templateKey:string;
+  verification_status:"legacy"|"research"|"verified"|"approved";
+  fulfillment_mode:"flexible"|"in_house"|"local_partner"|"international";
 };
 
 const emptyForm:ServiceForm={
   name:"",department_id:"",category_id:"",short_description:"",description:"",
   hero_url:"",gallery:[],badge:"",specs:[],highlights:[],faq:[],
-  featured:false,is_published:false,seo_title:"",seo_description:"",templateKey:""
+  featured:false,is_published:false,seo_title:"",seo_description:"",templateKey:"",
+  verification_status:"research",fulfillment_mode:"flexible"
 };
 
 const specGroups=["المقاس","المنتج","الملابس","الاستخدام","الخامة","اللاصق","الطباعة","الألوان","الخيوط","NCR","المحتوى","البنية","الموضع","الطي","التجليد","القص","المعالجة","التشطيب","التجميع","الترقيم","التجهيز","الكمية","التركيب","الإضاءة","النوافذ","التصميم","اللوحات","الملحقات","التخصيص","مواصفات أخرى"];
@@ -73,7 +76,7 @@ export default function ServiceManager(){
     const [servicesRes,depsRes,catsRes]=await Promise.all([
       supabase.from("services").select("*").order("sort_order",{ascending:true}),
       supabase.from("departments").select("id,name,slug").order("sort_order",{ascending:true}),
-      supabase.from("service_categories").select("id,name,department_id,parent_id").order("sort_order",{ascending:true})
+      supabase.from("service_categories").select("id,name,slug,department_id,parent_id").order("sort_order",{ascending:true})
     ]);
     if(servicesRes.error) setMessage(servicesRes.error.message);
     setRows(servicesRes.data || []);
@@ -115,7 +118,9 @@ export default function ServiceManager(){
       is_published:Boolean(row.is_published),
       seo_title:row.seo_title || "",
       seo_description:row.seo_description || "",
-      templateKey:""
+      templateKey:row.template_key || "",
+      verification_status:row.verification_status || row.review_status || "legacy",
+      fulfillment_mode:row.fulfillment_mode || "flexible"
     });
     setMessage("");
     setOpen(true);
@@ -124,12 +129,26 @@ export default function ServiceManager(){
   function applyTemplate(key:string){
     const template=serviceTemplates.find(t=>t.key===key);
     if(!template) return;
+
+    const existing=rows.find(row=>row.template_key===key);
+    if(existing && (!editing || existing.id!==editing.id)){
+      openEdit(existing);
+      setMessage("هذا القالب موجود بالفعل في الكتالوج؛ فتحت الخدمة الحالية بدل إنشاء نسخة مكررة.");
+      return;
+    }
+
+    const department=departments.find(item=>item.slug===template.departmentSlug);
+    const category=categories.find(item=>item.slug===template.categorySlug);
+
     setForm(current=>({
       ...current,
       templateKey:key,
       name:current.name || template.label,
+      department_id:department?.id || current.department_id,
+      category_id:category?.id || current.category_id,
       short_description:current.short_description || template.description,
       badge:current.badge || template.suggestedBadge || "",
+      verification_status:template.verification==="verified" ? "verified" : "legacy",
       specs:cloneSpecs(template.specs)
     }));
   }
@@ -208,6 +227,10 @@ export default function ServiceManager(){
       setMessage("اختر القسم الذي تتبع له الخدمة.");
       return;
     }
+    if(form.is_published && form.verification_status!=="approved"){
+      setMessage("الخدمة لا تُنشر قبل اعتمادها. غيّر «حالة المراجعة» إلى «معتمدة للنشر» أولًا.");
+      return;
+    }
     if(form.is_published && !form.hero_url){
       setMessage("الخدمة المنشورة تحتاج صورة رئيسية. يمكنك حفظها كمسودة بدون صورة.");
       return;
@@ -231,6 +254,7 @@ export default function ServiceManager(){
           options:spec.type==="select" ? (spec.options || []).map(x=>x.trim()).filter(Boolean):undefined
         }));
 
+      const activeTemplate=serviceTemplates.find(item=>item.key===form.templateKey);
       const payload={
         name:form.name.trim(),
         department_id:form.department_id || null,
@@ -250,6 +274,14 @@ export default function ServiceManager(){
         sort_order:editing ? editing.sort_order:maxOrder+1,
         seo_title:form.seo_title.trim() || form.name.trim(),
         seo_description:form.seo_description.trim() || form.short_description.trim() || null,
+        template_key:form.templateKey || null,
+        verification_status:form.verification_status,
+        review_status:form.verification_status,
+        fulfillment_mode:form.fulfillment_mode,
+        source_refs:activeTemplate?.provenanceDoc ? [activeTemplate.provenanceDoc] : (editing?.source_refs || []),
+        verification_notes:activeTemplate?.provenanceDoc ? "موثّق في "+activeTemplate.provenanceDoc : (editing?.verification_notes || null),
+        verified_at:["verified","approved"].includes(form.verification_status) ? (editing?.verified_at || new Date().toISOString()) : null,
+        approved_at:form.verification_status==="approved" ? (editing?.approved_at || new Date().toISOString()) : null,
         ...(editing ? {}:{slug:internalSlug(form.name)})
       };
 
@@ -301,7 +333,7 @@ export default function ServiceManager(){
             <article className="service-admin-card" key={row.id}>
               <div className="service-admin-image" style={{backgroundImage:row.hero_url ? "url("+row.hero_url+")":"none"}}>
                 {!row.hero_url && <i className="no-service-image">بدون صورة</i>}
-                <span className={row.is_published ? "published":"draft"}>{row.is_published ? "منشورة":"مسودة"}</span>
+                <span className={row.is_published ? "published":"draft"}>{row.is_published ? "منشورة":row.verification_status==="approved" ? "معتمدة" : row.verification_status==="verified" ? "موثقة" : "مسودة"}</span>
               </div>
               <div className="service-admin-copy">
                 <small>{dep?.name || "بدون قسم"}</small>
@@ -373,6 +405,8 @@ export default function ServiceManager(){
               <section className="editor-section quote-only-section">
                 <div className="editor-section-title"><span>04</span><div><h3>العرض في المتجر</h3><p>التسعير غير مستخدم حاليًا. كل خدمة في رواج تعمل بنظام «طلب عرض سعر».</p></div></div>
                 <div className="service-form-grid">
+                  <label><span>حالة المراجعة</span><select value={form.verification_status} onChange={e=>setForm({...form,verification_status:e.target.value as ServiceForm["verification_status"],is_published:e.target.value==="approved" ? form.is_published:false})}><option value="research">قيد البحث والمراجعة</option><option value="verified">موثقة فنيًا</option><option value="approved">معتمدة للنشر</option><option value="legacy">قديمة — تحتاج مراجعة</option></select></label>
+                  <label><span>طريقة التنفيذ</span><select value={form.fulfillment_mode} onChange={e=>setForm({...form,fulfillment_mode:e.target.value as ServiceForm["fulfillment_mode"]})}><option value="flexible">رواج تختار أفضل مسار تنفيذ</option><option value="in_house">تنفيذ داخل رواج</option><option value="local_partner">تنفيذ عبر شريك محلي</option><option value="international">توريد / تنفيذ دولي</option></select></label>
                   <label><span>شارة البطاقة</span><select value={form.badge} onChange={e=>setForm({...form,badge:e.target.value})}><option value="">بدون شارة</option><option>الأكثر طلبًا</option><option>جديد</option><option>مميز</option><option>تنفيذ متكامل</option><option>توريد خاص</option></select></label>
                   <div className="service-switches">
                     <label><input type="checkbox" checked={form.featured} onChange={e=>setForm({...form,featured:e.target.checked})}/><span><strong>خدمة مميزة</strong><small>تظهر في أقسام مختارة بالرئيسية</small></span></label>
