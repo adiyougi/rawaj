@@ -3,9 +3,17 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import AddToCartButton from "@/components/AddToCartButton";
-import { services } from "@/lib/content";
 
-export default function ServiceCatalog() {
+export type CatalogService = {
+  id: string;
+  title: string;
+  category: string;
+  desc: string;
+  image: string;
+  badge: string;
+};
+
+export default function ServiceCatalog({ services }: { services: CatalogService[] }) {
   const categories = ["الكل", ...Array.from(new Set(services.map((service) => service.category)))];
   const [category, setCategory] = useState("الكل");
   const [query, setQuery] = useState("");
@@ -17,7 +25,7 @@ export default function ServiceCatalog() {
       const matches = !q || (service.title + " " + service.desc + " " + service.category).toLowerCase().includes(q);
       return inCategory && matches;
     });
-  }, [category, query]);
+  }, [category, query, services]);
 
   return (
     <>
