@@ -32,11 +32,11 @@ export default function SiteFooter() {
         </div>
         <div>
           <h4>أقسام رواج</h4>
-          <a href="/#departments">التصميم وصناعة المحتوى</a>
-          <a href="/#departments">الطباعة الورقية</a>
-          <a href="/#departments">الطباعة الرقمية</a>
-          <a href="/#departments">اللوحات والواجهات</a>
-          <a href="/#departments">الليزر والأكريليك</a>
+          <Link href="/departments/design-content">التصميم وصناعة المحتوى</Link>
+          <Link href="/departments/paper-printing">الطباعة الورقية</Link>
+          <Link href="/departments/digital-printing">الطباعة الرقمية</Link>
+          <Link href="/departments/signage">اللوحات والحروف</Link>
+          <Link href="/departments/laser-acrylic">الليزر والأكريليك</Link>
         </div>
         <div>
           <h4>تواصل</h4>
