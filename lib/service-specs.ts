@@ -81,6 +81,121 @@ export const serviceSpecifications: Record<string, ServiceSpec[]> = {
     quoteQty("نسخة")
   ],
 
+  "presentation-folders": [
+    { key: "size", label: "المقاس النهائي", type: "select", options: ["9 × 12 بوصة", "6 × 9 بوصة", "5.25 × 10.5 بوصة", "9 × 14.5 بوصة Legal", "مقاس مخصص"], group: "المقاس" },
+    { key: "stock", label: "الخامة", type: "select", options: ["14PT C2S", "16PT C2S", "Uncoated / Natural", "Pearl Metallic", "خامة فاخرة حسب العينة"], group: "الخامة" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["الخارج فقط", "الخارج + الداخل", "الخارج ملون والداخل لون واحد", "يحدد حسب التصميم"], group: "الطباعة" },
+    { key: "pockets", label: "الجيوب", type: "select", options: ["جيب يمين", "جيب يسار", "جيبان", "Pocket style مخصص"], group: "البنية" },
+    { key: "card_slit", label: "فتحة كرت شخصي", type: "select", options: ["بدون", "يمين أفقي", "يمين رأسي", "يسار أفقي", "يسار رأسي", "على الجيبين"], group: "التجهيز" },
+    { key: "finish", label: "التشطيب السطحي", type: "select", options: ["بدون", "UV", "Spot UV", "Silk Lamination", "Velvet / Soft-touch Lamination", "حسب المورد والخامة"], group: "التشطيب" },
+    quoteQty("فولدر")
+  ],
+
+  menus: [
+    { key: "format", label: "شكل المنيو", type: "select", options: ["Flat / بدون طي", "Half Fold", "Tri-fold", "Z-Fold", "Accordion", "مقاس/بنية مخصصة"], group: "البنية" },
+    { key: "size", label: "المقاس", type: "select", options: ["A5", "A4", "A3", "Letter", "11 × 17 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "stock", label: "الخامة", type: "select", options: ["70lb Uncoated", "80lb Paper", "100lb Paper", "10PT Cardstock", "14PT Uncoated Cardstock", "14PT Cardstock", "16PT Cardstock", "Synthetic / Waterproof — خدمة منفصلة عند الحاجة"], group: "الخامة" },
+    { key: "printing", label: "أوجه الطباعة", type: "select", options: ["وجه واحد", "وجهين"], group: "الطباعة" },
+    { key: "coating", label: "الحماية", type: "select", options: ["بدون", "Gloss", "Matte", "Lamination حسب الاستخدام", "يحدد وفق قابلية التنظيف المطلوبة"], group: "التشطيب" },
+    { key: "scoring", label: "التخديد", type: "select", options: ["لا يحتاج", "يحتاج Scoring قبل الطي", "تحدده رواج حسب سماكة الخامة"], group: "التجهيز" },
+    { key: "drilling", label: "تخريم", type: "select", options: ["بدون", "فتحة واحدة", "3 فتحات", "موقع خاص"], group: "التجهيز" },
+    quoteQty("نسخة")
+  ],
+
+  tickets: [
+    { key: "size", label: "المقاس", type: "select", options: ["2 × 5.5 بوصة", "2.75 × 5.5 بوصة", "2.75 × 8.5 بوصة", "3.5 × 8.5 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "stock", label: "الخامة", type: "select", options: ["10PT Cardstock", "14PT Uncoated Cardstock", "خامة مخصصة"], group: "الخامة" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["وجه ملون وظهر فارغ", "وجهين Full Color"], group: "الطباعة" },
+    { key: "coating", label: "الطلاء", type: "select", options: ["بدون / Uncoated للكتابة", "Gloss", "Matte", "High Gloss UV"], group: "التشطيب" },
+    { key: "perforation", label: "خطوط الفصل Perforation", type: "select", options: ["بدون", "خط واحد", "خطان", "3 خطوط", "موضع مخصص"], group: "التجهيز" },
+    { key: "numbering", label: "ترقيم متسلسل", type: "select", options: ["بدون", "أسود", "لون آخر حسب الإمكانية"], group: "الترقيم" },
+    { key: "number_start", label: "رقم البداية", type: "text", placeholder: "مثال: 000100", group: "الترقيم" },
+    { key: "number_location", label: "موضع الترقيم", type: "select", options: ["أعلى يمين", "أعلى يسار", "أسفل يمين", "أسفل يسار", "على طرف التذكرة", "موضع محدد في التصميم"], group: "الترقيم" },
+    quoteQty("تذكرة")
+  ],
+
+  postcards: [
+    { key: "size", label: "المقاس", type: "select", options: ["4 × 6 بوصة", "5 × 7 بوصة", "4 × 9 بوصة", "5.5 × 8.5 بوصة", "6 × 9 بوصة", "6 × 11 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "stock", label: "الخامة", type: "select", options: ["14PT C2S", "16PT C2S", "100LB Gloss Cover", "Uncoated / Writable", "Ultra-thick / specialty stock"], group: "الخامة" },
+    { key: "printing", label: "أوجه الطباعة", type: "select", options: ["وجه واحد", "وجهين", "وجه ملون + ظهر للكتابة/العنوان"], group: "الطباعة" },
+    { key: "coating", label: "التشطيب", type: "select", options: ["بدون", "Matte", "Aqueous", "Satin Aqueous", "UV Front Only", "UV on printed side", "Spot UV حسب المنتج"], group: "التشطيب" },
+    { key: "score", label: "Scoring / طي", type: "select", options: ["بدون", "Score in half", "One score", "Two scores"], group: "التجهيز" },
+    { key: "tearoff", label: "جزء Tear-off", type: "select", options: ["بدون", "Perforated coupon / card section", "يحدد حسب التصميم"], group: "التجهيز" },
+    quoteQty("بطاقة")
+  ],
+
+  "hang-tags": [
+    { key: "size", label: "المقاس", type: "select", options: ["1.5 × 3.5 بوصة", "2 × 3.5 بوصة", "2 × 4 بوصة", "2 × 5 بوصة", "3 × 3 بوصة", "4 × 6 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "shape", label: "الشكل", type: "select", options: ["Rectangle", "Square", "Rounded corners", "Custom die-cut"], group: "القص" },
+    { key: "stock", label: "الخامة", type: "select", options: ["14PT C2S", "14PT Uncoated", "16PT C2S", "18PT C1S", "خامة فاخرة مخصصة"], group: "الخامة" },
+    { key: "printing", label: "أوجه الطباعة", type: "select", options: ["وجه واحد", "وجهين"], group: "الطباعة" },
+    { key: "coating", label: "التشطيب", type: "select", options: ["بدون", "Aqueous", "Matte", "UV", "Spot UV", "Silk / Laminated specialty"], group: "التشطيب" },
+    { key: "hole", label: "فتحة التعليق", type: "select", options: ["بدون", "Drill hole 1/8 بوصة", "Bottleneck / die-cut تعليق", "موضع مخصص"], group: "التجهيز" },
+    quoteQty("Tag")
+  ],
+
+  "door-hangers": [
+    { key: "size", label: "المقاس", type: "select", options: ["3.5 × 8.5 بوصة", "3.5 × 11 بوصة", "4 × 7 بوصة", "4.25 × 11 بوصة", "4.25 × 14 بوصة"], group: "المقاس" },
+    { key: "stock", label: "الخامة", type: "select", options: ["14PT C2S", "14PT Uncoated", "16PT C2S", "100LB Gloss Cover", "100LB Gloss Book", "Synthetic waterproof"], group: "الخامة" },
+    { key: "printing", label: "أوجه الطباعة", type: "select", options: ["وجه واحد", "وجهين"], group: "الطباعة" },
+    { key: "coating", label: "التشطيب", type: "select", options: ["بدون", "Aqueous", "Satin Aqueous", "UV Front Only", "UV on printed side"], group: "التشطيب" },
+    { key: "diecut", label: "فتحة الباب / Die-cut", type: "select", options: ["Standard", "Arch", "Starburst", "Custom"], group: "القص" },
+    { key: "tearoff", label: "جزء Tear-off", type: "select", options: ["بدون", "Perforated tear-off", "موضع مخصص"], group: "التجهيز" },
+    quoteQty("قطعة")
+  ],
+
+  "greeting-invitations": [
+    { key: "product", label: "نوع البطاقة", type: "select", options: ["دعوة", "Greeting Card", "Save the Date", "بطاقة شكر", "بطاقة مناسبة/تهنئة", "بطاقة مؤسسية"], group: "المنتج" },
+    { key: "size", label: "المقاس", type: "select", options: ["A6 / قريب منه", "A5 مطوي", "5 × 7 بوصة", "5.5 × 8.5 بوصة مطوي", "6 × 9 بوصة مطوي", "مقاس مخصص"], group: "المقاس" },
+    { key: "stock", label: "الخامة", type: "select", options: ["14PT C2S", "14PT Uncoated", "Natural", "16PT C2S", "Kraft", "Linen", "Pearl Metallic", "خامة فاخرة حسب العينة"], group: "الخامة" },
+    { key: "printing", label: "مناطق الطباعة", type: "select", options: ["الخارج فقط", "الخارج + الداخل", "وجهين بدون طي"], group: "الطباعة" },
+    { key: "finish", label: "التشطيب", type: "select", options: ["بدون", "Matte", "Aqueous", "Spot UV", "Velvet / Soft-touch", "Raised Foil", "Foil specialty حسب المورد"], group: "التشطيب" },
+    { key: "foil", label: "لون الفويل — إن اختير", type: "select", options: ["غير مطبق", "Gold", "Silver", "Holographic", "لون/نظام خاص"], group: "التشطيب" },
+    { key: "score", label: "الطي", type: "select", options: ["بدون طي", "Score + Fold in half"], group: "التجهيز" },
+    { key: "envelope", label: "المظروف", type: "select", options: ["بدون", "مظروف أبيض", "Natural/Kraft", "Pearl/Specialty", "مطبوعة ومخصصة — خدمة مظاريف"], group: "الملحقات" },
+    quoteQty("بطاقة")
+  ],
+
+  "wall-calendars": [
+    { key: "size", label: "المقاس المغلق", type: "select", options: ["11 × 8.5 بوصة", "8.5 × 5.5 بوصة", "12 × 9 بوصة", "12 × 12 بوصة", "6 × 6 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "months", label: "عدد الشهور/المحتوى", type: "select", options: ["12 شهر", "13 شهر", "18 شهر", "محتوى مخصص"], group: "المحتوى" },
+    { key: "binding", label: "التجليد", type: "select", options: ["Saddle Stitch", "Spiral", "Wire-O"], group: "التجليد" },
+    { key: "paper", label: "ورق الصفحات", type: "select", options: ["Gloss", "Matte", "Uncoated", "يحدد حسب الاستخدام"], group: "الخامة" },
+    { key: "cover", label: "الغلاف", type: "select", options: ["Self cover", "غلاف أثقل", "بدون غلاف مستقل"], group: "الخامة" },
+    quoteQty("تقويم")
+  ],
+
+  "desk-calendars": [
+    { key: "size", label: "المقاس", type: "select", options: ["10 × 4.5 بوصة", "8.5 × 5.5 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "months", label: "عدد الشهور/الأوراق", type: "select", options: ["12 شهر", "13 شهر", "محتوى مخصص"], group: "المحتوى" },
+    { key: "binding", label: "التجليد", type: "select", options: ["Wire-O", "Spiral", "Saddle Stitch", "Perfect Bound — حسب التصميم"], group: "التجليد" },
+    { key: "paper", label: "خامة الصفحات", type: "select", options: ["Gloss", "Matte", "Uncoated", "خامة خاصة"], group: "الخامة" },
+    { key: "stand", label: "قاعدة/حامل", type: "select", options: ["قاعدة كرتونية مدمجة", "قاعدة/ستاند خاص", "يحدد مع رواج"], group: "البنية" },
+    quoteQty("تقويم")
+  ],
+
+  notepads: [
+    { key: "size", label: "مقاس الورقة", type: "select", options: ["4.25 × 5.5 بوصة", "4 × 6 بوصة", "5.5 × 8.5 بوصة", "8.5 × 11 بوصة", "A5", "A4", "مقاس مخصص"], group: "المقاس" },
+    { key: "sheets", label: "عدد الأوراق في الباد", type: "select", options: ["25", "50", "100", "عدد مخصص"], group: "المحتوى" },
+    { key: "paper", label: "نوع الورق", type: "select", options: ["Uncoated مناسب للكتابة", "Gloss paper", "ورق خاص للكتابة"], group: "الخامة" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["وجه واحد", "وجهين"], group: "الطباعة" },
+    { key: "glue", label: "جهة اللصق", type: "select", options: ["أعلى", "يسار", "يمين", "أسفل"], group: "التجميع" },
+    { key: "backing", label: "ظهر الباد", type: "select", options: ["Cardboard backing", "بدون ظهر", "ظهر مخصص"], group: "التجميع" },
+    { key: "drill", label: "تخريم", type: "select", options: ["بدون", "فتحة واحدة", "3 فتحات"], group: "التجهيز" },
+    { key: "pads", label: "عدد البادات", type: "number", placeholder: "مثال: 100", unit: "باد", group: "الكمية" }
+  ],
+
+  notebooks: [
+    { key: "size", label: "مقاس الدفتر", type: "select", options: ["A6", "A5", "A4", "5.5 × 8.5 بوصة", "8.5 × 11 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "inside_pattern", label: "نمط الصفحات", type: "select", options: ["Blank", "Ruled / مسطر", "Graph / مربعات", "Custom printed pages"], group: "المحتوى" },
+    { key: "sheets", label: "عدد الأوراق", type: "select", options: ["25", "50", "100", "عدد مخصص"], group: "المحتوى" },
+    { key: "inside_paper", label: "ورق الداخل", type: "select", options: ["Uncoated مناسب للكتابة", "ورق مخصص حسب الاستخدام"], group: "الخامة" },
+    { key: "cover", label: "الغلاف", type: "select", options: ["14PT Cardstock", "18PT Cardstock", "غلاف مطبوع + Lamination", "غلاف مخصص"], group: "الخامة" },
+    { key: "binding", label: "التجليد", type: "select", options: ["Wire-O", "Spiral", "تجليد آخر حسب التصميم"], group: "التجليد" },
+    { key: "wire_color", label: "لون السلك", type: "select", options: ["أسود", "أبيض", "لون آخر حسب المورد"], group: "التجليد" },
+    quoteQty("دفتر")
+  ],
+
   catalogs: [
     { key: "size", label: "المقاس النهائي", type: "select", options: ["A4", "A5", "مربع", "Letter", "مقاس مخصص"], group: "المقاس" },
     { key: "pages", label: "عدد الصفحات", type: "number", placeholder: "مثال: 48", unit: "صفحة", group: "المحتوى" },

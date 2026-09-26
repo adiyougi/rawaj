@@ -18,10 +18,13 @@ export const printTaxonomy:PrintTaxonomyFamily[]=[
     label:"الطباعة الورقية والتجارية",
     description:"مطبوعات الأعمال والتسويق والنماذج والمنشورات.",
     subcategories:[
-      {key:"business-stationery",label:"القرطاسية التجارية",templates:["cards","letterheads","envelopes"],status:"verified"},
+      {key:"business-stationery",label:"القرطاسية التجارية",templates:["cards","letterheads","envelopes","presentation-folders","notepads"],status:"verified"},
       {key:"business-forms",label:"النماذج والسجلات",templates:["invoices"],status:"verified"},
-      {key:"marketing-collateral",label:"المواد التسويقية",templates:["flyers","brochures"],status:"verified"},
-      {key:"publications",label:"الكتب والمنشورات",templates:["catalogs","booklet-saddle","book-perfect","book-wire-o","book-spiral"],status:"verified"}
+      {key:"marketing-collateral",label:"المواد التسويقية",templates:["flyers","brochures","menus","postcards","door-hangers"],status:"verified"},
+      {key:"product-branding",label:"هوية وتغليف المنتج",templates:["hang-tags"],status:"verified"},
+      {key:"events",label:"المناسبات والتذاكر",templates:["tickets","greeting-invitations"],status:"verified"},
+      {key:"calendars",label:"التقاويم",templates:["wall-calendars","desk-calendars"],status:"verified"},
+      {key:"publications",label:"الكتب والمنشورات",templates:["catalogs","booklet-saddle","book-perfect","book-wire-o","book-spiral","notebooks"],status:"verified"}
     ]
   },
   {
