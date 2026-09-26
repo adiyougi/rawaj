@@ -10,7 +10,7 @@ export default function SiteFooter() {
       </div>
       <div className="footer-grid shell">
         <div className="footer-brand">
-          <div className="footer-mark">رواج</div>
+          <img className="footer-logo" src="/rawaj-logo.webp" alt="شعار رواج" />
           <h3>رواج للطباعة والإعلان والديكور</h3>
           <p>من التصميم إلى التنفيذ، نصنع حضورًا بصريًا يليق بعلامتك.</p>
         </div>
