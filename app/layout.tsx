@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./inner.css";
 
 export const metadata: Metadata = {
   title: "رواج للطباعة والإعلان والديكور",
