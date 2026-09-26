@@ -128,6 +128,61 @@ export const serviceSpecifications: Record<string, ServiceSpec[]> = {
     quoteQty("نسخة")
   ],
 
+
+  "roll-labels": [
+    { key: "application_surface", label: "سطح التطبيق", type: "select", options: ["زجاج", "PET", "HDPE / LDPE", "PP", "كرتون / كرتون مموج", "معدن", "سطح آخر"], group: "الاستخدام", helpText: "نوع السطح يؤثر مباشرة في اختيار اللاصق وقوة التثبيت." },
+    { key: "conditions", label: "ظروف الاستخدام", type: "select", options: ["داخلي وجاف", "رطوبة / تكاثف", "تبريد", "تجميد", "زيوت أو مواد كيميائية", "استخدام خارجي", "عبوة قابلة للعصر"], group: "الاستخدام" },
+    { key: "size", label: "مقاس الليبل", type: "text", placeholder: "العرض × الارتفاع بالملم", group: "المقاس" },
+    { key: "shape", label: "الشكل", type: "select", options: ["مستطيل", "مربع", "دائري", "بيضاوي", "قص مخصص"], group: "القص" },
+    { key: "face_material", label: "مادة الوجه", type: "select", options: ["ورق أبيض مطفي", "ورق أبيض لامع", "ورق محبب / فاخر", "ورق معدني", "BOPP أبيض", "BOPP شفاف", "BOPP فضي / كروم", "MDO قابل للعصر", "فيلم هولوغرافي", "أحتاج توصية رواج"], group: "الخامة" },
+    { key: "adhesive", label: "نوع اللاصق", type: "select", options: ["دائم", "قابل للإزالة", "للتبريد / درجات منخفضة", "للتجميد", "Wash-off للعبوات القابلة لإعادة الاستخدام", "لاصق متخصص — يحدد بعد معرفة السطح"], group: "اللاصق", helpText: "الاختيار النهائي يعتمد على السطح ودرجة حرارة التطبيق والخدمة والرطوبة." },
+    { key: "white_ink", label: "طباعة أبيض تحتي", type: "select", options: ["غير مطلوبة", "مطلوبة على الخامة الشفافة / المعدنية", "يحدد بعد مراجعة التصميم"], group: "الطباعة" },
+    { key: "finish", label: "الحماية السطحية", type: "select", options: ["بدون", "ورنيش مطفي", "ورنيش لامع", "لامينيشن مطفي", "لامينيشن لامع", "قابل للطباعة Thermal Transfer"], group: "التشطيب" },
+    { key: "liner", label: "بطانة الرول Liner", type: "select", options: ["ورق", "PET للتطبيق الآلي السريع", "يحدد مع مورد رواج"], group: "التجهيز" },
+    { key: "unwind", label: "اتجاه فك الرول", type: "select", options: ["غير مهم", "من أعلى", "من أسفل", "من اليمين", "من اليسار", "يحدد حسب ماكينة التطبيق"], group: "التجهيز" },
+    quoteQty("ليبل")
+  ],
+
+  "sheet-labels": [
+    { key: "application_surface", label: "سطح التطبيق", type: "select", options: ["ورق / كرتون", "زجاج", "PET", "HDPE / LDPE", "PP", "معدن", "سطح آخر"], group: "الاستخدام" },
+    { key: "size", label: "مقاس الليبل", type: "text", placeholder: "العرض × الارتفاع بالملم", group: "المقاس" },
+    { key: "shape", label: "الشكل", type: "select", options: ["مستطيل", "مربع", "دائري", "بيضاوي", "قص مخصص"], group: "القص" },
+    { key: "face_material", label: "مادة الوجه", type: "select", options: ["ورق مطفي", "ورق لامع", "ورق معاد التدوير", "ورق محبب", "BOPP أبيض", "BOPP شفاف", "فيلم متين مقاوم للماء", "خامة خاصة"], group: "الخامة" },
+    { key: "adhesive", label: "اللاصق", type: "select", options: ["دائم", "قابل للإزالة", "متخصص للرطوبة/البرودة", "أحتاج توصية رواج"], group: "اللاصق" },
+    { key: "finish", label: "التشطيب", type: "select", options: ["بدون", "ورنيش مطفي", "ورنيش لامع", "لامينيشن مطفي", "لامينيشن لامع"], group: "التشطيب" },
+    quoteQty("ليبل")
+  ],
+
+  "folding-carton": [
+    { key: "length", label: "الطول الداخلي", type: "number", placeholder: "مثال: 120", unit: "مم", group: "المقاس" },
+    { key: "width", label: "العرض الداخلي", type: "number", placeholder: "مثال: 60", unit: "مم", group: "المقاس" },
+    { key: "depth", label: "العمق الداخلي", type: "number", placeholder: "مثال: 35", unit: "مم", group: "المقاس" },
+    { key: "style", label: "بنية العلبة", type: "select", options: ["Straight Tuck End", "Reverse Tuck End", "Tuck End Auto Bottom", "Snap Lock Bottom", "Sleeve", "Pillow Box", "Tray / Lid", "بنية مخصصة"], group: "البنية" },
+    { key: "board", label: "نوع الكرتون", type: "select", options: ["SBS / SBB أبيض مصمت", "FBB كرتون علب متعدد الطبقات", "Kraft / Uncoated", "خامة خاصة حسب المنتج"], group: "الخامة", helpText: "يحدد النوع والسماكة وفق وزن المنتج، الطباعة، الطي والتشطيبات المطلوبة." },
+    { key: "print_process", label: "تقنية الطباعة", type: "select", options: ["Offset", "Digital", "UV", "تحدد وفق الكمية والخامة"], group: "الطباعة" },
+    { key: "print_sides", label: "مناطق الطباعة", type: "select", options: ["الخارج فقط", "الخارج + الداخل", "مواضع محددة"], group: "الطباعة" },
+    { key: "surface_finish", label: "التشطيب السطحي", type: "select", options: ["بدون", "Varnish", "Aqueous Coating", "UV Coating", "Spot UV", "Lamination", "Soft Touch"], group: "التشطيب" },
+    { key: "special_finish", label: "تشطيب بنيوي/فاخر", type: "select", options: ["بدون", "Hot Foil", "Cold Foil", "Emboss", "Deboss", "Window Patching", "أكثر من تشطيب — يراجع مع رواج"], group: "التشطيب" },
+    { key: "insert", label: "إدخالات داخلية", type: "select", options: ["بدون", "Paperboard Insert", "Corrugated Insert", "Divider", "Molded Pulp / Insert متخصص"], group: "الملحقات" },
+    quoteQty("علبة")
+  ],
+
+  "corrugated-box": [
+    { key: "length", label: "الطول الداخلي", type: "number", placeholder: "مثال: 400", unit: "مم", group: "المقاس" },
+    { key: "width", label: "العرض الداخلي", type: "number", placeholder: "مثال: 300", unit: "مم", group: "المقاس" },
+    { key: "height", label: "الارتفاع الداخلي", type: "number", placeholder: "مثال: 250", unit: "مم", group: "المقاس" },
+    { key: "style", label: "نمط الصندوق", type: "select", options: ["RSC / FEFCO 0201", "Slotted Box — نمط آخر", "Die-cut Box", "Tray / Folder", "Telescopic Box", "FEFCO code محدد", "يحتاج تصميم هندسي"], group: "البنية", helpText: "FEFCO هو نظام دولي لترميز تصاميم التغليف المموج." },
+    { key: "wall", label: "تركيب اللوح", type: "select", options: ["Single Wall", "Double Wall", "Triple Wall", "يحدد هندسيًا حسب الحمولة"], group: "الخامة" },
+    { key: "flute", label: "نوع الفلوت", type: "select", options: ["A", "B", "C", "E", "F / G / N Microflute", "تركيبة فلوت مزدوجة", "يحدد بعد معرفة الحمل والاستخدام"], group: "الخامة" },
+    { key: "liner", label: "نوع اللينر", type: "select", options: ["Kraftliner", "Testliner", "White top / Printable liner حسب المورد", "يحدد وفق الطباعة والقوة المطلوبة"], group: "الخامة" },
+    { key: "print", label: "الطباعة", type: "select", options: ["بدون طباعة", "Flexographic", "Digital direct print", "تحدد حسب الجودة والكمية"], group: "الطباعة" },
+    { key: "joint", label: "وصلة المصنع", type: "select", options: ["Glued", "Stitched", "Taped", "حسب FEFCO style"], group: "التجميع" },
+    { key: "features", label: "خصائص إضافية", type: "select", options: ["بدون", "مقبض/فتحات Die-cut", "Perforation", "Tear tape", "Display feature", "بنية مخصصة"], group: "التجهيز" },
+    { key: "product_weight", label: "وزن المنتج داخل الكرتون", type: "number", placeholder: "الوزن التقريبي", unit: "كجم", group: "الاستخدام" },
+    { key: "use", label: "الاستخدام", type: "select", options: ["شحن ونقل", "تخزين", "تجارة إلكترونية", "عرض Retail", "منتج ثقيل / صناعي", "استخدام آخر"], group: "الاستخدام" },
+    quoteQty("كرتون")
+  ],
+
   banner: [
     { key: "width", label: "العرض", type: "number", placeholder: "بالمتر", unit: "م", group: "المقاس" },
     { key: "height", label: "الارتفاع", type: "number", placeholder: "بالمتر", unit: "م", group: "المقاس" },
@@ -142,11 +197,14 @@ export const serviceSpecifications: Record<string, ServiceSpec[]> = {
     { key: "installation", label: "التركيب", type: "select", options: ["طباعة فقط", "طباعة + تركيب"], group: "التركيب" }
   ],
   stickers: [
-    { key: "size", label: "المقاس", type: "text", placeholder: "مثال: 10 × 10 سم", group: "المقاس" },
-    { key: "material", label: "الخامة", type: "select", options: ["استيكر أبيض", "شفاف", "فينيل", "أحتاج اقتراح"], group: "الخامة" },
-    { key: "cut", label: "القص", type: "select", options: ["مستقيم", "كونتور", "قص خاص"], group: "القص" },
-    { key: "lamination", label: "الحماية", type: "select", options: ["بدون", "سلفنة", "حسب الاستخدام"], group: "التشطيب" },
-    quoteQty("قطعة")
+    { key: "application", label: "نوع الاستخدام", type: "select", options: ["ملصق دعائي", "ملصق منتج", "زجاج/نافذة", "تغليف", "استخدام خارجي", "استخدام آخر"], group: "الاستخدام" },
+    { key: "surface", label: "سطح التطبيق", type: "select", options: ["ورق/كرتون", "زجاج", "معدن", "PET", "HDPE/LDPE", "PP", "سطح آخر"], group: "الاستخدام" },
+    { key: "size", label: "المقاس", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    { key: "material", label: "الخامة", type: "select", options: ["ورق مطفي", "ورق لامع", "BOPP / PP أبيض", "BOPP / PP شفاف", "فينيل أبيض", "فينيل شفاف", "معدني / فضي", "أحتاج توصية رواج"], group: "الخامة" },
+    { key: "adhesive", label: "اللاصق", type: "select", options: ["دائم", "قابل للإزالة", "متخصص للبرودة/الرطوبة", "يحدد بعد معرفة السطح"], group: "اللاصق" },
+    { key: "cut", label: "القص", type: "select", options: ["مستقيم", "Die-cut / كونتور", "Kiss-cut على شيت", "قص مخصص"], group: "القص" },
+    { key: "finish", label: "الحماية", type: "select", options: ["بدون", "ورنيش", "لامينيشن مطفي", "لامينيشن لامع"], group: "التشطيب" },
+    quoteQty("ملصق")
   ],
   lightbox: [
     { key: "size", label: "الأبعاد", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },

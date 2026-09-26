@@ -27,8 +27,13 @@ export const printTaxonomy:PrintTaxonomyFamily[]=[
   {
     key:"labels-packaging",
     label:"الملصقات والتغليف",
-    description:"ملصقات، ليبل، علب، أكياس وحلول تغليف مطبوعة.",
-    subcategories:[{key:"research",label:"قيد البحث والتوثيق",templates:[],status:"research"}]
+    description:"ملصقات حساسة للضغط، ليبل منتجات، علب ورقية وتغليف مموج.",
+    subcategories:[
+      {key:"stickers",label:"الاستيكرات",templates:["stickers"],status:"verified"},
+      {key:"product-labels",label:"ليبل المنتجات",templates:["roll-labels","sheet-labels"],status:"verified"},
+      {key:"folding-cartons",label:"العلب الورقية",templates:["folding-carton"],status:"verified"},
+      {key:"corrugated",label:"التغليف المموج",templates:["corrugated-box"],status:"verified"}
+    ]
   },
   {
     key:"large-format",
