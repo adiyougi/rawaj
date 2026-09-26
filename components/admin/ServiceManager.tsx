@@ -66,6 +66,9 @@ export default function ServiceManager(){
   const [uploading,setUploading]=useState(false);
   const [message,setMessage]=useState("");
   const [search,setSearch]=useState("");
+  const [statusFilter,setStatusFilter]=useState("all");
+  const [departmentFilter,setDepartmentFilter]=useState("all");
+  const [catalogFilter,setCatalogFilter]=useState("all");
   const [templateFamily,setTemplateFamily]=useState("الكل");
 
   useEffect(()=>{ void loadAll(); },[]);
@@ -192,9 +195,27 @@ export default function ServiceManager(){
 
   const visibleRows=useMemo(()=>{
     const q=search.trim().toLowerCase();
-    if(!q) return rows;
-    return rows.filter(row=>(String(row.name)+" "+String(row.short_description || "")).toLowerCase().includes(q));
-  },[rows,search]);
+    return rows.filter(row=>{
+      const matchesQuery=!q || (String(row.name)+" "+String(row.short_description || "")).toLowerCase().includes(q);
+      const matchesStatus=statusFilter==="all"
+        || (statusFilter==="published" && row.is_published)
+        || (statusFilter!=="published" && !row.is_published && (row.verification_status || "legacy")===statusFilter);
+      const matchesDepartment=departmentFilter==="all" || row.department_id===departmentFilter;
+      const matchesCatalog=catalogFilter==="all"
+        || (catalogFilter==="master" && Boolean(row.template_key))
+        || (catalogFilter==="legacy" && !row.template_key);
+      return matchesQuery && matchesStatus && matchesDepartment && matchesCatalog;
+    });
+  },[rows,search,statusFilter,departmentFilter,catalogFilter]);
+
+  const catalogStats=useMemo(()=>({
+    all:rows.length,
+    master:rows.filter(row=>Boolean(row.template_key)).length,
+    verified:rows.filter(row=>!row.is_published && row.verification_status==="verified").length,
+    approved:rows.filter(row=>!row.is_published && row.verification_status==="approved").length,
+    published:rows.filter(row=>row.is_published).length,
+    legacy:rows.filter(row=>!row.template_key).length
+  }),[rows]);
 
   const templateFamilies=useMemo(()=>["الكل",...Array.from(new Set(serviceTemplates.map(t=>t.family)))],[]);
   const visibleTemplates=useMemo(
@@ -318,17 +339,36 @@ export default function ServiceManager(){
 
       {message && <div className="admin-message">{message}</div>}
 
-      <div className="service-admin-toolbar">
+      <div className="catalog-admin-stats">
+        <button className={catalogFilter==="all"&&statusFilter==="all"?"active":""} onClick={()=>{setCatalogFilter("all");setStatusFilter("all");}}><strong>{catalogStats.all}</strong><span>كل الخدمات</span></button>
+        <button className={catalogFilter==="master"&&statusFilter==="all"?"active":""} onClick={()=>{setCatalogFilter("master");setStatusFilter("all");}}><strong>{catalogStats.master}</strong><span>Master Catalog</span></button>
+        <button className={statusFilter==="verified"?"active":""} onClick={()=>{setCatalogFilter("master");setStatusFilter("verified");}}><strong>{catalogStats.verified}</strong><span>موثقة</span></button>
+        <button className={statusFilter==="approved"?"active":""} onClick={()=>{setCatalogFilter("master");setStatusFilter("approved");}}><strong>{catalogStats.approved}</strong><span>معتمدة</span></button>
+        <button className={statusFilter==="published"?"active":""} onClick={()=>{setCatalogFilter("all");setStatusFilter("published");}}><strong>{catalogStats.published}</strong><span>منشورة</span></button>
+        <button className={catalogFilter==="legacy"?"active":""} onClick={()=>{setCatalogFilter("legacy");setStatusFilter("all");}}><strong>{catalogStats.legacy}</strong><span>Legacy</span></button>
+      </div>
+
+      <div className="service-admin-toolbar catalog-toolbar">
         <div className="service-admin-search">
-          <span>⌕</span><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="ابحث في خدمات رواج..."/>
+          <span>⌕</span><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="ابحث باسم الخدمة أو الوصف..."/>
         </div>
-        <div><strong>{rows.length}</strong><span> خدمة</span></div>
+        <select value={departmentFilter} onChange={e=>setDepartmentFilter(e.target.value)}>
+          <option value="all">كل الأقسام</option>
+          {departments.map(dep=><option key={dep.id} value={dep.id}>{dep.name}</option>)}
+        </select>
+        <select value={catalogFilter} onChange={e=>setCatalogFilter(e.target.value)}>
+          <option value="all">كل السجلات</option>
+          <option value="master">Master Catalog</option>
+          <option value="legacy">Legacy فقط</option>
+        </select>
+        <div className="catalog-result-count"><strong>{visibleRows.length}</strong><span> نتيجة</span></div>
       </div>
 
       {loading ? <div className="admin-empty">جارٍ تحميل الخدمات…</div>:
       <div className="service-admin-grid">
         {visibleRows.map(row=>{
           const dep=departments.find(d=>d.id===row.department_id);
+          const cat=categories.find(c=>c.id===row.category_id);
           return (
             <article className="service-admin-card" key={row.id}>
               <div className="service-admin-image" style={{backgroundImage:row.hero_url ? "url("+row.hero_url+")":"none"}}>
@@ -336,10 +376,15 @@ export default function ServiceManager(){
                 <span className={row.is_published ? "published":"draft"}>{row.is_published ? "منشورة":row.verification_status==="approved" ? "معتمدة" : row.verification_status==="verified" ? "موثقة" : "مسودة"}</span>
               </div>
               <div className="service-admin-copy">
-                <small>{dep?.name || "بدون قسم"}</small>
+                <div className="service-admin-taxonomy"><small>{dep?.name || "بدون قسم"}</small>{cat?.name && <span>{cat.name}</span>}</div>
                 <h3>{row.name}</h3>
                 <p>{row.short_description || "لا يوجد وصف مختصر بعد."}</p>
-                <div>
+                <div className="service-admin-meta">
+                  {row.template_key && <span>Master</span>}
+                  <span>{row.fulfillment_mode==="in_house"?"داخل رواج":row.fulfillment_mode==="local_partner"?"شريك محلي":row.fulfillment_mode==="international"?"تنفيذ دولي":"مرن"}</span>
+                  <span>{Array.isArray(row.specifications)?row.specifications.length:0} مواصفة</span>
+                </div>
+                <div className="service-admin-actions">
                   <button onClick={()=>openEdit(row)}>تعديل</button>
                   <button className="danger" onClick={()=>remove(row)}>حذف</button>
                 </div>
@@ -348,6 +393,7 @@ export default function ServiceManager(){
           );
         })}
       </div>}
+      {!loading && !visibleRows.length && <div className="admin-empty"><strong>لا توجد خدمات مطابقة.</strong><span>غيّر الفلاتر أو كلمة البحث.</span></div>}
 
       {open && (
         <div className="admin-modal service-editor-modal">
