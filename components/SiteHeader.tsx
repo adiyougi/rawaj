@@ -33,9 +33,7 @@ export default function SiteHeader() {
   return (
     <header className="site-header">
       <Link href="/" className="brand" aria-label="رواج">
-        <span className="brand-symbol">
-          <span className="brand-symbol-line">ر</span>
-        </span>
+        <span className="brand-logo-wrap"><img className="brand-logo" src="/rawaj-logo.webp" alt="شعار رواج" /></span>
         <span className="brand-copy">
           <strong>رواج</strong>
           <small>للطباعة والإعلان والديكور</small>
@@ -56,7 +54,7 @@ export default function SiteHeader() {
       {open && (
         <div className="mobile-menu">
           <button className="close-menu" onClick={() => setOpen(false)}>×</button>
-          <div className="mobile-menu-mark">رواج</div>
+          <img className="mobile-menu-logo" src="/rawaj-logo.webp" alt="رواج" />
           {nav.map(([label, href]) => <Link onClick={() => setOpen(false)} key={label} href={href}>{label}</Link>)}
           <Link onClick={() => setOpen(false)} className="btn btn-primary" href="/quote">ابدأ مشروعك</Link>
         </div>
