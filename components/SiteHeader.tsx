@@ -22,7 +22,7 @@ export default function SiteHeader() {
   const nav = [
     ["الرئيسية", "/"],
     ["عن رواج", "/about"],
-    ["الأقسام", "/#departments"],
+    ["الأقسام", "/departments"],
     ["الخدمات", "/services"],
     ["أعمالنا", "/portfolio"],
     ["الباقات", "/packages"],
