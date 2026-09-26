@@ -149,7 +149,7 @@ export default function HomeExperience({
               <div>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
-                <Link href="/services">استكشف خدمات القسم ↗</Link>
+                <Link href={"/departments/" + item.slug}>دخول القسم ↗</Link>
               </div>
             </article>
           ))}
