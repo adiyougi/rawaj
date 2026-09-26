@@ -17,9 +17,6 @@ type ServiceForm={
   hero_url:string;
   gallery:string[];
   badge:string;
-  price_mode:"quote"|"starting";
-  starting_price:string;
-  price_label:string;
   specs:ServiceSpec[];
   highlights:string[];
   faq:FaqItem[];
@@ -32,7 +29,7 @@ type ServiceForm={
 
 const emptyForm:ServiceForm={
   name:"",department_id:"",category_id:"",short_description:"",description:"",
-  hero_url:"",gallery:[],badge:"",price_mode:"quote",starting_price:"",price_label:"",
+  hero_url:"",gallery:[],badge:"",
   specs:[],highlights:[],faq:[],featured:false,is_published:true,seo_title:"",seo_description:"",templateKey:""
 };
 
@@ -107,9 +104,6 @@ export default function ServiceManager(){
       hero_url:row.hero_url || "",
       gallery,
       badge:row.badge || "",
-      price_mode:row.starting_price ? "starting":"quote",
-      starting_price:row.starting_price ? String(row.starting_price):"",
-      price_label:row.price_label || "",
       specs:cloneSpecs(specs),
       highlights,
       faq,
@@ -232,8 +226,8 @@ export default function ServiceManager(){
         hero_url:form.hero_url,
         gallery:form.gallery,
         badge:form.badge || null,
-        starting_price:form.price_mode==="starting" && form.starting_price ? Number(form.starting_price):null,
-        price_label:form.price_mode==="starting" ? (form.price_label.trim() || "يبدأ من"):null,
+        starting_price:null,
+        price_label:null,
         specifications:cleanSpecs,
         highlights:form.highlights.map(x=>x.trim()).filter(Boolean),
         faq:form.faq.filter(item=>item.question.trim() && item.answer.trim()),
@@ -271,7 +265,7 @@ export default function ServiceManager(){
         <div>
           <span className="admin-kicker">SERVICE STORE</span>
           <h1>كتالوج الخدمات</h1>
-          <p>أضف الخدمة كما ستظهر للعميل: صورة، وصف، سعر، مواصفات وخيارات طلب. لا توجد حقول برمجية في هذا المحرر.</p>
+          <p>أضف الخدمة كما ستظهر للعميل: صورة، وصف، مواصفات، تشطيبات وخيارات طلب. جميع الخدمات تعمل بنظام طلب عرض سعر.</p>
         </div>
         <button className="admin-primary" onClick={openNew}>+ إضافة خدمة</button>
       </div>
