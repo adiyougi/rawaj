@@ -201,3 +201,25 @@
   .configurator-actions{align-items:stretch;flex-direction:column}
   .service-configurator{padding:28px 20px}
 }
+
+.faq-page{display:grid;grid-template-columns:1fr 360px;gap:70px;align-items:start}
+.faq-list{border-top:1px solid var(--line)}
+.faq-list details{border-bottom:1px solid var(--line);padding:0}
+.faq-list summary{list-style:none;display:grid;grid-template-columns:48px 1fr 28px;gap:18px;align-items:center;padding:26px 0;cursor:pointer}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary>span{font-size:11px;color:var(--red)}
+.faq-list summary strong{font-size:19px}
+.faq-list summary b{font-size:22px;font-weight:400;transition:transform .2s}
+.faq-list details[open] summary b{transform:rotate(45deg)}
+.faq-list details p{color:var(--muted);line-height:1.95;margin:0;padding:0 66px 28px 0;max-width:800px}
+.faq-cta{position:sticky;top:120px;border-radius:30px;background:var(--surface2);border:1px solid var(--line);padding:32px}
+.faq-cta h2{font-size:40px;line-height:1.12;margin:12px 0 26px}
+.not-found{min-height:100svh;padding-top:170px;padding-bottom:90px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;position:relative;overflow:hidden}
+.not-found-code{font-size:clamp(110px,22vw,300px);line-height:.72;letter-spacing:-.08em;color:var(--surface2);font-weight:900;position:absolute;z-index:-1}
+.not-found h1{font-size:clamp(46px,7vw,98px);line-height:1;letter-spacing:-.05em;max-width:950px;margin:14px 0 22px}
+.not-found p{color:var(--muted);font-size:18px;line-height:1.8;max-width:620px}
+.not-found>div{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.testimonial-placeholder{margin-top:28px;border:1px dashed var(--line);border-radius:28px;padding:38px;text-align:center}
+.testimonial-placeholder h3{font-size:clamp(26px,4vw,44px);margin:12px 0}
+.testimonial-placeholder p{color:var(--muted);margin:0}
+@media(max-width:850px){.faq-page{grid-template-columns:1fr;gap:32px}.faq-cta{position:static}.faq-list details p{padding-right:0}}
