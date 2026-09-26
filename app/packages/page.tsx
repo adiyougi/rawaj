@@ -8,13 +8,26 @@ export default function PackagesPage() {
   return (
     <main>
       <SiteHeader />
-      <InnerHero eyebrow="الباقات والعروض" title="أكثر من خدمة. صفقة واحدة أذكى." text="باقات تجمع خدمات متكاملة يمكن تخصيصها حسب نوع المشروع والميزانية، بدل شراء كل خدمة بمعزل عن الأخرى." image={IMAGES.cards} action={{label:"اطلب باقة مخصصة",href:"/quote"}} />
+      <InnerHero
+        eyebrow="الباقات والعروض"
+        title="أكثر من خدمة. صفقة واحدة أذكى."
+        text="الباقة ليست منتجًا منفصلًا عن الكتالوج؛ إنها تجميع ذكي لعدة خدمات في عرض واحد قابل للتخصيص."
+        image={IMAGES.cards}
+        action={{label:"اطلب باقة مخصصة",href:"/quote"}}
+      />
+
       <section className="section shell">
         <div className="package-page-grid">
           {packages.map((item,index)=>(
-            <article key={item.title} className="package-page-card" style={{backgroundImage:"linear-gradient(180deg,rgba(8,8,10,.08),rgba(8,8,10,.9)),url("+item.image+")"}}>
+            <article key={item.id} className="package-page-card" style={{backgroundImage:"url("+item.image+")"}}>
               <span>0{index+1}</span>
-              <div><small>{item.eyebrow}</small><h2>{item.title}</h2><p>{item.text}</p><Link href="/quote" className="btn btn-light">خصص هذه الباقة</Link></div>
+              <div>
+                <small>{item.eyebrow}</small>
+                <h2>{item.title}</h2>
+                <p>{item.text}</p>
+                <ul className="package-items">{item.items.map((service)=><li key={service}>{service}</li>)}</ul>
+                <Link href={"/quote?package="+item.id} className="btn btn-light">خصص هذه الباقة</Link>
+              </div>
             </article>
           ))}
         </div>
