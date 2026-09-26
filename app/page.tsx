@@ -304,7 +304,7 @@ export default function Home() {
 
         <div className="post-grid">
           {posts.map((post) => (
-            <Link className="post-card" href="/blog" key={post.title}>
+            <Link className="post-card" href={"/blog/" + post.slug} key={post.slug}>
               <div style={{ backgroundImage: "url(" + post.image + ")" }} />
               <small>{post.tag}</small>
               <h3>{post.title}</h3>
