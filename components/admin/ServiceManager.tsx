@@ -29,9 +29,11 @@ type ServiceForm={
 
 const emptyForm:ServiceForm={
   name:"",department_id:"",category_id:"",short_description:"",description:"",
-  hero_url:"",gallery:[],badge:"",
-  specs:[],highlights:[],faq:[],featured:false,is_published:true,seo_title:"",seo_description:"",templateKey:""
+  hero_url:"",gallery:[],badge:"",specs:[],highlights:[],faq:[],
+  featured:false,is_published:false,seo_title:"",seo_description:"",templateKey:""
 };
+
+const specGroups=["المقاس","الخامة","الطباعة","NCR","المحتوى","البنية","الطي","التجليد","القص","التشطيب","التجميع","الترقيم","التجهيز","الكمية","التركيب","الإضاءة","التخصيص","مواصفات أخرى"];
 
 function internalSlug(name:string){
   const map:Record<string,string>={
@@ -61,6 +63,7 @@ export default function ServiceManager(){
   const [uploading,setUploading]=useState(false);
   const [message,setMessage]=useState("");
   const [search,setSearch]=useState("");
+  const [templateFamily,setTemplateFamily]=useState("الكل");
 
   useEffect(()=>{ void loadAll(); },[]);
 
@@ -82,6 +85,7 @@ export default function ServiceManager(){
   function openNew(){
     setEditing(null);
     setForm({...emptyForm,gallery:[],specs:[],highlights:[],faq:[]});
+    setTemplateFamily("الكل");
     setMessage("");
     setOpen(true);
   }
@@ -123,6 +127,7 @@ export default function ServiceManager(){
     setForm(current=>({
       ...current,
       templateKey:key,
+      name:current.name || template.label,
       short_description:current.short_description || template.description,
       badge:current.badge || template.suggestedBadge || "",
       specs:cloneSpecs(template.specs)
@@ -172,8 +177,14 @@ export default function ServiceManager(){
     return rows.filter(row=>(String(row.name)+" "+String(row.short_description || "")).toLowerCase().includes(q));
   },[rows,search]);
 
+  const templateFamilies=useMemo(()=>["الكل",...Array.from(new Set(serviceTemplates.map(t=>t.family)))],[]);
+  const visibleTemplates=useMemo(
+    ()=>serviceTemplates.filter(t=>templateFamily==="الكل" || t.family===templateFamily),
+    [templateFamily]
+  );
+
   function addSpec(){
-    setForm(current=>({...current,specs:[...current.specs,{key:"spec-"+Date.now(),label:"",type:"select",options:[]}]}));
+    setForm(current=>({...current,specs:[...current.specs,{key:"spec-"+Date.now(),label:"",type:"select",options:[],group:"مواصفات أخرى"}]}));
   }
 
   function updateSpec(index:number,patch:Partial<ServiceSpec>){
@@ -197,8 +208,8 @@ export default function ServiceManager(){
       setMessage("اختر القسم الذي تتبع له الخدمة.");
       return;
     }
-    if(!form.hero_url){
-      setMessage("ارفع صورة رئيسية للخدمة قبل الحفظ.");
+    if(form.is_published && !form.hero_url){
+      setMessage("الخدمة المنشورة تحتاج صورة رئيسية. يمكنك حفظها كمسودة بدون صورة.");
       return;
     }
 
@@ -214,6 +225,9 @@ export default function ServiceManager(){
           type:spec.type,
           placeholder:spec.placeholder?.trim() || undefined,
           unit:spec.unit?.trim() || undefined,
+          group:spec.group?.trim() || "مواصفات الطلب",
+          helpText:spec.helpText?.trim() || undefined,
+          required:Boolean(spec.required),
           options:spec.type==="select" ? (spec.options || []).map(x=>x.trim()).filter(Boolean):undefined
         }));
 
@@ -223,7 +237,7 @@ export default function ServiceManager(){
         category_id:form.category_id || null,
         short_description:form.short_description.trim() || null,
         description:form.description.trim() || null,
-        hero_url:form.hero_url,
+        hero_url:form.hero_url || null,
         gallery:form.gallery,
         badge:form.badge || null,
         starting_price:null,
@@ -246,7 +260,7 @@ export default function ServiceManager(){
       if(result.error) throw result.error;
       setOpen(false);
       await loadAll();
-      setMessage(editing ? "تم تحديث الخدمة وظهرت التغييرات في المتجر.":"تمت إضافة الخدمة إلى كتالوج رواج.");
+      setMessage(editing ? "تم تحديث الخدمة.":"تم حفظ الخدمة في كتالوج رواج.");
     }catch(error:any){
       setMessage(error?.message || "تعذر حفظ الخدمة.");
     }finally{setSaving(false);}
@@ -263,9 +277,9 @@ export default function ServiceManager(){
     <section className="admin-page service-admin-page">
       <div className="admin-page-head">
         <div>
-          <span className="admin-kicker">SERVICE STORE</span>
+          <span className="admin-kicker">RAWAJ MASTER CATALOG</span>
           <h1>كتالوج الخدمات</h1>
-          <p>أضف الخدمة كما ستظهر للعميل: صورة، وصف، مواصفات، تشطيبات وخيارات طلب. جميع الخدمات تعمل بنظام طلب عرض سعر.</p>
+          <p>كل خدمة تُدار كنموذج طلب عرض سعر مستقل بخاماتها ومواصفاتها وتشطيباتها الصحيحة.</p>
         </div>
         <button className="admin-primary" onClick={openNew}>+ إضافة خدمة</button>
       </div>
@@ -285,7 +299,8 @@ export default function ServiceManager(){
           const dep=departments.find(d=>d.id===row.department_id);
           return (
             <article className="service-admin-card" key={row.id}>
-              <div className="service-admin-image" style={{backgroundImage:"url("+row.hero_url+")"}}>
+              <div className="service-admin-image" style={{backgroundImage:row.hero_url ? "url("+row.hero_url+")":"none"}}>
+                {!row.hero_url && <i className="no-service-image">بدون صورة</i>}
                 <span className={row.is_published ? "published":"draft"}>{row.is_published ? "منشورة":"مسودة"}</span>
               </div>
               <div className="service-admin-copy">
@@ -313,10 +328,14 @@ export default function ServiceManager(){
 
             <div className="service-editor-body">
               <section className="editor-section">
-                <div className="editor-section-title"><span>01</span><div><h3>ابدأ من قالب جاهز</h3><p>اختر نوع الخدمة وسنجهز مواصفاتها المعتادة تلقائيًا. يمكنك تعديلها بعد ذلك.</p></div></div>
+                <div className="editor-section-title"><span>01</span><div><h3>ابدأ من قالب متخصص</h3><p>القوالب المعلّمة «موثّق» مبنية على مراجعة مصادر فنية وتجارية حقيقية.</p></div></div>
+                <div className="template-family-filter">
+                  {templateFamilies.map(f=><button className={templateFamily===f?"active":""} onClick={()=>setTemplateFamily(f)} key={f}>{f}</button>)}
+                </div>
                 <div className="service-template-grid">
-                  {serviceTemplates.map(template=>(
+                  {visibleTemplates.map(template=>(
                     <button key={template.key} className={form.templateKey===template.key ? "active":""} onClick={()=>applyTemplate(template.key)}>
+                      <div className="template-card-meta"><span>{template.subcategory}</span><em className={template.verification}>{template.verification==="verified"?"موثّق":"قديم — يحتاج مراجعة"}</em></div>
                       <strong>{template.label}</strong><small>{template.description}</small>
                     </button>
                   ))}
@@ -324,18 +343,18 @@ export default function ServiceManager(){
               </section>
 
               <section className="editor-section">
-                <div className="editor-section-title"><span>02</span><div><h3>بيانات الخدمة</h3><p>هذه هي المعلومات التي يقرأها العميل في بطاقة الخدمة وصفحتها.</p></div></div>
+                <div className="editor-section-title"><span>02</span><div><h3>بيانات الخدمة</h3><p>المعلومات التجارية التي يقرأها العميل في البطاقة وصفحة الخدمة.</p></div></div>
                 <div className="service-form-grid">
-                  <label className="wide"><span>اسم الخدمة *</span><input value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="مثال: طباعة كروت شخصية فاخرة"/></label>
+                  <label className="wide"><span>اسم الخدمة *</span><input value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="مثال: طباعة نماذج وفواتير NCR"/></label>
                   <label><span>القسم *</span><select value={form.department_id} onChange={e=>setForm({...form,department_id:e.target.value,category_id:""})}><option value="">اختر القسم</option>{departments.map(d=><option key={d.id} value={d.id}>{d.name}</option>)}</select></label>
                   <label><span>التصنيف</span><select value={form.category_id} onChange={e=>setForm({...form,category_id:e.target.value})}><option value="">اختر التصنيف</option>{filteredCategories.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></label>
-                  <label className="wide"><span>وصف قصير</span><textarea rows={3} value={form.short_description} onChange={e=>setForm({...form,short_description:e.target.value})} placeholder="جملة أو جملتان تظهران في بطاقة الخدمة."/></label>
-                  <label className="wide"><span>وصف تفصيلي</span><textarea rows={5} value={form.description} onChange={e=>setForm({...form,description:e.target.value})} placeholder="اشرح للعميل الاستخدامات، المزايا وما الذي تقدمه رواج في هذه الخدمة."/></label>
+                  <label className="wide"><span>وصف قصير</span><textarea rows={3} value={form.short_description} onChange={e=>setForm({...form,short_description:e.target.value})} placeholder="وصف موجز ودقيق يظهر في بطاقة الخدمة."/></label>
+                  <label className="wide"><span>وصف تفصيلي</span><textarea rows={5} value={form.description} onChange={e=>setForm({...form,description:e.target.value})} placeholder="اشرح الاستخدامات وما الذي تنفذه رواج وما الذي يحتاج العميل لتحديده."/></label>
                 </div>
               </section>
 
               <section className="editor-section">
-                <div className="editor-section-title"><span>03</span><div><h3>صور الخدمة</h3><p>ارفع الصور مباشرة. لا حاجة لنسخ أي روابط.</p></div></div>
+                <div className="editor-section-title"><span>03</span><div><h3>صور الخدمة</h3><p>يمكن حفظ الخدمة كمسودة بدون صورة؛ النشر يتطلب صورة رئيسية.</p></div></div>
                 <div className="service-media-editor">
                   <div className="service-cover-box">
                     {form.hero_url ? <img src={form.hero_url} alt="صورة الخدمة"/>:<div><strong>الصورة الرئيسية</strong><span>يفضل صورة أفقية واضحة وعالية الجودة</span></div>}
@@ -345,43 +364,37 @@ export default function ServiceManager(){
                     <div className="gallery-editor-head"><strong>معرض صور إضافي</strong><label>+ إضافة صور<input type="file" accept="image/*" multiple onChange={uploadGallery} disabled={uploading}/></label></div>
                     <div className="gallery-thumbs">
                       {form.gallery.map((url,index)=><div key={url}><img src={url} alt=""/><button onClick={()=>setForm(current=>({...current,gallery:current.gallery.filter((_,i)=>i!==index)}))}>×</button></div>)}
-                      {!form.gallery.length && <p>اختياري — أضف صور تفاصيل أو زوايا أخرى للعمل.</p>}
+                      {!form.gallery.length && <p>اختياري — صور تفاصيل، خامات، تشطيبات أو أمثلة تنفيذ.</p>}
                     </div>
                   </div>
                 </div>
               </section>
 
-              <section className="editor-section">
-                <div className="editor-section-title"><span>04</span><div><h3>طريقة التسعير والعرض</h3><p>اختر ما يراه العميل في المتجر.</p></div></div>
-                <div className="price-mode">
-                  <button className={form.price_mode==="quote"?"active":""} onClick={()=>setForm({...form,price_mode:"quote",starting_price:""})}><strong>عرض سعر</strong><small>السعر يعتمد على المواصفات والكمية</small></button>
-                  <button className={form.price_mode==="starting"?"active":""} onClick={()=>setForm({...form,price_mode:"starting"})}><strong>يبدأ من سعر</strong><small>اعرض سعرًا ابتدائيًا مع إمكانية التخصيص</small></button>
-                </div>
+              <section className="editor-section quote-only-section">
+                <div className="editor-section-title"><span>04</span><div><h3>العرض في المتجر</h3><p>التسعير غير مستخدم حاليًا. كل خدمة في رواج تعمل بنظام «طلب عرض سعر».</p></div></div>
                 <div className="service-form-grid">
-                  {form.price_mode==="starting" && <>
-                    <label><span>السعر الابتدائي</span><input type="number" min="0" value={form.starting_price} onChange={e=>setForm({...form,starting_price:e.target.value})} placeholder="مثال: 8000"/></label>
-                    <label><span>وصف السعر</span><input value={form.price_label} onChange={e=>setForm({...form,price_label:e.target.value})} placeholder="مثال: يبدأ من / لكل 500 حبة"/></label>
-                  </>}
-                  <label><span>شارة البطاقة</span><select value={form.badge} onChange={e=>setForm({...form,badge:e.target.value})}><option value="">بدون شارة</option><option>الأكثر طلبًا</option><option>جديد</option><option>مميز</option><option>عرض خاص</option><option>هوية مؤسسية</option><option>تنفيذ متكامل</option></select></label>
+                  <label><span>شارة البطاقة</span><select value={form.badge} onChange={e=>setForm({...form,badge:e.target.value})}><option value="">بدون شارة</option><option>الأكثر طلبًا</option><option>جديد</option><option>مميز</option><option>تنفيذ متكامل</option><option>توريد خاص</option></select></label>
                   <div className="service-switches">
                     <label><input type="checkbox" checked={form.featured} onChange={e=>setForm({...form,featured:e.target.checked})}/><span><strong>خدمة مميزة</strong><small>تظهر في أقسام مختارة بالرئيسية</small></span></label>
-                    <label><input type="checkbox" checked={form.is_published} onChange={e=>setForm({...form,is_published:e.target.checked})}/><span><strong>منشورة في المتجر</strong><small>أغلقها لحفظ الخدمة كمسودة</small></span></label>
+                    <label><input type="checkbox" checked={form.is_published} onChange={e=>setForm({...form,is_published:e.target.checked})}/><span><strong>منشورة في المتجر</strong><small>اتركها مغلقة أثناء البحث والمراجعة</small></span></label>
                   </div>
                 </div>
               </section>
 
               <section className="editor-section">
-                <div className="editor-section-title"><span>05</span><div><h3>مواصفات يختارها العميل</h3><p>هذه الحقول ستظهر مباشرة في صفحة الخدمة. لا توجد صيغة برمجية أو JSON.</p></div></div>
+                <div className="editor-section-title"><span>05</span><div><h3>نموذج طلب عرض السعر</h3><p>كل مواصفة هنا ستظهر للعميل تحت مجموعتها الصحيحة، بدون JSON أو أكواد.</p></div></div>
                 <div className="spec-editor-list">
                   {form.specs.map((spec,index)=>(
                     <article className="spec-editor-card" key={index}>
-                      <div className="spec-card-head"><strong>مواصفة {index+1}</strong><button onClick={()=>removeSpec(index)}>حذف</button></div>
+                      <div className="spec-card-head"><strong>{spec.group || "مواصفات أخرى"} · {spec.label || "مواصفة جديدة"}</strong><button onClick={()=>removeSpec(index)}>حذف</button></div>
                       <div className="service-form-grid compact">
                         <label><span>اسم المواصفة</span><input value={spec.label} onChange={e=>updateSpec(index,{label:e.target.value,key:spec.key || "spec-"+index})} placeholder="مثال: نوع الورق"/></label>
+                        <label><span>المجموعة</span><select value={spec.group || "مواصفات أخرى"} onChange={e=>updateSpec(index,{group:e.target.value})}>{specGroups.map(group=><option key={group}>{group}</option>)}</select></label>
                         <label><span>طريقة الاختيار</span><select value={spec.type} onChange={e=>updateSpec(index,{type:e.target.value as ServiceSpec["type"]})}><option value="select">قائمة خيارات</option><option value="number">رقم / كمية</option><option value="text">نص حر</option></select></label>
-                        {spec.type==="select" && <label className="wide"><span>الخيارات — كل خيار في سطر</span><textarea rows={4} value={(spec.options || []).join("\n")} onChange={e=>updateSpec(index,{options:e.target.value.split("\n")})} placeholder={"كوشيه\nبريستول\nورق فاخر\nأحتاج اقتراح رواج"}/></label>}
-                        {spec.type!=="select" && <label><span>مثال داخل الحقل</span><input value={spec.placeholder || ""} onChange={e=>updateSpec(index,{placeholder:e.target.value})} placeholder="مثال: 500"/></label>}
-                        {spec.type==="number" && <label><span>الوحدة</span><input value={spec.unit || ""} onChange={e=>updateSpec(index,{unit:e.target.value})} placeholder="حبة / متر / نسخة"/></label>}
+                        <label><span>وحدة القياس</span><input value={spec.unit || ""} onChange={e=>updateSpec(index,{unit:e.target.value})} placeholder="نسخة / متر / قطعة"/></label>
+                        {spec.type==="select" && <label className="wide"><span>الخيارات — كل خيار في سطر</span><textarea rows={4} value={(spec.options || []).join("\n")} onChange={e=>updateSpec(index,{options:e.target.value.split("\n")})}/></label>}
+                        {spec.type!=="select" && <label className="wide"><span>مثال داخل الحقل</span><input value={spec.placeholder || ""} onChange={e=>updateSpec(index,{placeholder:e.target.value})} placeholder="مثال: 500"/></label>}
+                        <label className="wide"><span>توضيح للعميل</span><input value={spec.helpText || ""} onChange={e=>updateSpec(index,{helpText:e.target.value})} placeholder="معلومة قصيرة تساعده على اختيار المواصفة الصحيحة."/></label>
                       </div>
                     </article>
                   ))}
@@ -390,9 +403,9 @@ export default function ServiceManager(){
               </section>
 
               <section className="editor-section">
-                <div className="editor-section-title"><span>06</span><div><h3>نقاط القوة والأسئلة</h3><p>اختياري، لكنه يساعد العميل على اتخاذ القرار.</p></div></div>
+                <div className="editor-section-title"><span>06</span><div><h3>نقاط القوة والأسئلة</h3><p>محتوى يساعد العميل على فهم الخدمة قبل إرسال طلب العرض.</p></div></div>
                 <div className="service-form-grid">
-                  <label className="wide"><span>مميزات الخدمة — ميزة في كل سطر</span><textarea rows={5} value={form.highlights.join("\n")} onChange={e=>setForm({...form,highlights:e.target.value.split("\n")})} placeholder={"طباعة دقيقة\nخيارات تشطيب متعددة\nإمكانية تنفيذ التصميم لدى رواج"}/></label>
+                  <label className="wide"><span>مميزات الخدمة — ميزة في كل سطر</span><textarea rows={5} value={form.highlights.join("\n")} onChange={e=>setForm({...form,highlights:e.target.value.split("\n")})}/></label>
                 </div>
                 <div className="faq-editor-list">
                   {form.faq.map((item,index)=><article key={index}><input value={item.question} onChange={e=>setForm(current=>({...current,faq:current.faq.map((f,i)=>i===index?{...f,question:e.target.value}:f)}))} placeholder="السؤال"/><textarea rows={3} value={item.answer} onChange={e=>setForm(current=>({...current,faq:current.faq.map((f,i)=>i===index?{...f,answer:e.target.value}:f)}))} placeholder="الإجابة"/><button onClick={()=>setForm(current=>({...current,faq:current.faq.filter((_,i)=>i!==index)}))}>حذف</button></article>)}
@@ -402,7 +415,7 @@ export default function ServiceManager(){
 
               <details className="advanced-editor">
                 <summary>إعدادات متقدمة لمحركات البحث</summary>
-                <p>هذه الحقول اختيارية. إذا تركتها فارغة سيستخدم النظام اسم الخدمة ووصفها تلقائيًا. الرابط الداخلي والترتيب يتم إنشاؤهما تلقائيًا ولا يحتاج المدير للتعامل معهما.</p>
+                <p>اختيارية. الرابط الداخلي والترتيب ينشئهما النظام تلقائيًا ولا يحتاج مدير رواج إلى التعامل معهما.</p>
                 <div className="service-form-grid">
                   <label><span>عنوان صفحة Google</span><input value={form.seo_title} onChange={e=>setForm({...form,seo_title:e.target.value})}/></label>
                   <label><span>وصف نتائج البحث</span><input value={form.seo_description} onChange={e=>setForm({...form,seo_description:e.target.value})}/></label>
@@ -412,7 +425,7 @@ export default function ServiceManager(){
 
             <footer className="service-editor-footer">
               <button className="admin-secondary" onClick={()=>setOpen(false)}>إلغاء</button>
-              <button className="admin-primary" disabled={saving || uploading} onClick={save}>{saving ? "جارٍ الحفظ…":editing ? "حفظ التغييرات":"إضافة الخدمة للمتجر"}</button>
+              <button className="admin-primary" disabled={saving || uploading} onClick={save}>{saving ? "جارٍ الحفظ…":editing ? "حفظ التغييرات":"حفظ الخدمة"}</button>
             </footer>
           </div>
         </div>

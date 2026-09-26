@@ -16,3 +16,7 @@
 
 [context.branch-deploy]
   command = "npm run build"
+
+# Research/development branch: never spend Netlify build credits.
+[context.autopilot]
+  ignore = "exit 0"
