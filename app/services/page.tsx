@@ -3,8 +3,11 @@ import SiteFooter from "@/components/SiteFooter";
 import InnerHero from "@/components/InnerHero";
 import ServiceCatalog from "@/components/ServiceCatalog";
 import { IMAGES } from "@/lib/content";
+import { getServices } from "@/lib/cms";
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getServices();
+
   return (
     <main>
       <SiteHeader />
@@ -16,7 +19,7 @@ export default function ServicesPage() {
         action={{ label: "اطلب عرض سعر", href: "/quote" }}
       />
       <section className="section shell">
-        <ServiceCatalog />
+        <ServiceCatalog services={services} />
       </section>
       <SiteFooter />
     </main>

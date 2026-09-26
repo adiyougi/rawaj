@@ -4,11 +4,12 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import AddToCartButton from "@/components/AddToCartButton";
 import ServiceConfigurator from "@/components/ServiceConfigurator";
-import { services } from "@/lib/content";
+import { getServices } from "@/lib/cms";
 import { serviceSpecifications } from "@/lib/service-specs";
 
 export default async function ServiceDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const services = await getServices();
   const service = services.find((item) => item.id === slug);
   if (!service) notFound();
 
@@ -61,7 +62,12 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
               {related.map((item) => (
                 <article className="service-card" key={item.id}>
                   <Link href={"/services/" + item.id} className="service-media" style={{ backgroundImage: "url(" + item.image + ")" }}><span>{item.badge}</span></Link>
-                  <div className="service-body"><small>{item.category}</small><Link href={"/services/" + item.id}><h3>{item.title}</h3></Link><p>{item.desc}</p><AddToCartButton id={item.id} title={item.title} compact /></div>
+                  <div className="service-body">
+                    <small>{item.category}</small>
+                    <Link href={"/services/" + item.id}><h3>{item.title}</h3></Link>
+                    <p>{item.desc}</p>
+                    <AddToCartButton id={item.id} title={item.title} compact />
+                  </div>
                 </article>
               ))}
             </div>

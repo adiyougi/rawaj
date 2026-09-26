@@ -2,10 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { posts } from "@/lib/content";
+import { getPosts } from "@/lib/cms";
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const posts = await getPosts();
   const post = posts.find((item) => item.slug === slug);
   if (!post) notFound();
 

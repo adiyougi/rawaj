@@ -2,9 +2,12 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import InnerHero from "@/components/InnerHero";
-import { IMAGES, portfolio } from "@/lib/content";
+import { IMAGES } from "@/lib/content";
+import { getPortfolio } from "@/lib/cms";
 
-export default function PortfolioPage() {
+export default async function PortfolioPage() {
+  const portfolio = await getPortfolio();
+
   return (
     <main>
       <SiteHeader />

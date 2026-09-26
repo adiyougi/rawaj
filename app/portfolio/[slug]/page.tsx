@@ -2,10 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { portfolio } from "@/lib/content";
+import { getPortfolio } from "@/lib/cms";
 
 export default async function PortfolioDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const portfolio = await getPortfolio();
   const project = portfolio.find((item) => item.slug === slug);
   if (!project) notFound();
 
@@ -28,7 +29,7 @@ export default async function PortfolioDetail({ params }: { params: Promise<{ sl
           <span className="eyebrow">عن العمل</span>
           <h2>التفاصيل التي تصنع الفرق.</h2>
           <p>{project.summary}</p>
-          <p>هذه الصفحة مصممة لتستوعب لاحقًا الصور والفيديو، قبل/بعد، وصف التنفيذ، الخامات، مراحل العمل وتفاصيل المشروع الفعلية من معرض رواج.</p>
+          <p>ستستوعب هذه الصفحة الصور والفيديو، قبل/بعد، وصف التنفيذ، الخامات، ومراحل العمل فور إدخال مواد المشروع الحقيقية في معرض رواج.</p>
         </div>
         <div className="case-services">
           <span>الخدمات المرتبطة</span>

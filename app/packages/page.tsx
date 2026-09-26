@@ -2,9 +2,12 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import InnerHero from "@/components/InnerHero";
-import { IMAGES, packages } from "@/lib/content";
+import { IMAGES } from "@/lib/content";
+import { getPackages } from "@/lib/cms";
 
-export default function PackagesPage() {
+export default async function PackagesPage() {
+  const packages = await getPackages();
+
   return (
     <main>
       <SiteHeader />

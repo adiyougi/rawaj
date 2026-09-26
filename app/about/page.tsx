@@ -2,9 +2,12 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import InnerHero from "@/components/InnerHero";
-import { departments, IMAGES } from "@/lib/content";
+import { IMAGES } from "@/lib/content";
+import { getDepartments } from "@/lib/cms";
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const departments = await getDepartments();
+
   return (
     <main>
       <SiteHeader />
@@ -29,7 +32,7 @@ export default function AboutPage() {
 
       <section className="section shell metric-grid">
         <div><strong>2008</strong><span>بداية الرحلة</span></div>
-        <div><strong>6+</strong><span>مسارات تخصصية مترابطة</span></div>
+        <div><strong>{departments.length}+</strong><span>مسارات تخصصية مترابطة</span></div>
         <div><strong>360°</strong><span>من الفكرة إلى التنفيذ</span></div>
       </section>
 
