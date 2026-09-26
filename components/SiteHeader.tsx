@@ -24,7 +24,7 @@ export default function SiteHeader({ cartCount = 0, onCart }: { cartCount?: numb
   return (
     <header className="site-header">
       <Link href="/" className="brand" aria-label="رواج">
-        <span className="brand-symbol">ر</span>
+        <img className="brand-logo" src="/rawaj-logo.webp" alt="شعار رواج" />
         <span className="brand-copy"><strong>رواج</strong><small>للطباعة والإعلان والديكور</small></span>
       </Link>
 
