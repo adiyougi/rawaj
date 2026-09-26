@@ -13,7 +13,9 @@ export default async function ServiceDetail({params}:{params:Promise<{slug:strin
   const services=await getServices();
   const service=services.find(item=>item.id===slug);
   if(!service) notFound();
-  const specs=serviceSpecifications[service.id] || [];
+  const dynamicSpecs=("specifications" in service && Array.isArray(service.specifications) && service.specifications.length)
+    ? service.specifications
+    : (serviceSpecifications[service.id] || []);
   const related=services.filter(item=>item.id!==service.id && item.category===service.category).slice(0,4);
 
   return (
@@ -36,7 +38,7 @@ export default async function ServiceDetail({params}:{params:Promise<{slug:strin
           </div>
         </section>
 
-        {!!specs.length && <section className="product-config-section"><ServiceConfigurator id={service.id} title={service.title} specs={specs}/></section>}
+        {!!dynamicSpecs.length && <section className="product-config-section"><ServiceConfigurator id={service.id} title={service.title} specs={dynamicSpecs}/></section>}
 
         {!!related.length && <section className="store-section related-app-section">
           <div className="store-section-head"><div><small>قد تحتاج أيضًا</small><h2>خدمات مشابهة</h2></div><Link href="/services">عرض الكل</Link></div>

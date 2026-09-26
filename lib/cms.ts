@@ -18,7 +18,7 @@ async function readTable<T>(path: string): Promise<T[] | null> {
         apikey: SUPABASE_KEY,
         Authorization: `Bearer ${SUPABASE_KEY}`
       },
-      next: { revalidate: 60 }
+      cache: "no-store"
     });
 
     if (!response.ok) return null;
@@ -50,11 +50,19 @@ export async function getServices() {
     slug: string;
     name: string;
     short_description: string | null;
+    description: string | null;
     hero_url: string | null;
+    gallery: string[];
     badge: string | null;
+    starting_price: number | null;
+    price_label: string | null;
+    specifications: any[];
+    highlights: any[];
+    faq: any[];
+    featured: boolean;
     service_categories: { name: string } | null;
   }>(
-    "services?select=slug,name,short_description,hero_url,badge,service_categories(name)&is_published=eq.true&order=sort_order.asc"
+    "services?select=slug,name,short_description,description,hero_url,gallery,badge,starting_price,price_label,specifications,highlights,faq,featured,service_categories(name)&is_published=eq.true&order=sort_order.asc"
   );
 
   if (!rows?.length) return fallbackServices;
@@ -65,7 +73,15 @@ export async function getServices() {
     category: row.service_categories?.name || "خدمات رواج",
     desc: row.short_description || "",
     image: row.hero_url || fallbackServices[0].image,
-    badge: row.badge || "رواج"
+    badge: row.badge || "رواج",
+    description: row.description || "",
+    gallery: Array.isArray(row.gallery) ? row.gallery : [],
+    startingPrice: row.starting_price,
+    priceLabel: row.price_label || "",
+    specifications: Array.isArray(row.specifications) ? row.specifications : [],
+    highlights: Array.isArray(row.highlights) ? row.highlights : [],
+    faq: Array.isArray(row.faq) ? row.faq : [],
+    featured: Boolean(row.featured)
   }));
 }
 
