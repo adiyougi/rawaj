@@ -55,11 +55,25 @@ const verifiedSignage:[string,string,string,string,string,string?][]=[
   ["facade","واجهات ACP / أليكوبوند","كسوات واجهات تجارية بألواح ألمنيوم مركبة مع تصميم وتصنيع وتركيب.","الواجهات والديكور","واجهات ACP","تنفيذ متكامل"]
 ];
 
+
+const verifiedSpecialty:[string,string,string,string,string,string?][]=[
+  ["textile-sublimation","Sublimation نسيجي","طباعة سوبليميشن على البوليستر للملابس والرايات والـSoft Signage.","الطباعة النسيجية والدعائية","Sublimation نسيجي"],
+  ["sublimation-hard-goods","Sublimation للمنتجات والهدايا","تخصيص منتجات Poly-coated مثل الأكواب والـdrinkware والألواح والهدايا.","الطباعة النسيجية والدعائية","Sublimation منتجات"],
+  ["dtf-apparel","DTF للملابس","نقل حراري Full Color على نطاق واسع من الأقمشة باستخدام فيلم ومسحوق لاصق.","الطباعة النسيجية والدعائية","DTF","الأكثر طلبًا"],
+  ["dtg-apparel","DTG طباعة مباشرة على الملابس","طباعة رقمية مباشرة على الملابس، خصوصًا القطن والخامات الغنية بالقطن.","الطباعة النسيجية والدعائية","DTG"],
+  ["screen-print-apparel","Screen Printing للملابس","طباعة سكرين Plastisol أو Water-based وأنظمة خاصة حسب القماش والاستخدام.","الطباعة النسيجية والدعائية","Screen Printing","الأكثر طلبًا"],
+  ["embroidery","تطريز آلي","تطريز شعارات وأسماء على الملابس والكابات واليونيفورم والحقائب.","الطباعة النسيجية والدعائية","Embroidery"],
+  ["heat-transfer-vinyl","Heat Transfer Vinyl","قص ونقل حراري للفينيل على الملابس بخيارات Standard وMetallic وFlock وغيرها.","الطباعة النسيجية والدعائية","Heat Transfer"],
+  ["uv-direct-object","UV Direct-to-Object","طباعة UV مباشرة على المنتجات والهدايا والألواح والمواد ثلاثية الأبعاد.","الطباعة المتخصصة","UV Direct Print","تنفيذ متكامل"],
+  ["uv-dtf","UV DTF Transfers","نقل UV DTF للأجسام ذات الأشكال والأسطح التي يصعب طباعتها مباشرة.","الطباعة المتخصصة","UV DTF"],
+  ["laser-cutting","قص ليزر","قص دقيق للأكريليك والخشب وMDF والورق والجلد وخامات أخرى قابلة لليزر.","الليزر والتخصيص","Laser Cutting"],
+  ["laser-engraving","حفر ووسم ليزر","حفر ووسم للأكريليك والخشب والألمنيوم المؤكسد والمعادن والخامات المتوافقة.","الليزر والتخصيص","Laser Engraving"],
+  ["awards","دروع وهدايا تكريم","تصميم وتصنيع وتخصيص الدروع والـplaques والهدايا بمزيج خامات وتقنيات.","الليزر والتخصيص","Awards","تنفيذ متكامل"]
+];
+
 const legacy:[string,string,string,string,string,string?][]=[
   ["identity","هوية بصرية","شعار وهوية مؤسسية متكاملة.","التصميم والمحتوى","الهوية البصرية"],
   ["social-content","تصميم ومحتوى سوشيال","تصاميم وحملات محتوى للمنصات.","التصميم والمحتوى","المحتوى الرقمي"],
-  ["laser","قص وحفر ليزر","أكريليك وخشب وMDF.","الليزر والأكريليك","القص والحفر"],
-  ["awards","دروع وهدايا","دروع تكريم وهدايا أكريليك مخصصة.","الليزر والأكريليك","الدروع والهدايا"]
 ];
 
 const build=(defs:[string,string,string,string,string,string?][],verification:"verified"|"legacy"):ServiceTemplate[] =>
@@ -73,6 +87,7 @@ export const serviceTemplates:ServiceTemplate[]=[
   ...build(verifiedLabelsPackaging,"verified"),
   ...build(verifiedLargeFormat,"verified"),
   ...build(verifiedSignage,"verified"),
+  ...build(verifiedSpecialty,"verified"),
   ...build(legacy,"legacy")
 ];
 

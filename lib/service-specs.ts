@@ -341,6 +341,128 @@ export const serviceSpecifications: Record<string, ServiceSpec[]> = {
     { key: "access", label: "الوصول لموقع العمل", type: "select", options: ["أرضي/سهل", "ارتفاع متوسط", "ارتفاع كبير أو يحتاج معدات رفع", "يحدد بالمعاينة"], group: "التركيب" },
     { key: "location", label: "موقع المشروع", type: "text", placeholder: "المدينة / المنطقة / وصف الموقع", group: "التركيب" }
   ],
+  "textile-sublimation": [
+    { key: "product", label: "نوع المنتج", type: "select", options: ["قماش رول", "راية / علم", "Sportswear / Jersey", "تيشيرت بوليستر", "Soft Signage", "قطعة مخيطة جاهزة", "منتج نسيجي آخر"], group: "المنتج" },
+    { key: "fabric", label: "تركيب القماش", type: "select", options: ["100% Polyester", "خليط عالي البوليستر", "Polyester pretreated للطباعة المباشرة", "غير معروف — أحتاج تقييم رواج"], group: "الخامة", helpText: "السوبليميشن التقليدي يثبت الصبغة داخل ألياف البوليستر، لذلك نسبة البوليستر وتجهيز القماش عاملان أساسيان." },
+    { key: "base_color", label: "لون الخامة", type: "select", options: ["أبيض", "فاتح", "ملون — يحتاج مراجعة التصميم", "داكن — غالبًا نحتاج تقنية بديلة"], group: "الخامة" },
+    { key: "process", label: "مسار التنفيذ", type: "select", options: ["Transfer Sublimation", "Direct Sublimation على قماش مهيأ", "تحدده رواج حسب المنتج"], group: "الطباعة" },
+    { key: "print_area", label: "مساحة/مقاس الطباعة", type: "text", placeholder: "مثال: كامل القماش أو 30 × 40 سم", group: "المقاس" },
+    { key: "artwork", label: "حالة التصميم", type: "select", options: ["ملف جاهز للطباعة", "لدي تصميم يحتاج تجهيز", "أحتاج التصميم من رواج"], group: "التصميم" },
+    { key: "finishing", label: "التجهيز النهائي", type: "select", options: ["طباعة فقط", "قص", "قص + خياطة", "منتج جاهز كامل", "حسب نوع المشروع"], group: "التجهيز" },
+    quoteQty("قطعة/متر")
+  ],
+
+  "sublimation-hard-goods": [
+    { key: "product", label: "المنتج", type: "select", options: ["Mug / كوب", "Tumbler / Drinkware", "لوح ألمنيوم مطلي", "لوح صور", "Coaster", "Phone Case", "قطعة سيراميك مطلية", "منتج Sublimation blank آخر"], group: "المنتج" },
+    { key: "blank", label: "حالة المنتج الخام", type: "select", options: ["سأوفر Blank مخصص للسوبليميشن", "أحتاج رواج توفر المنتج", "غير متأكد من وجود Poly-coating"], group: "الخامة", helpText: "السوبليميشن التقليدي يحتاج سطحًا بوليمريًا/Poly-coated أو مادة مصممة أصلًا للسوبليميشن." },
+    { key: "shape", label: "شكل السطح", type: "select", options: ["مسطح", "أسطواني", "مخروطي/متدرج", "شكل خاص"], group: "البنية" },
+    { key: "print_scope", label: "نطاق الطباعة", type: "select", options: ["وجه واحد", "وجهين", "Wrap حول المنتج", "موضع مخصص"], group: "الطباعة" },
+    { key: "size", label: "مساحة الطباعة", type: "text", placeholder: "الأبعاد التقريبية أو اسم المقاس القياسي", group: "المقاس" },
+    { key: "personalization", label: "بيانات متغيرة", type: "select", options: ["لا", "أسماء", "أرقام", "أسماء + أرقام", "بيانات أخرى من ملف"], group: "التخصيص" },
+    { key: "artwork", label: "التصميم", type: "select", options: ["جاهز", "يحتاج تهيئة", "أحتاج تصميم رواج"], group: "التصميم" },
+    quoteQty("قطعة")
+  ],
+
+  "dtf-apparel": [
+    { key: "garment", label: "نوع القطعة", type: "select", options: ["T-shirt", "Polo", "Hoodie / Sweatshirt", "Uniform", "Sportswear", "Tote Bag", "Cap / منتج يحتاج تقييم", "قطعة نسيجية أخرى"], group: "الملابس" },
+    { key: "fabric", label: "الخامة", type: "select", options: ["Cotton", "Polyester", "Cotton/Poly Blend", "Synthetic blend", "خامة أخرى — تحتاج اختبار"], group: "الخامة", helpText: "DTF يعمل على نطاق واسع من الأقمشة، لكن توافق الفيلم/المسحوق والقماش يجب تقييمه قبل الإنتاج النهائي." },
+    { key: "garment_color", label: "لون القطعة", type: "select", options: ["فاتح", "داكن", "ألوان متعددة"], group: "الخامة" },
+    { key: "placement", label: "موضع الطباعة", type: "select", options: ["صدر أمامي", "ظهر", "يسار الصدر", "كم", "أكثر من موضع", "موضع مخصص"], group: "الموضع" },
+    { key: "print_size", label: "مقاس الطباعة", type: "text", placeholder: "مثال: 28 × 35 سم", group: "المقاس" },
+    { key: "garment_supply", label: "توفير الملابس", type: "select", options: ["رواج توفر الملابس", "العميل يوفر الملابس", "أحتاج عرضًا للخيارين"], group: "التجهيز" },
+    { key: "personalization", label: "تخصيص أسماء/أرقام", type: "select", options: ["غير مطلوب", "أسماء", "أرقام", "أسماء + أرقام", "بيانات متغيرة أخرى"], group: "التخصيص" },
+    { key: "artwork", label: "الملف", type: "select", options: ["PNG/Artwork جاهز بخلفية شفافة", "ملف يحتاج تجهيز", "أحتاج تصميم رواج"], group: "التصميم" },
+    quoteQty("قطعة")
+  ],
+
+  "dtg-apparel": [
+    { key: "garment", label: "نوع القطعة", type: "select", options: ["T-shirt", "Sweatshirt", "Hoodie", "Tote/قطعة قطنية", "قطعة أخرى تحتاج تقييم"], group: "الملابس" },
+    { key: "fabric", label: "الخامة", type: "select", options: ["100% Cotton", "Cotton-rich blend", "Cotton/Poly blend", "Linen/Rayon — حسب الجهاز", "خامة أخرى — تحتاج اختبار"], group: "الخامة", helpText: "DTG يكون عادة أفضل على القطن والخامات الغنية بالقطن؛ الخلطات والخامات الأخرى تعتمد على نظام الطباعة والحبر." },
+    { key: "garment_color", label: "لون القطعة", type: "select", options: ["أبيض/فاتح", "داكن — يحتاج White Ink/pretreatment", "ألوان متعددة"], group: "الخامة" },
+    { key: "placement", label: "موضع الطباعة", type: "select", options: ["أمام", "خلف", "يسار الصدر", "موضع مخصص"], group: "الموضع" },
+    { key: "print_size", label: "مقاس الطباعة", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    { key: "garment_supply", label: "توفير الملابس", type: "select", options: ["رواج توفر الملابس", "العميل يوفر الملابس", "أحتاج عرضًا للخيارين"], group: "التجهيز" },
+    { key: "artwork", label: "التصميم", type: "select", options: ["جاهز", "يحتاج تجهيز", "أحتاج تصميم رواج"], group: "التصميم" },
+    quoteQty("قطعة")
+  ],
+
+  "screen-print-apparel": [
+    { key: "garment", label: "نوع القطعة", type: "select", options: ["T-shirt", "Polo", "Hoodie", "Uniform", "Sportswear", "Tote Bag", "Fabric panel", "قطعة أخرى"], group: "الملابس" },
+    { key: "fabric", label: "الخامة", type: "select", options: ["Cotton", "Polyester", "Cotton/Poly Blend", "Nylon", "Stretch/Performance fabric", "خامة أخرى"], group: "الخامة", helpText: "نوع الخامة يؤثر على نظام الحبر ومقاومة Dye Migration، خصوصًا في البوليستر والملابس الرياضية." },
+    { key: "garment_color", label: "لون القطعة", type: "select", options: ["فاتح", "داكن", "ألوان متعددة"], group: "الخامة" },
+    { key: "colors", label: "عدد ألوان التصميم", type: "select", options: ["لون واحد", "لونان", "3-4 ألوان", "5-8 ألوان", "Process/تفاصيل معقدة — تحتاج مراجعة"], group: "الألوان" },
+    { key: "ink_system", label: "نظام الحبر المطلوب", type: "select", options: ["تحدده رواج حسب الخامة والاستخدام", "Plastisol", "Water-based / Soft Hand", "High-solids water-based", "Low-bleed للبوليستر", "Special Effect"], group: "الطباعة" },
+    { key: "effect", label: "تأثير خاص — إن وجد", type: "select", options: ["بدون", "Metallic", "Reflective", "Glow in the dark", "Glitter/Shimmer", "Suede/Texture", "تأثير خاص آخر"], group: "التشطيب" },
+    { key: "placement", label: "موضع الطباعة", type: "select", options: ["أمام", "خلف", "يسار الصدر", "كم", "أكثر من موضع"], group: "الموضع" },
+    { key: "print_size", label: "مقاس الطباعة", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    { key: "garment_supply", label: "توفير الملابس", type: "select", options: ["رواج توفر الملابس", "العميل يوفر الملابس", "الخياران"], group: "التجهيز" },
+    quoteQty("قطعة")
+  ],
+
+  embroidery: [
+    { key: "item", label: "القطعة", type: "select", options: ["Polo / Shirt", "Jacket", "Cap", "Uniform", "Towel", "Bag", "Patch", "Performance wear", "قطعة أخرى"], group: "الملابس" },
+    { key: "fabric", label: "نوع القماش", type: "select", options: ["Woven ثابت", "Knit / Jersey", "Stretch / Performance", "Fleece", "Towel / Napped fabric", "Cap structure", "Denim/Canvas", "غير معروف"], group: "الخامة", helpText: "نوع القماش يغيّر إعدادات digitizing والـunderlay والـbacking؛ هذه التفاصيل يحددها الفني ولا يطلب من العميل ضبطها." },
+    { key: "placement", label: "موضع التطريز", type: "select", options: ["يسار الصدر", "يمين الصدر", "منتصف الصدر", "ظهر", "كم", "مقدمة الكاب", "جانب/خلف الكاب", "موضع مخصص"], group: "الموضع" },
+    { key: "size", label: "حجم التطريز", type: "text", placeholder: "مثال: 8 سم عرض", group: "المقاس" },
+    { key: "thread_colors", label: "عدد ألوان الخيط", type: "select", options: ["لون واحد", "2-3 ألوان", "4-6 ألوان", "أكثر", "مطابقة ألوان الهوية حسب المتاح"], group: "الخيوط" },
+    { key: "design_status", label: "ملف التطريز", type: "select", options: ["لدي ملف ماكينة جاهز", "لدي شعار Vector/PDF فقط", "لدي صورة تحتاج Digitizing", "أحتاج تصميم الشعار"], group: "التصميم" },
+    { key: "garment_supply", label: "توفير القطع", type: "select", options: ["رواج توفرها", "العميل يوفرها", "أحتاج عرضًا للخيارين"], group: "التجهيز" },
+    { key: "personalization", label: "أسماء فردية", type: "select", options: ["لا", "نعم — أسماء متغيرة", "أسماء + أرقام/مسميات"], group: "التخصيص" },
+    quoteQty("قطعة")
+  ],
+
+  "heat-transfer-vinyl": [
+    { key: "garment", label: "نوع القطعة", type: "select", options: ["T-shirt", "Polo", "Hoodie", "Sportswear", "Uniform", "Bag", "Leather item", "قطعة أخرى"], group: "الملابس" },
+    { key: "fabric", label: "الخامة", type: "select", options: ["Cotton", "Poly/Cotton blend", "100% Polyester", "Leather — حسب مادة HTV", "خامة أخرى تحتاج اختبار"], group: "الخامة", helpText: "درجة الحرارة والضغط وملاءمة HTV تختلف باختلاف المادة، لذلك يتم اختيار الفيلم بعد معرفة القماش." },
+    { key: "finish", label: "نوع HTV / المظهر", type: "select", options: ["Standard", "Metallic", "Sparkle/Glitter", "Flock / مخملي", "Glow", "Specialty — يحدد حسب الطلب"], group: "الخامة" },
+    { key: "colors", label: "ألوان التصميم", type: "select", options: ["لون واحد", "لونان", "عدة ألوان/طبقات", "أحتاج تقنية أخرى للألوان الكاملة"], group: "الألوان" },
+    { key: "placement", label: "موضع النقل", type: "select", options: ["أمام", "خلف", "يسار الصدر", "كم", "أكثر من موضع"], group: "الموضع" },
+    { key: "size", label: "مقاس التصميم", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    quoteQty("قطعة")
+  ],
+
+  "uv-direct-object": [
+    { key: "object", label: "نوع المنتج", type: "select", options: ["هدية دعائية", "Phone case", "Bottle / Drinkware", "Pen/Pencil", "Award", "Acrylic block", "Panel/Plate", "Industrial part", "Leather good", "منتج آخر"], group: "المنتج" },
+    { key: "material", label: "مادة السطح", type: "select", options: ["Plastic", "Acrylic", "Metal / Brushed Metal", "Wood", "Paper/Cardboard", "Ceramic", "Glass", "Leather / Synthetic Leather", "مادة أخرى"], group: "الخامة", helpText: "قابلية الالتصاق والـprimer تختلف حسب مادة السطح؛ رواج تختبر التوافق قبل الإنتاج الكمي." },
+    { key: "shape", label: "شكل المنتج", type: "select", options: ["مسطح", "قطعة سميكة/3D", "أسطواني", "مخروطي/منحني", "غير منتظم"], group: "البنية" },
+    { key: "dimensions", label: "أبعاد المنتج", type: "text", placeholder: "الطول × العرض × الارتفاع", group: "المقاس" },
+    { key: "surface_color", label: "لون/شفافية السطح", type: "select", options: ["أبيض/فاتح", "داكن", "شفاف", "معدني/عاكس", "ألوان متعددة"], group: "الخامة" },
+    { key: "white", label: "أبيض تحتي", type: "select", options: ["غير مطلوب", "مطلوب على الشفاف/الداكن", "تحدده رواج بعد التصميم"], group: "الطباعة" },
+    { key: "effect", label: "تأثير UV خاص", type: "select", options: ["بدون", "Gloss spot", "Texture / Raised effect", "Primer عند الحاجة للالتصاق", "مزيج تأثيرات"], group: "التشطيب" },
+    { key: "personalization", label: "تخصيص متغير", type: "select", options: ["لا", "أسماء", "أرقام", "QR/Serial", "بيانات متغيرة من ملف"], group: "التخصيص" },
+    quoteQty("قطعة")
+  ],
+
+  "uv-dtf": [
+    { key: "object", label: "المنتج المستهدف", type: "select", options: ["Bottle / Tumbler", "Mug", "Phone case", "Gift item", "Container", "Leather good", "منتج ذو شكل غير منتظم", "منتج آخر"], group: "المنتج" },
+    { key: "surface", label: "مادة السطح", type: "select", options: ["Glass", "Plastic", "Acrylic", "Metal", "Ceramic", "Leather / Synthetic Leather", "سطح آخر"], group: "الخامة" },
+    { key: "shape", label: "شكل السطح", type: "select", options: ["مسطح", "منحني", "أسطواني", "زوايا/حواف ممتدة", "غير منتظم"], group: "البنية", helpText: "UV DTF مفيد خصوصًا للأجسام التي يصعب أو يستحيل وضعها تحت طابعة UV مباشرة." },
+    { key: "size", label: "مقاس النقل", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    { key: "surface_condition", label: "حالة السطح", type: "select", options: ["أملس ونظيف", "محبب/خشن", "مطلي", "غير معروف — يحتاج اختبار"], group: "الاستخدام" },
+    { key: "personalization", label: "تخصيص متغير", type: "select", options: ["لا", "أسماء", "أرقام", "بيانات أخرى"], group: "التخصيص" },
+    quoteQty("قطعة")
+  ],
+
+  "laser-cutting": [
+    { key: "material", label: "الخامة", type: "select", options: ["Acrylic / PMMA", "MDF", "Plywood / Wood", "Paper / Cardboard", "Leather", "Textile", "Laserable plastic", "Metal — يحتاج تحديد نوع الليزر والسماكة", "خامة أخرى"], group: "الخامة" },
+    { key: "thickness", label: "السماكة", type: "text", placeholder: "مثال: 3 مم", group: "الخامة" },
+    { key: "sheet_size", label: "مقاس الخام/القطعة", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    { key: "operation", label: "العملية", type: "select", options: ["قص فقط", "قص + حفر/نقش", "قص + ترقيم/علامات", "مشروع تجميع متعدد القطع"], group: "المعالجة" },
+    { key: "edge_quality", label: "متطلب الحافة", type: "select", options: ["قياسي", "حافة أكريليك عالية الوضوح حسب الخامة", "سيتم صنفرة/دهان لاحقًا", "متطلب خاص"], group: "التشطيب" },
+    { key: "file", label: "ملف القص", type: "select", options: ["Vector جاهز", "PDF/AI يحتاج مراجعة", "صورة/رسم يحتاج تحويل", "أحتاج تصميم رواج"], group: "التصميم" },
+    quoteQty("قطعة")
+  ],
+
+  "laser-engraving": [
+    { key: "item", label: "المنتج", type: "select", options: ["لوحة/Tag", "هدية", "Award", "Nameplate", "Part/Component", "قطعة مخصصة"], group: "المنتج" },
+    { key: "material", label: "الخامة", type: "select", options: ["Anodized Aluminum", "Coated/Painted Metal", "Stainless Steel — Fiber/Marking", "Acrylic / PMMA", "Wood / Veneer / MDF", "Glass", "Leather", "Laserable plastic", "خامة أخرى"], group: "الخامة", helpText: "تقنية الليزر تختلف حسب الخامة؛ بعض المعادن تحتاج Fiber Laser أو marking system بدل CO₂." },
+    { key: "operation", label: "نوع التنفيذ", type: "select", options: ["Engraving / حفر", "Marking / وسم", "Etching effect", "حفر + قص", "يحدد بعد فحص الخامة"], group: "المعالجة" },
+    { key: "area", label: "مساحة الحفر", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    { key: "personalization", label: "بيانات متغيرة", type: "select", options: ["لا", "أسماء", "أرقام تسلسلية", "QR/Barcode", "أسماء + أرقام", "بيانات من ملف"], group: "التخصيص" },
+    { key: "file", label: "الملف", type: "select", options: ["Vector جاهز", "PDF/Logo يحتاج مراجعة", "أحتاج تصميم/تجهيز رواج"], group: "التصميم" },
+    quoteQty("قطعة")
+  ],
+
   identity: [
     { key: "business", label: "نوع النشاط", type: "text", placeholder: "مثال: مطعم، شركة، متجر...", group: "النشاط" },
     { key: "scope", label: "النطاق", type: "select", options: ["شعار فقط", "هوية أساسية", "هوية متكاملة"], group: "النطاق" },
@@ -354,17 +476,19 @@ export const serviceSpecifications: Record<string, ServiceSpec[]> = {
     { key: "period", label: "الفترة", type: "select", options: ["حملة", "أسبوع", "شهر", "مخصص"], group: "الجدول" }
   ],
   laser: [
-    { key: "material", label: "الخامة", type: "select", options: ["أكريليك", "MDF", "خشب", "خامة أخرى"], group: "الخامة" },
+    { key: "service", label: "نوع الخدمة", type: "select", options: ["قص ليزر", "حفر/نقش ليزر", "قص + حفر", "وسم Metal/Fiber", "أحتاج تحديد التقنية"], group: "المعالجة" },
+    { key: "material", label: "الخامة", type: "select", options: ["Acrylic / PMMA", "MDF/Wood", "Plywood", "Paper/Cardboard", "Leather", "Anodized Aluminum", "Coated Metal", "Stainless Steel — حسب التقنية", "Laserable plastic", "خامة أخرى"], group: "الخامة" },
     { key: "thickness", label: "السماكة", type: "text", placeholder: "إن كانت معروفة", group: "الخامة" },
     { key: "size", label: "المقاس", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
-    { key: "operation", label: "العملية", type: "select", options: ["قص", "حفر", "قص + حفر"], group: "التنفيذ" },
+    { key: "file", label: "الملف", type: "select", options: ["Vector جاهز", "ملف يحتاج تجهيز", "أحتاج التصميم من رواج"], group: "التصميم" },
     quoteQty("قطعة")
   ],
   awards: [
-    { key: "type", label: "النوع", type: "select", options: ["درع", "هدية أكريليك", "ستاند", "قطعة مخصصة"], group: "المنتج" },
-    { key: "material", label: "الخامة", type: "select", options: ["أكريليك", "خشب", "مزيج خامات"], group: "الخامة" },
-    { key: "size", label: "المقاس", type: "text", placeholder: "إن كان محددًا", group: "المقاس" },
-    quoteQty("قطعة"),
-    { key: "personalization", label: "تخصيص أسماء/شعارات", type: "select", options: ["نعم", "لا", "يحدد لاحقًا"], group: "التخصيص" }
-  ]
-};
+    { key: "type", label: "نوع المنتج", type: "select", options: ["درع تكريم", "Plaque", "Trophy component", "هدية مكتبية", "Acrylic award", "Wood/Metal award", "قطعة مخصصة"], group: "المنتج" },
+    { key: "material", label: "الخامات", type: "select", options: ["Acrylic", "Wood/MDF", "Metal", "Acrylic + Wood", "Acrylic + Metal", "مزيج خامات", "يحدد حسب التصميم"], group: "الخامة" },
+    { key: "decoration", label: "طريقة التخصيص", type: "select", options: ["Laser Engraving", "UV Direct Print", "Vinyl/Printed insert", "Metal plate + engraving", "مزيج تقنيات"], group: "الطباعة" },
+    { key: "size", label: "المقاس التقريبي", type: "text", placeholder: "إن كان محددًا", group: "المقاس" },
+    { key: "personalization", label: "الأسماء والبيانات", type: "select", options: ["نفس التصميم للجميع", "أسماء متغيرة", "أسماء + مسميات", "أسماء + أرقام/تواريخ", "بيانات من ملف"], group: "التخصيص" },
+    { key: "packaging", label: "تغليف كل قطعة", type: "select", options: ["بدون", "علبة/تغليف فردي", "تغليف فاخر", "يحدد حسب المنتج"], group: "التجهيز" },
+    quoteQty("قطعة")
+  ]};

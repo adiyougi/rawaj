@@ -63,8 +63,17 @@ export const printTaxonomy:PrintTaxonomyFamily[]=[
   },
   {
     key:"promotional-specialty",
-    label:"الطباعة الدعائية والمتخصصة",
-    description:"هدايا، ملابس، طباعة حرارية، سكرين، UV وتطبيقات متخصصة.",
-    subcategories:[{key:"research",label:"قيد البحث والتوثيق",templates:[],status:"research"}]
+    label:"الطباعة النسيجية والدعائية والمتخصصة",
+    description:"طباعة ملابس، تطريز، سوبليميشن، UV، نقل حراري، ليزر وتخصيص منتجات.",
+    subcategories:[
+      {key:"sublimation",label:"Sublimation",templates:["textile-sublimation","sublimation-hard-goods"],status:"verified"},
+      {key:"dtf-dtg",label:"DTF وDTG",templates:["dtf-apparel","dtg-apparel"],status:"verified"},
+      {key:"screen-printing",label:"Screen Printing",templates:["screen-print-apparel"],status:"verified"},
+      {key:"embroidery",label:"Embroidery",templates:["embroidery"],status:"verified"},
+      {key:"heat-transfer",label:"Heat Transfer",templates:["heat-transfer-vinyl"],status:"verified"},
+      {key:"uv-object",label:"UV وتخصيص المنتجات",templates:["uv-direct-object","uv-dtf"],status:"verified"},
+      {key:"laser",label:"الليزر",templates:["laser-cutting","laser-engraving"],status:"verified"},
+      {key:"awards",label:"الدروع والهدايا",templates:["awards"],status:"verified"}
+    ]
   }
 ];
