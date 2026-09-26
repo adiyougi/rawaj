@@ -9,7 +9,7 @@ export function getSupabaseBrowser(): any {
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
   if (!url || !key) {
-    throw new Error("Supabase public environment variables are missing.");
+    throw new Error("Rawaj admin configuration is incomplete: Supabase public variables are missing.");
   }
 
   client = createClient(url, key, {
