@@ -3,6 +3,7 @@
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { getSupabaseBrowser } from "@/lib/supabase-browser";
 import { serviceTemplates } from "@/lib/service-templates";
+import { serviceContent } from "@/lib/service-content";
 import type { ServiceSpec } from "@/lib/service-specs";
 
 type Row=Record<string,any>;
@@ -142,6 +143,7 @@ export default function ServiceManager(){
 
     const department=departments.find(item=>item.slug===template.departmentSlug);
     const category=categories.find(item=>item.slug===template.categorySlug);
+    const rich=serviceContent[key];
 
     setForm(current=>({
       ...current,
@@ -150,9 +152,12 @@ export default function ServiceManager(){
       department_id:department?.id || current.department_id,
       category_id:category?.id || current.category_id,
       short_description:current.short_description || template.description,
+      description:current.description || rich?.description || "",
       badge:current.badge || template.suggestedBadge || "",
       verification_status:template.verification==="verified" ? "verified" : "legacy",
-      specs:cloneSpecs(template.specs)
+      specs:cloneSpecs(template.specs),
+      highlights:current.highlights.length ? current.highlights : (rich?.highlights ? [...rich.highlights] : []),
+      faq:current.faq.length ? current.faq : (rich?.faq ? rich.faq.map(item=>({...item})) : [])
     }));
   }
 
