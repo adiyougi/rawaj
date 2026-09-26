@@ -1,83 +1,44 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useState } from "react";
-import AddToCartButton from "@/components/AddToCartButton";
+import Link from "next/link";
+import ServiceCard, { ServiceCardData } from "@/components/ServiceCard";
 
-export type CatalogService = {
-  id: string;
-  title: string;
-  category: string;
-  desc: string;
-  image: string;
-  badge: string;
-};
+export type CatalogService=ServiceCardData;
 
-export default function ServiceCatalog({ services }: { services: CatalogService[] }) {
-  const categories = ["الكل", ...Array.from(new Set(services.map((service) => service.category)))];
-  const [category, setCategory] = useState("الكل");
-  const [query, setQuery] = useState("");
+export default function ServiceCatalog({services,initialQuery=""}:{services:CatalogService[];initialQuery?:string}){
+  const categories=["الكل",...Array.from(new Set(services.map(s=>s.category)))];
+  const [category,setCategory]=useState("الكل");
+  const [query,setQuery]=useState(initialQuery);
 
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return services.filter((service) => {
-      const inCategory = category === "الكل" || service.category === category;
-      const matches = !q || (service.title + " " + service.desc + " " + service.category).toLowerCase().includes(q);
-      return inCategory && matches;
-    });
-  }, [category, query, services]);
+  const filtered=useMemo(()=>{
+    const q=query.trim().toLowerCase();
+    return services.filter(s=>(category==="الكل"||s.category===category) && (!q || (s.title+" "+s.desc+" "+s.category).toLowerCase().includes(q)));
+  },[services,category,query]);
 
   return (
-    <>
-      <div className="catalog-toolbar">
-        <div>
-          {categories.map((item) => (
-            <button
-              key={item}
-              className={item === category ? "active" : ""}
-              onClick={() => setCategory(item)}
-            >
-              {item}
-            </button>
-          ))}
+    <div className="catalog-app">
+      <div className="catalog-search-card">
+        <div className="catalog-search-input">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="ابحث عن خدمة..." />
+          {query && <button onClick={()=>setQuery("")}>×</button>}
         </div>
-        <input
-          placeholder="ابحث عن خدمة..."
-          aria-label="البحث في الخدمات"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-        />
-      </div>
-
-      <div className="catalog-status">
-        <span>{filtered.length} خدمة</span>
-        {(query || category !== "الكل") && <button onClick={() => { setQuery(""); setCategory("الكل"); }}>مسح الفلاتر</button>}
-      </div>
-
-      <div className="service-grid">
-        {filtered.map((item) => (
-          <article className="service-card" key={item.id}>
-            <Link href={"/services/" + item.id} className="service-media" style={{ backgroundImage: "url(" + item.image + ")" }}>
-              <span>{item.badge}</span>
-            </Link>
-            <div className="service-body">
-              <small>{item.category}</small>
-              <Link href={"/services/" + item.id}><h3>{item.title}</h3></Link>
-              <p>{item.desc}</p>
-              <AddToCartButton id={item.id} title={item.title} compact />
-              <Link className="catalog-link" href={"/services/" + item.id}>التفاصيل والمواصفات ←</Link>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      {!filtered.length && (
-        <div className="catalog-empty">
-          <strong>لم نجد خدمة مطابقة.</strong>
-          <p>جرّب كلمة أخرى أو أرسل طلبًا مخصصًا إلى رواج.</p>
-          <Link className="btn btn-primary" href="/quote">اطلب خدمة مخصصة</Link>
+        <div className="category-chips">
+          {categories.map(cat=><button key={cat} className={category===cat ? "active":""} onClick={()=>setCategory(cat)}>{cat}</button>)}
         </div>
-      )}
-    </>
+      </div>
+
+      <div className="catalog-result-head">
+        <div><strong>{filtered.length}</strong><span>خدمة متاحة</span></div>
+        {(query || category!=="الكل") && <button onClick={()=>{setQuery("");setCategory("الكل");}}>مسح التصفية</button>}
+      </div>
+
+      <div className="store-product-grid catalog-grid">
+        {filtered.map(item=><ServiceCard key={item.id} item={item}/>)}
+      </div>
+
+      {!filtered.length && <div className="catalog-empty"><h3>لم نجد نتيجة مطابقة.</h3><p>جرّب كلمة أخرى أو أرسل طلبًا مخصصًا.</p><Link className="btn btn-primary" href="/quote">اطلب خدمة مخصصة</Link></div>}
+    </div>
   );
 }

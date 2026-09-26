@@ -1,27 +1,22 @@
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import InnerHero from "@/components/InnerHero";
 import ServiceCatalog from "@/components/ServiceCatalog";
-import { IMAGES } from "@/lib/content";
 import { getServices } from "@/lib/cms";
 
-export default async function ServicesPage() {
-  const services = await getServices();
-
+export default async function ServicesPage({searchParams}:{searchParams:Promise<{q?:string}>}){
+  const [services,params]=await Promise.all([getServices(),searchParams]);
   return (
-    <main>
-      <SiteHeader />
-      <InnerHero
-        eyebrow="كتالوج رواج"
-        title="اختر الخدمة كما تختار منتجًا."
-        text="كتالوج قابل للتوسع: لكل خدمة صفحة مستقلة ومواصفات وخيارات، ويمكن جمع أكثر من خدمة في طلب واحد."
-        image={IMAGES.design}
-        action={{ label: "اطلب عرض سعر", href: "/quote" }}
-      />
-      <section className="section shell">
-        <ServiceCatalog services={services} />
-      </section>
-      <SiteFooter />
+    <main className="app-storefront">
+      <SiteHeader/>
+      <div className="page-app-shell">
+        <header className="catalog-page-head">
+          <span>كتالوج رواج</span>
+          <h1>كل الخدمات في مكان واحد.</h1>
+          <p>ابحث، صفِّ النتائج، افتح تفاصيل الخدمة وحدد المواصفات التي تحتاجها.</p>
+        </header>
+        <ServiceCatalog services={services} initialQuery={params.q || ""}/>
+      </div>
+      <SiteFooter/>
     </main>
   );
 }

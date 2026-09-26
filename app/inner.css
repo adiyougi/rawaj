@@ -236,3 +236,28 @@
 .department-hero h1{font-size:clamp(54px,8vw,112px);line-height:.98;letter-spacing:-.055em;max-width:980px;margin:14px 0 20px}
 .department-hero p{max-width:760px;font-size:18px;line-height:1.9;color:rgba(255,255,255,.72)}
 @media(max-width:800px){.department-index-grid{grid-template-columns:1fr}.department-index-card{min-height:480px}.department-hero{min-height:78svh}.department-hero>.shell{padding-top:130px;padding-bottom:64px}}
+
+/* ===== COMPACT INNER PAGES ===== */
+.inner-hero{min-height:440px;border-radius:0 0 30px 30px}.inner-hero-content{padding-top:90px;padding-bottom:54px}.inner-hero-content h1{font-size:clamp(34px,4.5vw,56px);line-height:1.16;letter-spacing:-.025em;margin:9px 0 12px}.inner-hero-content p{font-size:13px;line-height:1.8;max-width:650px;margin-bottom:20px}
+.inner-copy-grid{gap:38px}.inner-copy-grid p{font-size:14px;line-height:1.9}.metric-grid>div{min-height:150px;border-radius:20px;padding:22px}.metric-grid strong{font-size:40px}
+.filter-pills{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}.filter-pills button{flex:0 0 auto;padding:8px 13px;font-size:10px}
+.package-page-grid{gap:12px}.package-page-card{min-height:430px;border-radius:24px;padding:24px}.package-page-card h2{font-size:32px}.package-page-card p{font-size:11px;line-height:1.7}
+.featured-post{min-height:390px;border-radius:24px}.featured-post-media{min-height:350px}.featured-post-copy{padding:28px}.featured-post-copy h2{font-size:32px}.featured-post-copy p{font-size:12px}
+.article-hero,.case-hero,.department-hero{min-height:520px;border-radius:0 0 28px 28px}.article-hero>.shell,.case-hero-copy,.department-hero>.shell{padding-top:95px;padding-bottom:55px}.article-hero h1,.case-hero h1,.department-hero h1{font-size:clamp(34px,5vw,60px);line-height:1.15;letter-spacing:-.025em;margin:9px 0 13px}.case-hero p,.department-hero p{font-size:13px}
+.article-layout{gap:48px;padding-top:55px;padding-bottom:65px}.article-body p{font-size:14px;line-height:1.95}.article-lead{font-size:23px!important}.article-cta{padding:25px;border-radius:20px}.article-cta h2{font-size:28px}
+.case-study{gap:40px}.case-study h2{font-size:36px}.case-study p{font-size:14px}.case-services{border-radius:20px;padding:22px}
+.about-value-grid article{min-height:220px;padding:24px}.about-value-grid h3{font-size:27px}.about-value-grid p{font-size:12px}.about-final-cta h2{font-size:42px}
+.department-index-grid{gap:12px}.department-index-card{min-height:410px;border-radius:24px;padding:24px}.department-index-card h2{font-size:34px}.department-index-card p{font-size:11px}
+.contact-info-card{min-height:170px;border-radius:20px;padding:21px}.contact-info-card.wide{min-height:210px}.contact-info-card a,.contact-info-card strong{font-size:24px}
+.quote-page{padding:100px 0 65px}.quote-grid{gap:40px}.quote-intro h1{font-size:45px}.quote-intro>p{font-size:13px}.quote-form{border-radius:24px;padding:25px}
+.service-configurator{border-radius:22px;padding:26px}.configurator-head{gap:8px 35px;margin-bottom:22px}.configurator-head h2{font-size:32px}.configurator-head p{font-size:11px}.configurator-grid{gap:10px}.configurator-grid input,.configurator-grid select,.configurator-grid textarea{border-radius:12px;padding:11px 12px;font-size:12px}.configurator-actions{margin-top:18px;padding-top:18px}
+.faq-page{gap:36px}.faq-list summary{padding:19px 0}.faq-list summary strong{font-size:15px}.faq-list details p{font-size:12px}.faq-cta{border-radius:20px;padding:22px}.faq-cta h2{font-size:28px}
+@media(max-width:720px){
+  .inner-hero{min-height:330px;border-radius:0 0 22px 22px}.inner-hero-content{padding-top:65px;padding-bottom:36px}.inner-hero-content h1{font-size:29px}.inner-hero-content p{font-size:11px}
+  .inner-copy-grid{gap:22px}.metric-grid{grid-template-columns:repeat(3,1fr);gap:7px}.metric-grid>div{min-height:105px;padding:12px;border-radius:15px}.metric-grid strong{font-size:23px}.metric-grid span{font-size:8px}
+  .package-page-card{min-height:360px;border-radius:20px;padding:20px}.package-page-card h2{font-size:27px}
+  .article-hero,.case-hero,.department-hero{min-height:390px;border-radius:0 0 22px 22px}.article-hero>.shell,.case-hero-copy,.department-hero>.shell{padding-top:70px;padding-bottom:38px}.article-hero h1,.case-hero h1,.department-hero h1{font-size:31px}.article-layout{padding-top:34px;padding-bottom:44px}.article-lead{font-size:19px!important}
+  .about-value-grid article{min-height:170px}.about-final-cta h2{font-size:30px}.department-index-card{min-height:320px}.department-index-card h2{font-size:27px}
+  .quote-page{padding:78px 0 90px}.quote-intro h1{font-size:33px}.quote-form{padding:18px;border-radius:20px}
+  .service-configurator{padding:18px 14px;border-radius:19px}.configurator-head h2{font-size:27px}
+}
