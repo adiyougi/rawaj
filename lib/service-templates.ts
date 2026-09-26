@@ -86,6 +86,27 @@ const verifiedSpecialty:[string,string,string,string,string,string?][]=[
   ["awards","دروع وهدايا تكريم","تصميم وتصنيع وتخصيص الدروع والـplaques والهدايا بمزيج خامات وتقنيات.","الليزر والتخصيص","Awards","تنفيذ متكامل"]
 ];
 
+
+const verifiedRigidDisplay:[string,string,string,string,string,string?][]=[
+  ["rigid-uv-print","طباعة UV مباشرة على ألواح صلبة","طباعة مباشرة على الأكريليك وACM وPVC وألواح ومواد صلبة متعددة.","الطباعة الصلبة والعرض","Direct-to-Rigid UV"],
+  ["pvc-foam-board","طباعة وتصنيع PVC Foam Board","لوحات وعناصر عرض من PVC Foam Board للطباعة والقص والـrouting.","الطباعة الصلبة والعرض","PVC Foam Board"],
+  ["acm-printed-panel","لوحات ACM / DIBOND مطبوعة","ألواح ألمنيوم مركب مطبوعة أو مركب عليها جرافيك للاستخدام الداخلي والخارجي.","الطباعة الصلبة والعرض","ACM Panels"],
+  ["coroplast-sign","لوحات Corrugated Plastic","لوحات Polypropylene مموجة خفيفة للافتات والمواقع والفعاليات والـPOP.","الطباعة الصلبة والعرض","Corrugated Plastic"],
+  ["foam-board-display","Foam Board Displays","لوحات رغوية عالية الصلابة للـPOP والمعارض والتثبيت الداخلي.","الطباعة الصلبة والعرض","Foam Boards"],
+
+  ["retractable-banner-stand","Roll-up / Retractable Banner Stand","ستاند رول أب محمول بجرافيك قابل للاستبدال وخيارات هاردوير متعددة.","المعارض وأنظمة العرض","Banner Stands","الأكثر طلبًا"],
+  ["tension-fabric-banner","Tension Fabric Banner","ستاندات وإطارات قماش مشدود Pillowcase أو SEG للمعارض والريتيل.","المعارض وأنظمة العرض","Fabric Displays"],
+  ["pop-up-backwall","Pop-up / Collapsible Backwall","باك وول محمول قابل للطي بجرافيك قماشي أو Panels للمعارض.","المعارض وأنظمة العرض","Backwalls"],
+  ["seg-fabric-frame","SEG Fabric Frame","إطار ألمنيوم بجرافيك Silicone Edge قابل للاستبدال للريتيل والمعارض والديكور.","المعارض وأنظمة العرض","SEG Systems"],
+  ["seg-lightbox","SEG Fabric Lightbox","Lightbox قماشي مضيء بوجه واحد أو وجهين للمعارض والريتيل والمساحات المؤسسية.","المعارض وأنظمة العرض","SEG Lightboxes","تنفيذ متكامل"],
+  ["table-cover","أغطية طاولات مطبوعة","Table Throws وFitted وStretch مطبوعة Dye-sublimation للفعاليات والمعارض.","المعارض وأنظمة العرض","Tables"],
+  ["trade-show-counter","كاونترات معارض مطبوعة","كاونترات استقبال وعرض محمولة بجرافيك قماشي أو SEG أو Backlit.","المعارض وأنظمة العرض","Counters"],
+  ["event-tent","خيام فعاليات مطبوعة","خيام وCanopies مخصصة للطباعة للفعاليات والترويج الخارجي.","المعارض وأنظمة العرض","Outdoor Displays"],
+  ["event-flag","أعلام ورايات عرض","Feather وTeardrop وStraight flags بأنظمة أعمدة وقواعد متعددة.","المعارض وأنظمة العرض","Outdoor Displays"],
+  ["hanging-display","لافتات وهياكل معلقة للمعارض","Hanging Signs وFabric Structures مخصصة للرؤية العلوية في القاعات.","المعارض وأنظمة العرض","Hanging Displays"],
+  ["modular-exhibit","بوثات ومعارض Modular","أنظمة بوث محمولة أو Modular مع SEG وإضاءة وكاونترات وملحقات.","المعارض وأنظمة العرض","Exhibit Systems","تنفيذ متكامل"]
+];
+
 const legacy:[string,string,string,string,string,string?][]=[
   ["identity","هوية بصرية","شعار وهوية مؤسسية متكاملة.","التصميم والمحتوى","الهوية البصرية"],
   ["social-content","تصميم ومحتوى سوشيال","تصاميم وحملات محتوى للمنصات.","التصميم والمحتوى","المحتوى الرقمي"],
@@ -109,6 +130,7 @@ export const serviceTemplates:ServiceTemplate[]=[
   ...build(verifiedLargeFormat,"verified"),
   ...build(verifiedSignage,"verified"),
   ...build(verifiedSpecialty,"verified"),
+  ...build(verifiedRigidDisplay,"verified"),
   ...build(legacy,"legacy")
 ];
 

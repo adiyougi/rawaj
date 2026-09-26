@@ -49,7 +49,8 @@ export const printTaxonomy:PrintTaxonomyFamily[]=[
       {key:"windows",label:"جرافيك النوافذ",templates:["window-graphics"],status:"verified"},
       {key:"walls",label:"جرافيك الجدران",templates:["wall-graphics"],status:"verified"},
       {key:"floors",label:"جرافيك الأرضيات",templates:["floor-graphics"],status:"verified"},
-      {key:"vehicles",label:"المركبات والأساطيل",templates:["vehicle-wrap"],status:"verified"}
+      {key:"vehicles",label:"المركبات والأساطيل",templates:["vehicle-wrap"],status:"verified"},
+      {key:"rigid",label:"الطباعة على الخامات الصلبة",templates:["rigid-uv-print","pvc-foam-board","acm-printed-panel","coroplast-sign","foam-board-display"],status:"verified"}
     ]
   },
   {
@@ -62,6 +63,21 @@ export const printTaxonomy:PrintTaxonomyFamily[]=[
       {key:"dimensional",label:"الحروف البارزة",templates:["dimensional-letters"],status:"verified"},
       {key:"rigid-signs",label:"اللوحات الصلبة",templates:["acrylic-sign"],status:"verified"},
       {key:"facades",label:"واجهات ACP",templates:["facade"],status:"verified"}
+    ]
+  },
+  {
+    key:"exhibitions-displays",
+    label:"المعارض وأنظمة العرض",
+    description:"ستاندات محمولة، باك وول، SEG، Lightboxes قماشية، طاولات، خيام، أعلام وبوثات Modular.",
+    subcategories:[
+      {key:"banner-stands",label:"Banner Stands",templates:["retractable-banner-stand"],status:"verified"},
+      {key:"fabric-displays",label:"Fabric Displays",templates:["tension-fabric-banner"],status:"verified"},
+      {key:"backwalls",label:"Backwalls",templates:["pop-up-backwall"],status:"verified"},
+      {key:"seg",label:"SEG Systems",templates:["seg-fabric-frame","seg-lightbox"],status:"verified"},
+      {key:"tables-counters",label:"Tables & Counters",templates:["table-cover","trade-show-counter"],status:"verified"},
+      {key:"outdoor",label:"Outdoor Displays",templates:["event-tent","event-flag"],status:"verified"},
+      {key:"hanging",label:"Hanging Displays",templates:["hanging-display"],status:"verified"},
+      {key:"modular",label:"Modular Exhibits",templates:["modular-exhibit"],status:"verified"}
     ]
   },
   {

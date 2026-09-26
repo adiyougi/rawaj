@@ -578,6 +578,175 @@ export const serviceSpecifications: Record<string, ServiceSpec[]> = {
     quoteQty("قطعة")
   ],
 
+  "rigid-uv-print": [
+    { key: "substrate", label: "الخامة الصلبة", type: "select", options: ["Acrylic", "Aluminum Composite / ACM", "PVC Foam Board", "Corrugated Plastic", "Corrugated Cardboard", "Pasteboard / Display Board", "PET / Synthetic Sheet", "خامة أخرى تحتاج اختبار"], group: "الخامة" },
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 100", unit: "سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 70", unit: "سم", group: "المقاس" },
+    { key: "thickness", label: "السماكة", type: "text", placeholder: "إن كانت معروفة", group: "الخامة" },
+    { key: "application", label: "الاستخدام", type: "select", options: ["لوحة داخلية", "لوحة خارجية", "POP / POS", "معرض أو كشك", "ديكور داخلي", "قطعة تصنيع مخصصة"], group: "الاستخدام" },
+    { key: "print", label: "الطباعة", type: "select", options: ["Direct UV Color", "Color + White Ink", "White + Color + Effects حسب الجهاز", "تحدده رواج حسب الخامة"], group: "الطباعة" },
+    { key: "fabrication", label: "التصنيع بعد الطباعة", type: "select", options: ["قص مستقيم", "Contour / Digital Cut", "CNC Routing", "Drilling", "بدون تصنيع إضافي", "مزيج عمليات"], group: "المعالجة" },
+    { key: "mounting", label: "التجهيز/التركيب", type: "select", options: ["توريد اللوح فقط", "Standoffs", "تعليق", "Frame", "تثبيت موقعي", "يحدد حسب المشروع"], group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "pvc-foam-board": [
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 100", unit: "سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 70", unit: "سم", group: "المقاس" },
+    { key: "thickness", label: "السماكة", type: "select", options: ["1 مم", "2 مم", "3 مم", "6 مم", "10 مم", "12.7 مم", "سماكة أخرى حسب المورد"], group: "الخامة", helpText: "السماكات المتاحة تختلف حسب المورد؛ الاستخدام الخارجي أو البنيوي يحتاج مراجعة السماكة والتثبيت." },
+    { key: "color", label: "لون اللوح", type: "select", options: ["أبيض", "أسود", "لون جاهز حسب المورد", "طباعة تغطي السطح"], group: "الخامة" },
+    { key: "application", label: "الاستخدام", type: "select", options: ["Interior Sign", "Exterior Sign", "POP/POS Display", "Exhibit/Kiosk", "Window Display", "Dimensional element"], group: "الاستخدام" },
+    { key: "graphics", label: "الجرافيك", type: "select", options: ["Direct Digital/UV Print", "Vinyl Applied", "Screen Print", "Paint + Graphics", "بدون طباعة — تصنيع فقط"], group: "الطباعة" },
+    { key: "fabrication", label: "التصنيع", type: "select", options: ["قص مستقيم", "Knife Cut للسماكات المناسبة", "CNC Route", "Die-cut للسماكات المناسبة", "Heat Form / تشكيل", "مزيج عمليات"], group: "المعالجة" },
+    { key: "install", label: "التركيب", type: "select", options: ["توريد فقط", "توريد + تركيب", "جزء من مشروع عرض/ديكور"], group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "acm-printed-panel": [
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 120", unit: "سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 240", unit: "سم", group: "المقاس" },
+    { key: "thickness", label: "سماكة اللوح", type: "select", options: ["2 مم", "3 مم", "4 مم", "سماكة/نظام آخر"], group: "الخامة" },
+    { key: "surface", label: "سطح اللوح", type: "select", options: ["أبيض للطباعة", "أسود", "Metallic / Brushed specialty", "لون جاهز", "يحدد حسب المورد"], group: "الخامة" },
+    { key: "application", label: "الاستخدام", type: "select", options: ["Signage داخلي", "Signage خارجي", "POP / Display", "Exhibit/Kiosk", "لوحة ديكور", "جزء مُشكّل ثلاثي الأبعاد"], group: "الاستخدام" },
+    { key: "graphics", label: "طريقة الجرافيك", type: "select", options: ["Direct Digital/UV Print", "Screen Print", "Applied Vinyl", "Painted + Graphics"], group: "الطباعة" },
+    { key: "fabrication", label: "التصنيع", type: "select", options: ["قص فقط", "CNC Routing", "Route & Return / ثني", "Curved/Formed", "Drilling", "مزيج عمليات"], group: "المعالجة" },
+    { key: "install", label: "التنفيذ", type: "select", options: ["توريد لوحة", "توريد + تجهيز تثبيت", "تركيب كامل"], group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "coroplast-sign": [
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 60", unit: "سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 40", unit: "سم", group: "المقاس" },
+    { key: "thickness", label: "السماكة", type: "text", placeholder: "إن كانت محددة أو اتركها لرواج", group: "الخامة" },
+    { key: "application", label: "الاستخدام", type: "select", options: ["Yard / Site Sign", "Real Estate", "Construction", "POP / Retail", "Trade Show", "Directional", "Promotion"], group: "الاستخدام" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["وجه واحد", "وجهين", "Direct Digital", "Screen Print — للكميات المناسبة"], group: "الطباعة" },
+    { key: "shape", label: "القص", type: "select", options: ["مستطيل", "Die-cut Shape", "Custom Contour", "Routing / Fabrication"], group: "القص" },
+    { key: "hardware", label: "ملحقات العرض", type: "select", options: ["بدون", "Stake / حامل أرضي", "تعليق", "Frame", "يحدد حسب الموقع"], group: "الملحقات" },
+    quoteQty("لوحة")
+  ],
+
+  "foam-board-display": [
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 70", unit: "سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 100", unit: "سم", group: "المقاس" },
+    { key: "thickness", label: "السماكة", type: "select", options: ["3/16 بوصة", "3/8 بوصة", "1/2 بوصة", "3/4 بوصة", "1 بوصة", "1.5 بوصة", "2 بوصة", "3 بوصة", "حسب الخامة المتاحة"], group: "الخامة" },
+    { key: "application", label: "الاستخدام", type: "select", options: ["Interior Sign", "POP/POS", "Exhibit/Kiosk", "Window Display", "Mounted Print", "Dimensional Display"], group: "الاستخدام" },
+    { key: "graphics", label: "الجرافيك", type: "select", options: ["Direct Digital Print", "Mounted Print", "Screen Print", "Painted/Graphic combination"], group: "الطباعة" },
+    { key: "fabrication", label: "التصنيع", type: "select", options: ["قص", "Routing", "Shape Cut", "Layered dimensional build"], group: "المعالجة" },
+    { key: "mounting", label: "العرض/التثبيت", type: "select", options: ["بدون", "Wall Mount", "Easel/Stand", "Hanging", "ضمن كشك/معرض"], group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "retractable-banner-stand": [
+    { key: "hardware", label: "الهاردوير", type: "select", options: ["جهاز جديد + جرافيك", "استبدال جرافيك لجهاز موجود", "أحتاج اختيار نظام كامل"], group: "أنظمة العرض" },
+    { key: "class", label: "فئة الجهاز", type: "select", options: ["Economy", "Mid-range", "Premium", "Interchangeable cassette", "يحدد حسب تكرار الاستخدام"], group: "أنظمة العرض" },
+    { key: "width", label: "عرض الجرافيك", type: "text", placeholder: "أدخل المقاس إن كان الجهاز موجودًا", group: "المقاس" },
+    { key: "height", label: "ارتفاع الجرافيك", type: "text", placeholder: "أدخل المقاس أو اتركه لاختيار النظام", group: "المقاس" },
+    { key: "graphic_material", label: "خامة الجرافيك", type: "select", options: ["Vinyl", "Fabric", "Polyester", "PVC-free media", "تحدد حسب نظام الجهاز"], group: "الخامة" },
+    { key: "usage", label: "الاستخدام", type: "select", options: ["معرض", "مؤتمر", "متجر", "مكتب/لوبي", "تنقل متكرر لفريق المبيعات"], group: "الاستخدام" },
+    { key: "carry", label: "حقيبة نقل", type: "select", options: ["مطلوبة", "غير مطلوبة", "ضمن الجهاز حسب المورد"], group: "الملحقات" },
+    quoteQty("ستاند")
+  ],
+
+  "tension-fabric-banner": [
+    { key: "system", label: "نظام القماش", type: "select", options: ["Pillowcase Tension Fabric", "SEG / Push-fit Fabric", "Fabric Banner Stand", "يحدد حسب شكل العرض"], group: "أنظمة العرض" },
+    { key: "width", label: "العرض", type: "text", placeholder: "مثال: 90 سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "text", placeholder: "مثال: 220 سم", group: "المقاس" },
+    { key: "sides", label: "عدد الأوجه", type: "select", options: ["وجه واحد", "وجهين"], group: "البنية" },
+    { key: "graphic", label: "نوع الجرافيك", type: "select", options: ["Stretch Dye-sublimated Fabric", "SEG Fabric", "يحدد حسب الإطار"], group: "الخامة" },
+    { key: "hardware", label: "الإطار", type: "select", options: ["إطار جديد", "استبدال الجرافيك فقط", "أحتاج نظام كامل"], group: "أنظمة العرض" },
+    { key: "usage", label: "الاستخدام", type: "select", options: ["Retail", "Corporate", "Event", "Trade Show"], group: "الاستخدام" },
+    quoteQty("نظام")
+  ],
+
+  "pop-up-backwall": [
+    { key: "width", label: "العرض التقريبي", type: "text", placeholder: "مثال: 3 متر", group: "المقاس" },
+    { key: "shape", label: "شكل الباك وول", type: "select", options: ["Straight", "Curved", "Extra Tall", "Custom"], group: "البنية" },
+    { key: "graphic_system", label: "نظام الجرافيك", type: "select", options: ["Tension Fabric", "Push-fit Fabric", "Panel Graphics", "Backlit Fabric", "يحدد حسب النظام"], group: "أنظمة العرض" },
+    { key: "hardware", label: "الهاردوير", type: "select", options: ["جديد", "استبدال الجرافيك لجهاز موجود", "نظام كامل مع حقيبة نقل"], group: "أنظمة العرض" },
+    { key: "accessories", label: "ملحقات", type: "select", options: ["بدون", "إضاءة", "Monitor Mount", "Counter", "رف بروشورات", "مزيج ملحقات"], group: "الملحقات" },
+    quoteQty("نظام")
+  ],
+
+  "seg-fabric-frame": [
+    { key: "mounting", label: "نوع الإطار", type: "select", options: ["Wall-mounted", "Freestanding", "Hanging", "Modular frame"], group: "أنظمة العرض" },
+    { key: "width", label: "العرض", type: "text", placeholder: "المقاس المطلوب", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "text", placeholder: "المقاس المطلوب", group: "المقاس" },
+    { key: "sides", label: "الأوجه", type: "select", options: ["وجه واحد", "وجهين"], group: "البنية" },
+    { key: "graphic", label: "الجرافيك", type: "select", options: ["SEG Dye-sublimated Fabric", "استبدال جرافيك فقط", "إطار + جرافيك"], group: "الخامة" },
+    { key: "lighting", label: "الإضاءة", type: "select", options: ["بدون إضاءة", "أحتاج Lightbox — استخدم نموذج SEG Lightbox"], group: "الإضاءة" },
+    quoteQty("إطار")
+  ],
+
+  "seg-lightbox": [
+    { key: "mounting", label: "نوع التركيب", type: "select", options: ["Freestanding", "Wall-mounted", "Hanging", "Modular Exhibit"], group: "أنظمة العرض" },
+    { key: "width", label: "العرض", type: "text", placeholder: "المقاس المطلوب", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "text", placeholder: "المقاس المطلوب", group: "المقاس" },
+    { key: "sides", label: "الأوجه", type: "select", options: ["وجه واحد", "وجهين"], group: "البنية" },
+    { key: "graphic", label: "الجرافيك", type: "select", options: ["Backlit SEG Fabric", "استبدال الجرافيك فقط", "إطار + LED + جرافيك"], group: "الخامة" },
+    { key: "usage", label: "الاستخدام", type: "select", options: ["Retail", "Showroom/Lobby", "Trade Show", "Pop-up Retail", "Gallery/Event"], group: "الاستخدام" },
+    quoteQty("Lightbox")
+  ],
+
+  "table-cover": [
+    { key: "table", label: "مقاس الطاولة", type: "select", options: ["4 ft", "6 ft", "8 ft", "Tall 4 ft Demo Table", "Round Table", "مقاس مخصص"], group: "المقاس" },
+    { key: "style", label: "ستايل الغطاء", type: "select", options: ["Draped / Table Throw", "Fitted", "Stretch", "Convertible", "Outdoor fitted"], group: "البنية" },
+    { key: "coverage", label: "التغطية", type: "select", options: ["4 جوانب", "3 جوانب مع فتح الخلف", "حسب نوع الغطاء"], group: "البنية" },
+    { key: "fabric", label: "الخامة", type: "select", options: ["Washable Polyester Dye-sublimation", "Power Stretch Polyester", "Outdoor Canvas / Spill-resistant", "تحدد حسب النظام"], group: "الخامة" },
+    { key: "carry", label: "حقيبة حمل", type: "select", options: ["بدون", "مطلوبة", "حسب المنتج"], group: "الملحقات" },
+    quoteQty("غطاء")
+  ],
+
+  "trade-show-counter": [
+    { key: "counter_type", label: "نوع الكاونتر", type: "select", options: ["Collapsible Fabric Counter", "SEG Counter", "Backlit Counter", "Reception Counter", "Custom Exhibit Counter"], group: "أنظمة العرض" },
+    { key: "hardware", label: "الهاردوير", type: "select", options: ["جديد كامل", "استبدال الجرافيك فقط", "لدي هيكل يحتاج قياس"], group: "أنظمة العرض" },
+    { key: "graphic", label: "الجرافيك", type: "select", options: ["Tension Fabric", "SEG Fabric", "Printed Panel", "Backlit Fabric"], group: "الخامة" },
+    { key: "storage", label: "تخزين داخلي", type: "select", options: ["غير مطلوب", "رف داخلي", "مساحة تخزين مغلقة", "حسب النظام"], group: "الملحقات" },
+    { key: "use", label: "الاستخدام", type: "select", options: ["Trade Show", "Event", "Reception", "Retail / Promotion"], group: "الاستخدام" },
+    quoteQty("كاونتر")
+  ],
+
+  "event-tent": [
+    { key: "size", label: "مقاس الخيمة", type: "text", placeholder: "مثال: 3 × 3 م", group: "المقاس" },
+    { key: "hardware", label: "الهيكل", type: "select", options: ["هيكل جديد + طباعة", "استبدال Canopy فقط", "لدي هيكل يحتاج مطابقة"], group: "أنظمة العرض" },
+    { key: "print_scope", label: "نطاق الطباعة", type: "select", options: ["السقف فقط", "السقف + Valances", "Full printed canopy", "Canopy + Walls"], group: "الطباعة" },
+    { key: "walls", label: "الجدران", type: "select", options: ["بدون", "Half Wall", "Full Wall", "عدة جدران", "جدران مطبوعة كاملة"], group: "الملحقات" },
+    { key: "use", label: "الاستخدام", type: "select", options: ["فعالية خارجية", "مهرجان", "رياضة", "ترويج ميداني", "سوق/بازار"], group: "الاستخدام" },
+    { key: "anchoring", label: "التثبيت", type: "select", options: ["أرض ترابية", "سطح صلب", "يحدد حسب الموقع والرياح"], group: "التركيب" },
+    quoteQty("خيمة")
+  ],
+
+  "event-flag": [
+    { key: "shape", label: "شكل العلم", type: "select", options: ["Feather", "Straight", "Teardrop", "Edge", "Rectangle / Banner Flag"], group: "البنية" },
+    { key: "size", label: "الحجم", type: "select", options: ["Small", "Medium", "Large", "Extra Large", "مقاس مخصص"], group: "المقاس" },
+    { key: "sides", label: "الطباعة", type: "select", options: ["وجه واحد", "وجهين"], group: "الطباعة" },
+    { key: "hardware", label: "العمود والهاردوير", type: "select", options: ["طقم كامل", "استبدال العلم فقط", "لدي عمود يحتاج مطابقة"], group: "أنظمة العرض" },
+    { key: "base", label: "قاعدة التثبيت", type: "select", options: ["Ground Stake", "قاعدة لسطح صلب", "قاعدة موزونة/مائية", "يحدد حسب الموقع"], group: "التركيب" },
+    { key: "use", label: "الاستخدام", type: "select", options: ["Outdoor Event", "Sports", "Festival", "Storefront", "Indoor Event"], group: "الاستخدام" },
+    quoteQty("علم")
+  ],
+
+  "hanging-display": [
+    { key: "shape", label: "الشكل", type: "select", options: ["Circle/Ring", "Square", "Rectangle", "Triangle", "Custom Fabric Structure"], group: "البنية" },
+    { key: "dimensions", label: "الأبعاد", type: "text", placeholder: "العرض × الارتفاع أو القطر", group: "المقاس" },
+    { key: "graphic", label: "نوع الجرافيك", type: "select", options: ["Pillowcase Tension Fabric", "SEG Fabric", "Hanging Banner", "Custom sewn fabric"], group: "الخامة" },
+    { key: "hardware", label: "الهاردوير", type: "select", options: ["نظام كامل", "استبدال جرافيك", "تصنيع مخصص"], group: "أنظمة العرض" },
+    { key: "rigging", label: "التعليق/Rigging", type: "select", options: ["الهاردوير فقط", "مع تجهيز نقاط التعليق", "يحتاج تنسيق مع موقع المعرض"], group: "التركيب" },
+    { key: "venue", label: "مكان الاستخدام", type: "text", placeholder: "المعرض/القاعة وارتفاع التعليق إن كان معروفًا", group: "الاستخدام" },
+    quoteQty("نظام")
+  ],
+
+  "modular-exhibit": [
+    { key: "footprint", label: "مساحة البوث", type: "text", placeholder: "مثال: 3 × 3 م أو 6 × 3 م", group: "المقاس" },
+    { key: "system", label: "نوع النظام", type: "select", options: ["Portable Modular", "Aluminum Extrusion + SEG", "Tension Fabric Structure", "Custom Modular Exhibit", "Rental/Reusable System"], group: "أنظمة العرض" },
+    { key: "walls", label: "الجدران والجرافيك", type: "select", options: ["Backwall واحد", "Corner / L-shape", "عدة جدران", "Backlit SEG", "مزيج جرافيك"], group: "البنية" },
+    { key: "counter", label: "كاونتر استقبال", type: "select", options: ["بدون", "Counter", "Backlit Counter", "Storage Counter"], group: "الملحقات" },
+    { key: "av", label: "شاشات/AV", type: "select", options: ["بدون", "Monitor Mount", "عدة شاشات", "احتياج AV مخصص"], group: "الملحقات" },
+    { key: "lighting", label: "الإضاءة", type: "select", options: ["إضاءة القاعة فقط", "Spotlights", "Integrated LED", "Backlit Graphics"], group: "الإضاءة" },
+    { key: "storage", label: "التخزين", type: "select", options: ["غير مطلوب", "خزانة/مخزن صغير", "غرفة تخزين", "حسب التصميم"], group: "الملحقات" },
+    { key: "service", label: "الخدمة المطلوبة", type: "select", options: ["توريد النظام والجرافيك", "تصميم + توريد", "تصميم + توريد + تركيب", "إدارة كاملة للبوث"], group: "التركيب" },
+    { key: "venue", label: "المعرض والموقع", type: "text", placeholder: "اسم المعرض/القاعة/المدينة إن عُرف", group: "الاستخدام" }
+  ],
+
   identity: [
     { key: "business", label: "نوع النشاط", type: "text", placeholder: "مثال: مطعم، شركة، متجر...", group: "النشاط" },
     { key: "scope", label: "النطاق", type: "select", options: ["شعار فقط", "هوية أساسية", "هوية متكاملة"], group: "النطاق" },
