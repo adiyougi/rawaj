@@ -236,3 +236,71 @@ export async function getHomepageContent() {
 
   return { slides, ticker, departments, services, packages, features, portfolio, posts };
 }
+
+
+export async function getDepartmentDetail(slug: string) {
+  const departmentRows = await readTable<{
+    id: string;
+    slug: string;
+    name: string;
+    summary: string | null;
+    description: string | null;
+    image_url: string | null;
+    hero_url: string | null;
+  }>(
+    "departments?select=id,slug,name,summary,description,image_url,hero_url&slug=eq." + encodeURIComponent(slug) + "&is_published=eq.true&limit=1"
+  );
+
+  const fallbackDepartment = fallbackDepartments.find((item) => item.slug === slug);
+  if (!departmentRows?.length) {
+    if (!fallbackDepartment) return null;
+    return {
+      department: fallbackDepartment,
+      services: fallbackServices.filter((service) => {
+        const map: Record<string,string> = {
+          "التصميم والمحتوى":"design-content",
+          "الطباعة الورقية":"paper-printing",
+          "الطباعة الرقمية":"digital-printing",
+          "اللوحات والحروف":"signage",
+          "الواجهات والديكور":"facades",
+          "الليزر والأكريليك":"laser-acrylic"
+        };
+        return map[service.category] === slug;
+      })
+    };
+  }
+
+  const row = departmentRows[0];
+  const serviceRows = await readTable<{
+    slug: string;
+    name: string;
+    short_description: string | null;
+    hero_url: string | null;
+    badge: string | null;
+    service_categories: { name: string } | null;
+  }>(
+    "services?select=slug,name,short_description,hero_url,badge,service_categories(name)&department_id=eq." +
+    row.id +
+    "&is_published=eq.true&order=sort_order.asc"
+  );
+
+  const services = serviceRows?.map((service) => ({
+    id: service.slug,
+    title: service.name,
+    category: service.service_categories?.name || row.name,
+    desc: service.short_description || "",
+    image: service.hero_url || row.image_url || fallbackServices[0].image,
+    badge: service.badge || "رواج"
+  })) || [];
+
+  return {
+    department: {
+      slug: row.slug,
+      title: row.name,
+      text: row.summary || "",
+      description: row.description || row.summary || "",
+      image: row.hero_url || row.image_url || fallbackDepartment?.image || fallbackServices[0].image
+    },
+    services
+  };
+}
