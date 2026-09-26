@@ -184,17 +184,95 @@ export const serviceSpecifications: Record<string, ServiceSpec[]> = {
   ],
 
   banner: [
-    { key: "width", label: "العرض", type: "number", placeholder: "بالمتر", unit: "م", group: "المقاس" },
-    { key: "height", label: "الارتفاع", type: "number", placeholder: "بالمتر", unit: "م", group: "المقاس" },
-    { key: "material", label: "الخامة", type: "select", options: ["بنر", "أحتاج اقتراح رواج"], group: "الخامة" },
-    { key: "finish", label: "التجهيز", type: "select", options: ["بدون", "عيون معدنية", "لحام أطراف", "مخصص"], group: "التشطيب" },
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 3", unit: "م", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 1", unit: "م", group: "المقاس" },
+    { key: "environment", label: "مكان الاستخدام", type: "select", options: ["داخلي", "خارجي قصير المدة", "خارجي طويل المدة", "واجهة/سور", "فعالية أو معرض"], group: "الاستخدام" },
+    { key: "banner_type", label: "نوع خامة البنر", type: "select", options: ["PVC Banner Frontlit", "Blockout Banner للطباعة على وجهين/حجب الضوء", "أحتاج توصية رواج"], group: "الخامة" },
+    { key: "sides", label: "أوجه الطباعة", type: "select", options: ["وجه واحد", "وجهان — بخامة مناسبة"], group: "الطباعة" },
+    { key: "edge_finish", label: "تجهيز الحواف", type: "select", options: ["قص فقط", "لحام/ثني الحواف", "حواف مقواة حسب طريقة التعليق"], group: "التشطيب" },
+    { key: "mounting", label: "طريقة التعليق", type: "select", options: ["بدون تجهيز", "عيون معدنية Grommets", "Pole Pockets / جيوب أعمدة", "حبال/ملحقات حسب الموقع", "يحدد بعد معاينة الموقع"], group: "التركيب" },
+    { key: "install", label: "التركيب", type: "select", options: ["طباعة فقط", "طباعة + تركيب"], group: "التركيب" },
     quoteQty("قطعة")
   ],
   flex: [
-    { key: "width", label: "العرض", type: "number", placeholder: "بالمتر", unit: "م", group: "المقاس" },
-    { key: "height", label: "الارتفاع", type: "number", placeholder: "بالمتر", unit: "م", group: "المقاس" },
-    { key: "usage", label: "الاستخدام", type: "select", options: ["لوحة مضيئة", "واجهة", "إعلان خارجي", "غير ذلك"], group: "الاستخدام" },
-    { key: "installation", label: "التركيب", type: "select", options: ["طباعة فقط", "طباعة + تركيب"], group: "التركيب" }
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 4", unit: "م", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 1.2", unit: "م", group: "المقاس" },
+    { key: "application", label: "الاستخدام", type: "select", options: ["وجه Lightbox مضيء", "واجهة مضيئة كبيرة", "استبدال وجه لوحة قائمة", "مشروع جديد كامل"], group: "الاستخدام" },
+    { key: "face_material", label: "نوع الوجه المضيء", type: "select", options: ["Backlit Flexible Face / فلكس مضيء", "أحتاج توصية رواج حسب حجم اللوحة"], group: "الخامة" },
+    { key: "box_status", label: "حالة صندوق الإضاءة", type: "select", options: ["موجود — طباعة وتجهيز الوجه فقط", "موجود ويحتاج صيانة/تعديل", "غير موجود — تنفيذ كامل"], group: "البنية" },
+    { key: "lighting", label: "الإضاءة", type: "select", options: ["LED ضمن تنفيذ رواج", "الإضاءة موجودة", "يحتاج تقييم فني"], group: "الإضاءة" },
+    { key: "sides", label: "عدد الأوجه", type: "select", options: ["وجه واحد", "وجهين"], group: "البنية" },
+    { key: "install", label: "التركيب", type: "select", options: ["توريد الوجه فقط", "توريد + تركيب", "تنفيذ كامل للصندوق والوجه والإضاءة"], group: "التركيب" },
+    { key: "location", label: "موقع التركيب", type: "text", placeholder: "المدينة / المنطقة / وصف الارتفاع والوصول", group: "التركيب" }
+  ],
+
+  "mesh-banner": [
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 10", unit: "م", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 6", unit: "م", group: "المقاس" },
+    { key: "application", label: "الاستخدام", type: "select", options: ["سقالة/مبنى", "سور خارجي", "فعالية", "منطقة معرضة للرياح", "استخدام آخر"], group: "الاستخدام" },
+    { key: "material", label: "الخامة", type: "select", options: ["Mesh Banner مثقب", "أحتاج توصية رواج حسب الموقع والرياح"], group: "الخامة" },
+    { key: "edge_finish", label: "تجهيز الحواف", type: "select", options: ["حواف مقواة", "لحام/ثني الحواف", "يحدد وفق نظام التثبيت"], group: "التشطيب" },
+    { key: "mounting", label: "التثبيت", type: "select", options: ["عيون معدنية", "نظام شد", "تركيب موقعي كامل", "يحدد بعد المعاينة"], group: "التركيب" },
+    { key: "location", label: "موقع التركيب والارتفاع", type: "text", placeholder: "وصف الموقع وارتفاع التركيب التقريبي", group: "التركيب" },
+    quoteQty("قطعة")
+  ],
+
+  "vinyl-graphics": [
+    { key: "surface", label: "سطح التطبيق", type: "select", options: ["زجاج", "معدن مطلي", "ACP / ألواح واجهات", "PVC صلب", "أكريليك", "سطح أملس آخر", "غير متأكد"], group: "الاستخدام" },
+    { key: "environment", label: "مكان الاستخدام", type: "select", options: ["داخلي", "خارجي قصير المدة", "خارجي متوسط/طويل المدة"], group: "الاستخدام" },
+    { key: "size", label: "المقاس/المساحة", type: "text", placeholder: "العرض × الارتفاع أو المساحة التقريبية", group: "المقاس" },
+    { key: "film", label: "فئة الفيلم", type: "select", options: ["PVC أبيض", "PVC شفاف", "Removable قابل للإزالة", "Polymeric طويل المدة", "Cast للأسطح المعقدة", "أحتاج توصية رواج"], group: "الخامة", helpText: "اختيار الفيلم يعتمد على عمر الاستخدام وشكل السطح وظروفه." },
+    { key: "adhesive", label: "اللاصق", type: "select", options: ["دائم", "قابل للإزالة", "يحدد حسب السطح والاستخدام"], group: "اللاصق" },
+    { key: "laminate", label: "الحماية", type: "select", options: ["بدون", "Gloss Overlaminate", "Matte Overlaminate", "Optically Clear عند الحاجة", "يحدد حسب العمر والاستخدام"], group: "التشطيب" },
+    { key: "cut", label: "القص", type: "select", options: ["قص مستطيل", "Contour Cut", "Plotter Cut بدون طباعة", "تقسيم بانلات كبيرة"], group: "القص" },
+    { key: "install", label: "التركيب", type: "select", options: ["توريد فقط", "توريد + تركيب"], group: "التركيب" },
+    quoteQty("قطعة/مشروع")
+  ],
+
+  "window-graphics": [
+    { key: "window_type", label: "نوع التطبيق", type: "select", options: ["فينيل مطبوع كامل", "Perforated One-Way Vision", "شفاف بطباعة White Ink", "Frosted / Etched-look للخصوصية", "قص فينيل بدون طباعة"], group: "الاستخدام" },
+    { key: "mount_side", label: "جهة التطبيق", type: "select", options: ["خارج الزجاج", "داخل الزجاج", "يحدد حسب الخامة والموقع"], group: "التركيب" },
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 1.5", unit: "م", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 2.2", unit: "م", group: "المقاس" },
+    { key: "perforation", label: "نسبة الرؤية — للـOne-Way Vision", type: "select", options: ["غير مطبق", "50/50", "65/35", "يحدد حسب الخصوصية والإضاءة"], group: "الخامة" },
+    { key: "adhesion", label: "مدة الاستخدام", type: "select", options: ["حملة مؤقتة / قابل للإزالة", "متوسط المدة", "تركيب طويل المدة"], group: "اللاصق" },
+    { key: "laminate", label: "الحماية", type: "select", options: ["بدون", "Optically Clear compatible overlaminate", "حماية أخرى حسب الفيلم"], group: "التشطيب", helpText: "الـperforated window film قد يحتاج لامينيت شفاف بصريًا متوافقًا حسب النظام والتعرض." },
+    { key: "install", label: "التركيب", type: "select", options: ["توريد فقط", "توريد + تركيب"], group: "التركيب" },
+    { key: "location", label: "الموقع", type: "text", placeholder: "نوع المبنى/المحل والمدينة والارتفاع إن وجد", group: "التركيب" }
+  ],
+
+  "wall-graphics": [
+    { key: "wall_surface", label: "سطح الجدار", type: "select", options: ["دهان أملس", "دهان خشن/محبب", "جبس/دراي وول مطلي", "زجاج/لوح أملس", "سطح آخر"], group: "الاستخدام" },
+    { key: "paint_age", label: "حالة الدهان", type: "select", options: ["جاف ومستقر", "حديث — يحتاج انتظار/تقييم", "قديم أو متقشر", "غير متأكد"], group: "الاستخدام" },
+    { key: "width", label: "عرض المنطقة", type: "number", placeholder: "مثال: 5", unit: "م", group: "المقاس" },
+    { key: "height", label: "ارتفاع المنطقة", type: "number", placeholder: "مثال: 2.8", unit: "م", group: "المقاس" },
+    { key: "duration", label: "مدة الاستخدام", type: "select", options: ["فعالية مؤقتة", "متوسط المدة", "ديكور طويل المدة"], group: "الاستخدام" },
+    { key: "film", label: "نوع المادة", type: "select", options: ["Wall Vinyl مخصص", "Removable Wall Film", "Textured Wall Film", "Wallpaper / Wallcovering", "أحتاج معاينة وتوصية"], group: "الخامة" },
+    { key: "finish", label: "المظهر", type: "select", options: ["مطفي", "لامع", "Textured", "يحدد حسب المادة"], group: "التشطيب" },
+    { key: "install", label: "التركيب", type: "select", options: ["توريد فقط", "توريد + تركيب ومعاينة السطح"], group: "التركيب" }
+  ],
+
+  "floor-graphics": [
+    { key: "surface", label: "نوع الأرضية", type: "select", options: ["سيراميك/بورسلان أملس", "رخام/جرانيت أملس", "Vinyl flooring", "خرسانة ملساء", "أرضية أخرى"], group: "الاستخدام" },
+    { key: "location", label: "مكان الاستخدام", type: "select", options: ["داخلي Retail", "معرض/فعالية", "ممر توجيهي", "سلامة وتحذير", "خارجي — يحتاج نظام مخصص"], group: "الاستخدام" },
+    { key: "duration", label: "المدة", type: "select", options: ["قصيرة", "متوسطة", "يحدد حسب نظام المادة"], group: "الاستخدام" },
+    { key: "size", label: "المقاس", type: "text", placeholder: "العرض × الارتفاع أو شكل القص", group: "المقاس" },
+    { key: "system", label: "نظام الجرافيك", type: "select", options: ["Direct-print anti-slip film", "Printed film + approved anti-slip overlaminate", "يحدد بعد معرفة الأرضية والمدة"], group: "الخامة", helpText: "مقاومة الانزلاق متطلب وظيفي أساسي في جرافيك الأرضيات." },
+    { key: "cut", label: "القص", type: "select", options: ["مستطيل", "دائري", "Contour Cut", "مجموعة مسارات/علامات"], group: "القص" },
+    { key: "install", label: "التركيب", type: "select", options: ["توريد فقط", "توريد + تركيب"], group: "التركيب" },
+    quoteQty("قطعة/مجموعة")
+  ],
+
+  "vehicle-wrap": [
+    { key: "vehicle", label: "نوع المركبة", type: "select", options: ["سيارة سيدان", "SUV", "بيك أب", "فان", "حافلة", "شاحنة", "أسطول مركبات", "نوع آخر"], group: "الاستخدام" },
+    { key: "coverage", label: "نطاق التغطية", type: "select", options: ["شعارات وكتابات فقط", "Partial Wrap", "Full Wrap", "Fleet Graphics", "يحدد بعد معاينة المركبة"], group: "الاستخدام" },
+    { key: "surface_shape", label: "تعقيد السطح", type: "select", options: ["ألواح مسطحة/منحنيات بسيطة", "منحنيات مركبة", "تجاويف وقنوات عميقة", "غير متأكد"], group: "الاستخدام" },
+    { key: "film", label: "فئة فيلم الراب", type: "select", options: ["Cast vehicle wrap film", "Polymeric film للأسطح الأبسط", "Reflective / specialty film", "أحتاج توصية رواج"], group: "الخامة" },
+    { key: "laminate", label: "Overlaminate", type: "select", options: ["Gloss", "Matte", "Luster / Satin", "Optically Clear", "يحدد مع نظام الفيلم"], group: "التشطيب", helpText: "يجب اختيار الفيلم والـoverlaminate كنظام متوافق حسب الاستخدام والأسطح." },
+    { key: "windows", label: "زجاج المركبة", type: "select", options: ["لا يشمل الزجاج", "Perforated window graphics حيث يسمح التطبيق", "يحدد بعد المعاينة والاشتراطات المحلية"], group: "النوافذ" },
+    { key: "artwork", label: "التصميم", type: "select", options: ["ملف جاهز", "أحتاج تصميم الراب من رواج", "تكييف هوية موجودة على المركبة"], group: "التصميم" },
+    { key: "installation", label: "التنفيذ", type: "select", options: ["طباعة فقط", "طباعة + تركيب احترافي"], group: "التركيب" },
+    { key: "vehicles_qty", label: "عدد المركبات", type: "number", placeholder: "مثال: 1", unit: "مركبة", group: "الكمية" }
   ],
   stickers: [
     { key: "application", label: "نوع الاستخدام", type: "select", options: ["ملصق دعائي", "ملصق منتج", "زجاج/نافذة", "تغليف", "استخدام خارجي", "استخدام آخر"], group: "الاستخدام" },
@@ -207,24 +285,61 @@ export const serviceSpecifications: Record<string, ServiceSpec[]> = {
     quoteQty("ملصق")
   ],
   lightbox: [
-    { key: "size", label: "الأبعاد", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
-    { key: "sides", label: "نوع اللوحة", type: "select", options: ["أمامية", "جانبية / وجهين"], group: "البنية" },
-    { key: "lighting", label: "الإضاءة", type: "select", options: ["LED", "حسب توصية رواج"], group: "الإضاءة" },
-    { key: "install", label: "التركيب", type: "select", options: ["تنفيذ فقط", "تنفيذ + تركيب"], group: "التركيب" },
-    { key: "location", label: "موقع التركيب", type: "text", placeholder: "اسم المنطقة أو وصف الموقع", group: "التركيب" }
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 2", unit: "م", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 0.8", unit: "م", group: "المقاس" },
+    { key: "sides", label: "عدد الأوجه", type: "select", options: ["وجه واحد", "وجهين"], group: "البنية" },
+    { key: "face", label: "نوع الوجه", type: "select", options: ["Acrylic / أكريليك", "Flexible backlit face", "Textile face للاستخدام الداخلي", "يحدد حسب الحجم والتصميم"], group: "الخامة" },
+    { key: "lighting", label: "نظام الإضاءة", type: "select", options: ["LED داخلي", "Edge-lit حسب التصميم", "تحديث إضاءة صندوق قائم", "يحدد هندسيًا"], group: "الإضاءة" },
+    { key: "location_type", label: "مكان الاستخدام", type: "select", options: ["داخلي", "خارجي"], group: "الاستخدام" },
+    { key: "existing", label: "حالة اللوحة", type: "select", options: ["مشروع جديد", "تغيير وجه فقط", "تحديث الإضاءة", "صيانة وإعادة تأهيل"], group: "البنية" },
+    { key: "install", label: "الخدمة", type: "select", options: ["تصنيع فقط", "تصنيع + تركيب", "معاينة ثم عرض سعر"], group: "التركيب" },
+    { key: "location", label: "موقع التركيب والارتفاع", type: "text", placeholder: "المدينة / المنطقة / الارتفاع التقريبي", group: "التركيب" }
   ],
   letters: [
-    { key: "material", label: "الخامة", type: "select", options: ["أكريليك", "ستيل", "مزيج خامات", "أحتاج اقتراح"], group: "الخامة" },
-    { key: "height", label: "ارتفاع الحروف التقريبي", type: "number", placeholder: "بالسنتيمتر", unit: "سم", group: "المقاس" },
-    { key: "lighting", label: "الإضاءة", type: "select", options: ["بدون إضاءة", "إضاءة أمامية", "إضاءة خلفية", "مخصص"], group: "الإضاءة" },
-    { key: "install", label: "التركيب", type: "select", options: ["تصنيع فقط", "تصنيع + تركيب"], group: "التركيب" }
+    { key: "letter_type", label: "نوع الحروف", type: "select", options: ["Face-lit Channel Letters", "Halo-lit / Reverse Channel", "Face + Halo", "Block Acrylic illuminated", "يحدد حسب التصميم"], group: "البنية" },
+    { key: "face_material", label: "وجه الحرف", type: "select", options: ["Acrylic sign-grade", "معدن/وجه غير شفاف حسب التصميم", "خامة خاصة"], group: "الخامة" },
+    { key: "return_material", label: "جوانب/جسم الحرف", type: "select", options: ["ألمنيوم", "ستانلس ستيل", "مادة أخرى حسب التصميم"], group: "الخامة" },
+    { key: "height", label: "ارتفاع الحرف التقريبي", type: "number", placeholder: "مثال: 40", unit: "سم", group: "المقاس" },
+    { key: "depth", label: "عمق الحرف", type: "select", options: ["يحدد هندسيًا حسب الحجم والإضاءة", "لدي عمق محدد — أذكره في الملاحظات"], group: "المقاس" },
+    { key: "lighting", label: "الإضاءة", type: "select", options: ["LED أبيض", "LED لون محدد", "RGB / RGBW", "بدون إضاءة"], group: "الإضاءة" },
+    { key: "mounting", label: "طريقة التثبيت", type: "select", options: ["على RaceWay", "تثبيت مباشر على الواجهة", "على خلفية/لوح حامل", "يحدد بعد المعاينة"], group: "التركيب" },
+    { key: "location_type", label: "الاستخدام", type: "select", options: ["داخلي", "خارجي"], group: "الاستخدام" },
+    { key: "install", label: "الخدمة", type: "select", options: ["تصنيع فقط", "تصنيع + تركيب", "تنفيذ كامل مع التمديدات المطلوبة"], group: "التركيب" },
+    { key: "location", label: "الموقع والارتفاع", type: "text", placeholder: "وصف موقع التركيب", group: "التركيب" }
+  ],
+
+  "dimensional-letters": [
+    { key: "material", label: "الخامة", type: "select", options: ["Acrylic", "Stainless Steel", "Aluminum", "PVC / Foam PVC", "Wood / MDF داخلي", "مزيج خامات", "أحتاج اقتراح رواج"], group: "الخامة" },
+    { key: "height", label: "ارتفاع الحروف", type: "number", placeholder: "مثال: 25", unit: "سم", group: "المقاس" },
+    { key: "thickness", label: "السماكة/البروز", type: "text", placeholder: "إن كانت محددة، أو اتركها لتوصية رواج", group: "المقاس" },
+    { key: "finish", label: "المظهر", type: "select", options: ["لون مصمت", "Metallic / Brushed", "Mirror", "Painted", "Natural material finish", "حسب العينة"], group: "التشطيب" },
+    { key: "backing", label: "الخلفية", type: "select", options: ["بدون خلفية", "لوح حامل", "ACP background", "Acrylic background", "حسب التصميم"], group: "البنية" },
+    { key: "install", label: "التركيب", type: "select", options: ["تصنيع فقط", "تصنيع + تركيب"], group: "التركيب" },
+    { key: "location", label: "مكان الاستخدام", type: "select", options: ["داخلي", "خارجي"], group: "الاستخدام" }
+  ],
+
+  "acrylic-sign": [
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 60", unit: "سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 40", unit: "سم", group: "المقاس" },
+    { key: "acrylic_type", label: "نوع الأكريليك", type: "select", options: ["Clear", "White / Opal", "Colored", "LED sign-grade", "Light-guiding edge-lit", "يحدد حسب التطبيق"], group: "الخامة" },
+    { key: "fabrication", label: "التصنيع", type: "select", options: ["Flat panel", "Cut / Routed shape", "Formed / Thermoformed", "Layered acrylic", "Edge-lit panel"], group: "البنية" },
+    { key: "graphics", label: "الجرافيك", type: "select", options: ["UV print", "Vinyl graphics", "Back-painted", "Engraved / etched look", "مزيج تقنيات"], group: "الطباعة" },
+    { key: "lighting", label: "الإضاءة", type: "select", options: ["بدون", "Backlit", "Edge-lit", "LED ضمن التركيب"], group: "الإضاءة" },
+    { key: "mounting", label: "التثبيت", type: "select", options: ["Standoffs", "Direct mount", "Frame", "Suspended", "يحدد بعد التصميم"], group: "التركيب" },
+    { key: "location", label: "مكان الاستخدام", type: "select", options: ["داخلي", "خارجي"], group: "الاستخدام" },
+    quoteQty("لوحة")
   ],
   facade: [
-    { key: "size", label: "أبعاد الواجهة", type: "text", placeholder: "العرض × الارتفاع التقريبي", group: "المقاس" },
-    { key: "material", label: "الخامة المطلوبة", type: "select", options: ["أليكوبوند", "مزيج خامات", "أحتاج اقتراح رواج"], group: "الخامة" },
-    { key: "design", label: "التصميم", type: "select", options: ["لدي تصميم", "أحتاج تصميم 3D من رواج"], group: "التصميم" },
-    { key: "signage", label: "اللوحة أو الحروف", type: "select", options: ["ضمن المشروع", "غير مطلوبة", "يحدد لاحقًا"], group: "اللوحات" },
-    { key: "location", label: "موقع المشروع", type: "text", placeholder: "المدينة / المنطقة", group: "التركيب" }
+    { key: "width", label: "عرض الواجهة التقريبي", type: "number", placeholder: "مثال: 8", unit: "م", group: "المقاس" },
+    { key: "height", label: "ارتفاع الواجهة التقريبي", type: "number", placeholder: "مثال: 4", unit: "م", group: "المقاس" },
+    { key: "scope", label: "نطاق المشروع", type: "select", options: ["كسوة ACP فقط", "ACP + حروف/لوحة", "واجهة تجارية متكاملة", "إعادة تأهيل واجهة قائمة"], group: "البنية" },
+    { key: "panel_system", label: "نظام الكسوة", type: "select", options: ["ألواح ACP / Aluminum Composite Panels", "ألواح مطوية Routed & Folded Trays", "مزيج خامات", "يحدد بعد التصميم والمعاينة"], group: "الخامة", helpText: "التفاصيل الإنشائية والسماكات والتثبيت تُحدد هندسيًا بعد معاينة الموقع." },
+    { key: "finish", label: "مظهر السطح", type: "select", options: ["Solid color", "Metallic", "Anodized look", "Natural / textured look", "لون/عينة مخصصة"], group: "التشطيب" },
+    { key: "design", label: "التصميم", type: "select", options: ["لدي مخططات نهائية", "أحتاج تصميم واجهة من رواج", "أحتاج تصور 3D + مخططات تنفيذ"], group: "التصميم" },
+    { key: "signage", label: "الهوية على الواجهة", type: "select", options: ["بدون", "Channel Letters", "حروف غير مضيئة", "Lightbox", "مزيج لوحات وحروف"], group: "اللوحات" },
+    { key: "existing_surface", label: "حالة الواجهة الحالية", type: "select", options: ["مبنى جديد", "واجهة قائمة تحتاج تغطية", "تحتاج إزالة/معالجة قبل التنفيذ", "غير متأكد"], group: "الاستخدام" },
+    { key: "access", label: "الوصول لموقع العمل", type: "select", options: ["أرضي/سهل", "ارتفاع متوسط", "ارتفاع كبير أو يحتاج معدات رفع", "يحدد بالمعاينة"], group: "التركيب" },
+    { key: "location", label: "موقع المشروع", type: "text", placeholder: "المدينة / المنطقة / وصف الموقع", group: "التركيب" }
   ],
   identity: [
     { key: "business", label: "نوع النشاط", type: "text", placeholder: "مثال: مطعم، شركة، متجر...", group: "النشاط" },

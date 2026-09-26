@@ -38,14 +38,28 @@ export const printTaxonomy:PrintTaxonomyFamily[]=[
   {
     key:"large-format",
     label:"الطباعة كبيرة الحجم",
-    description:"بنر، فلكس، فينيل، رسومات نوافذ وجدران ومركبات.",
-    subcategories:[{key:"research",label:"قيد البحث والتوثيق",templates:[],status:"research"}]
+    description:"بنرات، Backlit، فينيل، نوافذ، جدران، أرضيات ومركبات.",
+    subcategories:[
+      {key:"banners",label:"البنرات",templates:["banner","mesh-banner"],status:"verified"},
+      {key:"backlit",label:"Backlit والوجوه المضيئة",templates:["flex"],status:"verified"},
+      {key:"vinyl",label:"الفينيل والجرافيك",templates:["vinyl-graphics"],status:"verified"},
+      {key:"windows",label:"جرافيك النوافذ",templates:["window-graphics"],status:"verified"},
+      {key:"walls",label:"جرافيك الجدران",templates:["wall-graphics"],status:"verified"},
+      {key:"floors",label:"جرافيك الأرضيات",templates:["floor-graphics"],status:"verified"},
+      {key:"vehicles",label:"المركبات والأساطيل",templates:["vehicle-wrap"],status:"verified"}
+    ]
   },
   {
     key:"signage",
-    label:"اللوحات والإشارات",
-    description:"لوحات مضيئة وغير مضيئة، حروف، أنظمة توجيه وعرض.",
-    subcategories:[{key:"research",label:"قيد البحث والتوثيق",templates:[],status:"research"}]
+    label:"اللوحات والإشارات والواجهات",
+    description:"لوحات مضيئة وغير مضيئة، حروف، أكريليك وواجهات ACP.",
+    subcategories:[
+      {key:"lightboxes",label:"اللوحات المضيئة",templates:["lightbox"],status:"verified"},
+      {key:"channel-letters",label:"الحروف المضيئة",templates:["letters"],status:"verified"},
+      {key:"dimensional",label:"الحروف البارزة",templates:["dimensional-letters"],status:"verified"},
+      {key:"rigid-signs",label:"اللوحات الصلبة",templates:["acrylic-sign"],status:"verified"},
+      {key:"facades",label:"واجهات ACP",templates:["facade"],status:"verified"}
+    ]
   },
   {
     key:"promotional-specialty",
