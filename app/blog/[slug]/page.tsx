@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { getPosts } from "@/lib/cms";
+import type { Metadata } from "next";
+
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{const {slug}=await params;const post=(await getPosts()).find(x=>x.slug===slug);return post?{title:post.title,description:post.excerpt,alternates:{canonical:"/blog/"+slug},openGraph:{title:post.title,description:post.excerpt,images:post.image?[post.image]:[]}}:{title:"المقال غير موجود"};}
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
