@@ -13,8 +13,15 @@ export default function QuoteForm({services,packages}:{services:Option[];package
  useEffect(()=>{const p=new URLSearchParams(location.search);setService(p.get("service")||"");setPackageId(p.get("package")||"");},[]);
  async function submit(e:FormEvent){e.preventDefault();setSending(true);setMessage("");
   try{
-   const chosen=service?services.find(x=>x.id===service):packageId?packages.find(x=>x.id===packageId):null;
-   const payload=items.length?items.map(x=>({title:x.title,quantity:x.qty,specifications:x.specs?{summary:x.specs}:{}})):chosen?[{title:chosen.title,quantity:1,specifications:{}}]:[];
+   const chosenService=service?services.find(x=>x.id===service):null;
+   const chosenPackage=packageId?packages.find(x=>x.id===packageId):null;
+   const payload=items.length
+    ? items.map(x=>({title:x.title,quantity:x.qty,specifications:x.specs?{summary:x.specs}:{},service_slug:x.id}))
+    : chosenService
+      ? [{title:chosenService.title,quantity:1,specifications:{},service_slug:chosenService.id}]
+      : chosenPackage
+        ? [{title:chosenPackage.title,quantity:1,specifications:{},package_slug:chosenPackage.id}]
+        : [];
    const response=await fetch("/api/quotes",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({customer_name:name.trim(),company_name:company.trim()||null,phone:phone.trim(),whatsapp:phone.trim(),email:email.trim()||null,city:city.trim()||null,deadline:deadline||null,notes:details.trim()||null,items:payload})});
    const result=await response.json();
    if(!response.ok) throw new Error(result?.error||"تعذر حفظ الطلب");

@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
 
-type Item={title?:unknown;quantity?:unknown;specifications?:unknown};
-type QuoteItem={title:string;quantity:number;specifications:Record<string,unknown>};
+type Item={title?:unknown;quantity?:unknown;specifications?:unknown;service_slug?:unknown;package_slug?:unknown};
+type QuoteItem={title:string;quantity:number;specifications:Record<string,unknown>;service_slug?:string;package_slug?:string};
 const SUPABASE_URL=process.env.NEXT_PUBLIC_SUPABASE_URL;
 const PUBLIC_KEY=process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
@@ -23,8 +23,9 @@ export async function POST(request:Request){
   const items:QuoteItem[]=rawItems.reduce<QuoteItem[]>((result,item)=>{
    const title=clean(item.title,180);
    const specifications:Record<string,unknown>=typeof item.specifications==="object"&&item.specifications&&!Array.isArray(item.specifications)?item.specifications as Record<string,unknown>:{};
+   const serviceSlug=clean(item.service_slug,180),packageSlug=clean(item.package_slug,180);
    if(!title||JSON.stringify(specifications).length>6000) return result;
-   result.push({title,quantity:Math.min(9999,Math.max(1,Number(item.quantity)||1)),specifications});
+   result.push({title,quantity:Math.min(9999,Math.max(1,Number(item.quantity)||1)),specifications,...(serviceSlug?{service_slug:serviceSlug}:{}),...(packageSlug?{package_slug:packageSlug}:{})});
    return result;
   },[]);
   if(name.length<2||phone.length<5) return NextResponse.json({error:"أدخل الاسم ورقم التواصل بشكل صحيح"},{status:400});
