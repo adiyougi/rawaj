@@ -1,3 +1,4 @@
+import { specialtyContent } from "@/lib/service-content-specialty";
 import { exhibitionContent } from "@/lib/service-content-exhibitions";
 export type ServiceRichContent={
   description:string;
@@ -646,5 +647,6 @@ export const serviceContent:Record<string,ServiceRichContent>={
   ...packaging,
   ...largeSignage,
   ...reflectiveSafety,
-  ...exhibitionContent
+  ...exhibitionContent,
+  ...specialtyContent
 };
