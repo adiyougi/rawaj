@@ -6,7 +6,9 @@ import { getSupabaseBrowser } from "@/lib/supabase-browser";
 
 type Row = Record<string, any>;
 
-function autoSlug(value:string){const normalized=value.trim().toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");return normalized || "item";}\n\nfunction fieldInitial(field: AdminField) {
+function autoSlug(value:string){const normalized=value.trim().toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");return normalized || "item";}
+
+function fieldInitial(field: AdminField) {
   if (field.type === "boolean") return true;
   if (field.type === "json") return "[]";
   return "";
@@ -93,7 +95,8 @@ export default function AdminCollection({ config }: { config: AdminSection }) {
     setMessage("");
     try {
       const payload: Row = {};
-      for (const field of config.fields) payload[field.name] = normalize(field,form[field.name]);\n      if(!editing && ["departments","service_categories","packages","portfolio_items","blog_posts"].includes(config.table) && !payload.slug){const source=payload.name || payload.title; if(source) payload.slug=autoSlug(String(source))+"-"+Date.now().toString(36).slice(-4);}
+      for (const field of config.fields) payload[field.name] = normalize(field,form[field.name]);
+      if(!editing && ["departments","service_categories","packages","portfolio_items","blog_posts"].includes(config.table) && !payload.slug){const source=payload.name || payload.title; if(source) payload.slug=autoSlug(String(source))+"-"+Date.now().toString(36).slice(-4);}
 
       const supabase = getSupabaseBrowser();
       let result;
