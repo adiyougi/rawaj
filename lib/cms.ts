@@ -107,27 +107,43 @@ export async function getPackages() {
 }
 
 export async function getPortfolio() {
+  const fallback=fallbackPortfolio.map((item)=>({
+    ...item,
+    description:item.summary || "",
+    gallery:[] as string[],
+    videoUrl:"",
+    clientName:""
+  }));
+
   const rows = await readTable<{
     slug: string;
     title: string;
     category: string | null;
     summary: string | null;
+    description: string | null;
     cover_url: string | null;
+    gallery: string[];
+    video_url: string | null;
     project_date: string | null;
+    client_name: string | null;
     services: string[];
   }>(
-    "portfolio_items?select=slug,title,category,summary,cover_url,project_date,services&is_published=eq.true&order=sort_order.asc"
+    "portfolio_items?select=slug,title,category,summary,description,cover_url,gallery,video_url,project_date,client_name,services&is_published=eq.true&order=sort_order.asc"
   );
 
-  if (!rows?.length) return fallbackPortfolio;
+  if (!rows?.length) return fallback;
 
   return rows.map((row) => ({
     slug: row.slug,
     title: row.title,
     category: row.category || "أعمال رواج",
-    image: row.cover_url || fallbackPortfolio[0].image,
+    image: row.cover_url || fallback[0].image,
     date: row.project_date?.slice(0, 4) || "",
     summary: row.summary || "",
+    description: row.description || row.summary || "",
+    gallery: Array.isArray(row.gallery) ? row.gallery.filter(Boolean) : [],
+    videoUrl: row.video_url || "",
+    clientName: row.client_name || "",
     services: Array.isArray(row.services) ? row.services : []
   }));
 }
