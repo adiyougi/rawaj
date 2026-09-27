@@ -35,10 +35,27 @@ export default function AdminShell({ children }: { children: ReactNode }) {
         return;
       }
 
-      setRole(profile.role || "admin");
+      const currentRole=profile.role || "admin";
+      const isQuotes=pathname==="/admin/quotes" || pathname.startsWith("/admin/quotes/");
+      const isUsers=pathname==="/admin/users" || pathname.startsWith("/admin/users/");
+
+      if(currentRole==="sales" && !isQuotes){
+        router.replace("/admin/quotes");
+        return;
+      }
+      if(currentRole==="editor" && (isQuotes || isUsers)){
+        router.replace("/admin");
+        return;
+      }
+      if(currentRole!=="owner" && isUsers){
+        router.replace("/admin");
+        return;
+      }
+
+      setRole(currentRole);
       setReady(true);
     })();
-  }, [router]);
+  }, [router,pathname]);
 
   async function logout() {
     await getSupabaseBrowser().auth.signOut();
@@ -58,7 +75,11 @@ export default function AdminShell({ children }: { children: ReactNode }) {
         </div>
 
         <nav>
-          {adminNav.filter(([,href])=>href!=="/admin/users"||role==="owner").map(([label,href]) => (
+          {adminNav.filter(([,href])=>{
+            if(role==="sales") return href==="/admin/quotes";
+            if(role==="editor") return href!=="/admin/users" && href!=="/admin/quotes";
+            return href!=="/admin/users" || role==="owner";
+          }).map(([label,href]) => (
             <Link key={href} href={href} className={pathname === href ? "active" : ""} onClick={() => setMenu(false)}>
               {label}
             </Link>
@@ -66,7 +87,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
         </nav>
 
         <div className="admin-sidebar-foot">
-          <small>{email}</small><small>{role==="owner"?"المالك":role==="editor"?"محرر":"مدير"}</small>
+          <small>{email}</small><small>{role==="owner"?"المالك":role==="admin"?"مدير":role==="editor"?"محرر":"مبيعات"}</small>
           <button onClick={logout}>تسجيل الخروج</button>
         </div>
       </aside>
@@ -74,7 +95,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
       <div className="admin-main">
         <header className="admin-topbar">
           <button className="admin-menu-btn" onClick={() => setMenu(!menu)}>☰</button>
-          <div><span>لوحة تحكم رواج</span><small>إدارة المحتوى التسويقي</small></div>
+          <div><span>لوحة تحكم رواج</span><small>{role==="sales"?"متابعة طلبات عروض السعر":"إدارة المحتوى والكتالوج"}</small></div>
           <Link href="/" target="_blank">فتح الموقع ↗</Link>
         </header>
         {children}

@@ -27,7 +27,7 @@ export async function GET(request:Request){
 
 export async function POST(request:Request){
  const admin=await owner(request);if(!admin)return NextResponse.json({error:"غير مصرح"},{status:403});
- const body=await request.json().catch(()=>({}));const email=String(body.email||"").trim().toLowerCase();const role=["admin","editor"].includes(body.role)?body.role:"editor";
+ const body=await request.json().catch(()=>({}));const email=String(body.email||"").trim().toLowerCase();const role=["admin","editor","sales"].includes(body.role)?body.role:"editor";
  if(!/^\S+@\S+\.\S+$/.test(email))return NextResponse.json({error:"البريد غير صالح"},{status:400});
  const {data,error}=await admin.auth.admin.inviteUserByEmail(email);
  if(error||!data.user)return NextResponse.json({error:error?.message||"تعذر إرسال الدعوة"},{status:400});
@@ -38,7 +38,7 @@ export async function POST(request:Request){
 
 export async function PATCH(request:Request){
  const admin=await owner(request);if(!admin)return NextResponse.json({error:"غير مصرح"},{status:403});
- const body=await request.json().catch(()=>({}));const id=String(body.id||"");const role=["admin","editor"].includes(body.role)?body.role:"";
+ const body=await request.json().catch(()=>({}));const id=String(body.id||"");const role=["admin","editor","sales"].includes(body.role)?body.role:"";
  if(!id||!role)return NextResponse.json({error:"بيانات غير صالحة"},{status:400});
  const {error}=await admin.from("admin_users").update({role}).eq("user_id",id).neq("role","owner");
  return error?NextResponse.json({error:"تعذر تحديث الصلاحية"},{status:500}):NextResponse.json({ok:true});

@@ -18,6 +18,7 @@ const quoteStatus:Record<string,string>={new:"جديد",contacted:"تم التو
 
 export default function AdminDashboard() {
   const [counts,setCounts] = useState<Record<string,number>>({});
+  const [role,setRole] = useState("");
   const [catalog,setCatalog] = useState({verified:0,approved:0,legacy:0});
   const [recentQuotes,setRecentQuotes] = useState<RecentQuote[]>([]);
   const [newQuotes,setNewQuotes] = useState(0);
@@ -26,21 +27,31 @@ export default function AdminDashboard() {
   useEffect(()=>{
     (async()=>{
       const supabase = getSupabaseBrowser();
+      const {data:{session}}=await supabase.auth.getSession();
+      const {data:profile}=session ? await supabase.from("admin_users").select("role").eq("user_id",session.user.id).maybeSingle() : {data:null};
+      const currentRole=profile?.role || "editor";
+      setRole(currentRole);
+      const canQuotes=currentRole==="owner" || currentRole==="admin";
+      const visibleCards=cards.filter(([,table])=>table!=="quote_requests" || canQuotes);
       const result:Record<string,number> = {};
-      const countResults=await Promise.all(cards.map(async ([,table])=>{const response=await supabase.from(table).select("*",{count:"exact",head:true});return {table,count:response.count,error:response.error};}));
+      const countResults=await Promise.all(visibleCards.map(async ([,table])=>{const response=await supabase.from(table).select("*",{count:"exact",head:true});return {table,count:response.count,error:response.error};}));
       if(countResults.some(item=>item.error)) setLoadError("تعذر تحميل بعض مؤشرات لوحة التحكم.");
       countResults.forEach(item=>{result[item.table]=item.count||0;});
       setCounts(result);
-      const [{count:verified},{count:approved},{count:legacy},{count:newCount},{data:recent,error:recentError}] = await Promise.all([
+      const [{count:verified},{count:approved},{count:legacy}] = await Promise.all([
         supabase.from("services").select("*",{count:"exact",head:true}).eq("verification_status","verified").eq("is_published",false),
         supabase.from("services").select("*",{count:"exact",head:true}).eq("verification_status","approved").eq("is_published",true),
-        supabase.from("services").select("*",{count:"exact",head:true}).eq("verification_status","legacy"),
-        supabase.from("quote_requests").select("*",{count:"exact",head:true}).eq("status","new"),
-        supabase.from("quote_requests").select("id,customer_name,phone,status,created_at").order("created_at",{ascending:false}).limit(5)
+        supabase.from("services").select("*",{count:"exact",head:true}).eq("verification_status","legacy")
       ]);
       setCatalog({verified:verified||0,approved:approved||0,legacy:legacy||0});
-      setNewQuotes(newCount||0);
-      if(recentError)setLoadError("تعذر تحميل أحدث طلبات عروض السعر.");else setRecentQuotes((recent||[]) as RecentQuote[]);
+      if(canQuotes){
+        const [{count:newCount},{data:recent,error:recentError}]=await Promise.all([
+          supabase.from("quote_requests").select("*",{count:"exact",head:true}).eq("status","new"),
+          supabase.from("quote_requests").select("id,customer_name,phone,status,created_at").order("created_at",{ascending:false}).limit(5)
+        ]);
+        setNewQuotes(newCount||0);
+        if(recentError)setLoadError("تعذر تحميل أحدث طلبات عروض السعر.");else setRecentQuotes((recent||[]) as RecentQuote[]);
+      }
     })();
   },[]);
 
@@ -57,7 +68,7 @@ export default function AdminDashboard() {
         {loadError&&<div className="admin-message" role="alert">{loadError}</div>}
 
         <div className="admin-stats">
-          {cards.map(([label,table,href]) => (
+          {cards.filter(([,table])=>table!=="quote_requests" || role==="owner" || role==="admin").map(([label,table,href]) => (
             <Link href={href} key={table}>
               <span>{label}</span>
               <strong>{counts[table] ?? "—"}</strong>
@@ -67,13 +78,13 @@ export default function AdminDashboard() {
         </div>
 
         <div className="admin-dashboard-grid">
-          <article className={newQuotes?"dashboard-inbox attention":"dashboard-inbox"}>
+          {(role==="owner"||role==="admin")&&(<article className={newQuotes?"dashboard-inbox attention":"dashboard-inbox"}>
             <span className="admin-kicker">RFQ INBOX</span>
             <h2>{newQuotes?newQuotes+" طلب جديد يحتاج متابعة":"لا توجد طلبات جديدة معلقة"}</h2>
             <p>آخر طلبات عروض السعر الواردة من الموقع، مرتبة من الأحدث.</p>
             <div className="dashboard-recent-quotes">{recentQuotes.length?recentQuotes.map(row=><Link href="/admin/quotes" key={row.id}><span><strong>{row.customer_name||"عميل بدون اسم"}</strong><small>{row.phone||"بدون رقم تواصل"} · {new Date(row.created_at).toLocaleDateString("ar")}</small></span><em>{quoteStatus[row.status]||row.status}</em></Link>):<small>لا توجد طلبات مسجلة حتى الآن.</small>}</div>
             <Link className="admin-primary" href="/admin/quotes">فتح صندوق الطلبات</Link>
-          </article>
+          </article>)}
           <article><span className="admin-kicker">MASTER CATALOG</span><h2>حالة اعتماد الكتالوج</h2><p>موثقة وتنتظر الاعتماد: <strong>{catalog.verified}</strong> · منشورة ومعتمدة: <strong>{catalog.approved}</strong> · قديمة للمراجعة: <strong>{catalog.legacy}</strong></p><Link className="admin-primary" href="/admin/services">مراجعة الخدمات</Link></article>
           <article>
             <span className="admin-kicker">محتوى الرئيسية</span>
