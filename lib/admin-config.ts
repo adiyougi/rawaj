@@ -40,9 +40,9 @@ export const adminSections: Record<string, AdminSection> = {
   },
   departments: {
     slug:"departments", title:"أقسام المؤسسة", description:"إدارة أقسام رواج وصفحاتها الرئيسية.",
-    table:"departments", orderField:"sort_order", list:["name","slug","is_published","sort_order"],
+    table:"departments", orderField:"sort_order", list:["name","is_published","sort_order"],
     fields:[
-      {name:"name",label:"اسم القسم",required:true},{name:"slug",label:"الرابط المختصر",required:true},
+      {name:"name",label:"اسم القسم",required:true},
       {name:"summary",label:"ملخص",type:"textarea"},{name:"description",label:"الوصف الكامل",type:"textarea"},
       {name:"image_url",label:"صورة البطاقة"},{name:"hero_url",label:"صورة الهيرو"},
       {name:"sort_order",label:"الترتيب",type:"number"},{name:"is_published",label:"منشور",type:"boolean"}
@@ -52,7 +52,7 @@ export const adminSections: Record<string, AdminSection> = {
     slug:"categories", title:"تصنيفات الخدمات", description:"التصنيفات الرئيسية والفرعية للكتالوج.",
     table:"service_categories", orderField:"sort_order", list:["name","slug","is_published","sort_order"],
     fields:[
-      {name:"name",label:"اسم التصنيف",required:true},{name:"slug",label:"الرابط المختصر",required:true},
+      {name:"name",label:"اسم التصنيف",required:true},
       {name:"department_id",label:"القسم",relation:{table:"departments",value:"id",label:"name"}},
       {name:"parent_id",label:"التصنيف الأب",relation:{table:"service_categories",value:"id",label:"name"}},
       {name:"description",label:"الوصف",type:"textarea"},{name:"image_url",label:"الصورة"},
@@ -77,13 +77,12 @@ export const adminSections: Record<string, AdminSection> = {
     ]
   },
   packages: {
-    slug:"packages", title:"الباقات والعروض", description:"إدارة الباقات التسويقية والأسعار والعروض.",
+    slug:"packages", title:"الباقات والعروض", description:"إدارة الباقات التسويقية ومحتواها بنظام طلب عرض سعر.",
     table:"packages", orderField:"sort_order", list:["name","eyebrow","featured","is_published"],
     fields:[
-      {name:"name",label:"اسم الباقة",required:true},{name:"slug",label:"الرابط المختصر",required:true},
+      {name:"name",label:"اسم الباقة",required:true},
       {name:"eyebrow",label:"العنوان التسويقي"},{name:"description",label:"الوصف",type:"textarea"},
-      {name:"hero_url",label:"الصورة الرئيسية"},{name:"original_price",label:"السعر الأصلي",type:"number"},
-      {name:"offer_price",label:"سعر العرض",type:"number"},{name:"price_label",label:"وصف السعر"},
+      {name:"hero_url",label:"الصورة الرئيسية"},
       {name:"starts_at",label:"بداية العرض",type:"datetime"},{name:"ends_at",label:"نهاية العرض",type:"datetime"},
       {name:"featured",label:"مميزة",type:"boolean"},{name:"sort_order",label:"الترتيب",type:"number"},
       {name:"is_published",label:"منشورة",type:"boolean"}
@@ -102,7 +101,7 @@ export const adminSections: Record<string, AdminSection> = {
     slug:"portfolio", title:"معرض الأعمال", description:"إدارة المشاريع والصور والفيديو والتصنيفات.",
     table:"portfolio_items", orderField:"sort_order", list:["title","category","featured","is_published"],
     fields:[
-      {name:"title",label:"عنوان المشروع",required:true},{name:"slug",label:"الرابط المختصر",required:true},
+      {name:"title",label:"عنوان المشروع",required:true},
       {name:"category",label:"التصنيف"},{name:"summary",label:"ملخص",type:"textarea"},
       {name:"description",label:"الوصف الكامل",type:"textarea"},{name:"cover_url",label:"صورة الغلاف"},
       {name:"gallery",label:"المعرض JSON",type:"json"},{name:"video_url",label:"رابط الفيديو"},
@@ -144,7 +143,7 @@ export const adminSections: Record<string, AdminSection> = {
     slug:"blog", title:"المدونة", description:"إدارة المقالات والتصنيفات وSEO.",
     table:"blog_posts", orderField:"published_at", list:["title","category","featured","is_published"],
     fields:[
-      {name:"title",label:"عنوان المقال",required:true},{name:"slug",label:"الرابط المختصر",required:true},
+      {name:"title",label:"عنوان المقال",required:true},
       {name:"excerpt",label:"المقتطف",type:"textarea"},{name:"content",label:"المحتوى JSON",type:"json"},
       {name:"category",label:"التصنيف"},{name:"tags",label:"الوسوم",type:"csv"},
       {name:"cover_url",label:"صورة الغلاف"},{name:"author_name",label:"الكاتب"},
@@ -154,9 +153,9 @@ export const adminSections: Record<string, AdminSection> = {
     ]
   },
   settings: {
-    slug:"settings", title:"إعدادات الهوية والتواصل", description:"إعدادات عامة محفوظة بصيغة JSON.",
+    slug:"settings", title:"إعدادات الهوية والتواصل", description:"إعدادات الموقع العامة. الحقول التقنية المتقدمة تُدار برمجيًا ولا تظهر للمحرر.",
     table:"site_settings", list:["key","updated_at"],
-    fields:[{name:"key",label:"المفتاح",required:true},{name:"value",label:"القيمة JSON",type:"json",required:true}]
+    fields:[{name:"key",label:"اسم الإعداد",required:true}]
   },
   quotes: {
     slug:"quotes", title:"طلبات عروض السعر", description:"الطلبات المحفوظة داخل النظام.",
