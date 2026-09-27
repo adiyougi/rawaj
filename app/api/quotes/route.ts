@@ -15,7 +15,7 @@ export async function POST(request:Request){
  if(!SUPABASE_URL||!SERVER_KEY) return NextResponse.json({error:"خدمة الطلبات غير مهيأة على الخادم"},{status:503});
  try{
   const body=await request.json();
-  const name=clean(body.customer_name,120),phone=clean(body.phone,40),notes=clean(body.notes,3000);
+  const name=clean(body.customer_name,120),company=clean(body.company_name,160),phone=clean(body.phone,40),whatsapp=clean(body.whatsapp,40),email=clean(body.email,180),city=clean(body.city,120),deadline=clean(body.deadline,20),notes=clean(body.notes,3000);
   const rawItems:Item[]=Array.isArray(body.items)?body.items.slice(0,30):[];
   if(!rawItems.length) return NextResponse.json({error:"اختر خدمة أو أضف خدمة إلى السلة"},{status:400});
   const items:QuoteItem[]=rawItems.reduce<QuoteItem[]>((result,item)=>{
@@ -27,10 +27,12 @@ export async function POST(request:Request){
   },[]);
   if(name.length<2||phone.length<5) return NextResponse.json({error:"أدخل الاسم ورقم التواصل بشكل صحيح"},{status:400});
   const headers={apikey:SERVER_KEY,Authorization:"Bearer "+SERVER_KEY,"Content-Type":"application/json",Prefer:"return=representation"};
-  const created=await fetch(SUPABASE_URL+"/rest/v1/quote_requests",{method:"POST",headers,body:JSON.stringify({customer_name:name,phone,notes:notes||null,source:"website",status:"new"}),cache:"no-store"});
+  const safeDeadline=/^\d{4}-\d{2}-\d{2}$/.test(deadline)?deadline:null;
+  const created=await fetch(SUPABASE_URL+"/rest/v1/quote_requests",{method:"POST",headers,body:JSON.stringify({customer_name:name,company_name:company||null,phone,whatsapp:whatsapp||null,email:email||null,city:city||null,deadline:safeDeadline,notes:notes||null,source:"website",status:"new"}),cache:"no-store"});
   if(!created.ok) throw new Error("quote_request_failed");
   const rows=await created.json();const id=rows?.[0]?.id;if(!id) throw new Error("quote_id_missing");
   if(items.length){const saved=await fetch(SUPABASE_URL+"/rest/v1/quote_request_items",{method:"POST",headers,body:JSON.stringify(items.map((item:QuoteItem)=>({...item,quote_request_id:id}))),cache:"no-store"});if(!saved.ok) throw new Error("quote_items_failed");}
+  await fetch(SUPABASE_URL+"/rest/v1/quote_events",{method:"POST",headers,body:JSON.stringify({quote_request_id:id,event_type:"created",to_status:"new",message:"تم إنشاء الطلب من المنصة.",is_internal:true}),cache:"no-store"}).catch(()=>null);
   return NextResponse.json({id},{status:201});
  }catch{return NextResponse.json({error:"تعذر حفظ الطلب حاليًا"},{status:500});}
 }
