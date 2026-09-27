@@ -763,6 +763,97 @@ export const serviceSpecifications: Record<string, ServiceSpec[]> = {
     quoteQty("لوحة")
   ],
 
+  "traffic-regulatory-sign": [
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "الجهة/المشروع/المواصفة إن كانت معروفة", group: "الامتثال", required: true },
+    { key: "purpose", label: "الغرض", type: "text", placeholder: "تنظيم/منع/إلزام", group: "الاستخدام", required: true },
+    { key: "reflective_class", label: "فئة الانعكاس", type: "select", options: ["تحدد من المواصفة — لا اختيار افتراضي", "ASTM Type I / RA1 عند سماح المواصفة", "ASTM Type III/IV أو RA2 عند سماح المواصفة", "ASTM Type IX/XI أو RA3 عند اشتراطها", "فئة أخرى منصوص عليها بالمشروع"], group: "الامتثال", helpText: "فئة الانعكاس يحددها الكود أو الجهة الحاكمة. لا تستبدل الفئات ببعضها تلقائيًا." },
+    { key: "standard_ref", label: "رقم المواصفة أو بند العقد", type: "text", placeholder: "إن وجد", group: "الامتثال" },
+    { key: "dimensions", label: "المقاس/الكود", type: "text", placeholder: "المقاس أو رمز اللوحة القياسي", group: "المقاس", required: true },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["معدن حسب المواصفة", "سطح قائم يحتاج إعادة تجهيز", "محدد بمستند المشروع", "تحدده رواج بعد المراجعة"], group: "الخامة" },
+    { key: "imaging", label: "نظام تنفيذ الجرافيك", type: "select", options: ["نظام متوافق مع الفيلم تحدده رواج", "Digital print ضمن نظام مصنع معتمد", "Screen print ضمن نظام مصنع معتمد", "Cut/overlay film متوافق", "Electronic cut حسب النظام"], group: "الطباعة", helpText: "الطابعة والحبر والفيلم والـoverlay تُعامل كنظام متوافق؛ لا تُفترض صلاحية أي توليفة." },
+    { key: "mounting", label: "التركيب", type: "select", options: ["عمود/أعمدة", "جدار/واجهة", "هيكل قائم", "توريد فقط", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع والارتفاع وظروف التركيب إن عُرفت", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "traffic-warning-sign": [
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "الجهة/المشروع/المواصفة إن كانت معروفة", group: "الامتثال", required: true },
+    { key: "purpose", label: "الغرض", type: "text", placeholder: "تحذير من خطر أو تغير بالطريق", group: "الاستخدام", required: true },
+    { key: "reflective_class", label: "فئة الانعكاس", type: "select", options: ["تحدد من المواصفة — لا اختيار افتراضي", "ASTM Type I / RA1 عند سماح المواصفة", "ASTM Type III/IV أو RA2 عند سماح المواصفة", "ASTM Type IX/XI أو RA3 عند اشتراطها", "فئة أخرى منصوص عليها بالمشروع"], group: "الامتثال", helpText: "فئة الانعكاس يحددها الكود أو الجهة الحاكمة. لا تستبدل الفئات ببعضها تلقائيًا." },
+    { key: "standard_ref", label: "رقم المواصفة أو بند العقد", type: "text", placeholder: "إن وجد", group: "الامتثال" },
+    { key: "dimensions", label: "المقاس/الكود", type: "text", placeholder: "المقاس أو رمز اللوحة القياسي", group: "المقاس", required: true },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["معدن حسب المواصفة", "سطح قائم يحتاج إعادة تجهيز", "محدد بمستند المشروع", "تحدده رواج بعد المراجعة"], group: "الخامة" },
+    { key: "imaging", label: "نظام تنفيذ الجرافيك", type: "select", options: ["نظام متوافق مع الفيلم تحدده رواج", "Digital print ضمن نظام مصنع معتمد", "Screen print ضمن نظام مصنع معتمد", "Cut/overlay film متوافق", "Electronic cut حسب النظام"], group: "الطباعة", helpText: "الطابعة والحبر والفيلم والـoverlay تُعامل كنظام متوافق؛ لا تُفترض صلاحية أي توليفة." },
+    { key: "mounting", label: "التركيب", type: "select", options: ["عمود/أعمدة", "جدار/واجهة", "هيكل قائم", "توريد فقط", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع والارتفاع وظروف التركيب إن عُرفت", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "traffic-guide-sign": [
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "الجهة/المشروع/المواصفة إن كانت معروفة", group: "الامتثال", required: true },
+    { key: "purpose", label: "الغرض", type: "text", placeholder: "وجهات ومسارات ومعلومات طريق", group: "الاستخدام", required: true },
+    { key: "reflective_class", label: "فئة الانعكاس", type: "select", options: ["تحدد من المواصفة — لا اختيار افتراضي", "ASTM Type I / RA1 عند سماح المواصفة", "ASTM Type III/IV أو RA2 عند سماح المواصفة", "ASTM Type IX/XI أو RA3 عند اشتراطها", "فئة أخرى منصوص عليها بالمشروع"], group: "الامتثال", helpText: "فئة الانعكاس يحددها الكود أو الجهة الحاكمة. لا تستبدل الفئات ببعضها تلقائيًا." },
+    { key: "standard_ref", label: "رقم المواصفة أو بند العقد", type: "text", placeholder: "إن وجد", group: "الامتثال" },
+    { key: "dimensions", label: "المقاس/الكود", type: "text", placeholder: "المقاس أو رمز اللوحة القياسي", group: "المقاس", required: true },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["معدن حسب المواصفة", "سطح قائم يحتاج إعادة تجهيز", "محدد بمستند المشروع", "تحدده رواج بعد المراجعة"], group: "الخامة" },
+    { key: "imaging", label: "نظام تنفيذ الجرافيك", type: "select", options: ["نظام متوافق مع الفيلم تحدده رواج", "Digital print ضمن نظام مصنع معتمد", "Screen print ضمن نظام مصنع معتمد", "Cut/overlay film متوافق", "Electronic cut حسب النظام"], group: "الطباعة", helpText: "الطابعة والحبر والفيلم والـoverlay تُعامل كنظام متوافق؛ لا تُفترض صلاحية أي توليفة." },
+    { key: "mounting", label: "التركيب", type: "select", options: ["عمود/أعمدة", "جدار/واجهة", "هيكل قائم", "توريد فقط", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع والارتفاع وظروف التركيب إن عُرفت", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "parking-reflective-sign": [
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "الجهة/المشروع/المواصفة إن كانت معروفة", group: "الامتثال", required: true },
+    { key: "purpose", label: "الغرض", type: "text", placeholder: "تنظيم وإرشاد المواقف", group: "الاستخدام", required: true },
+    { key: "reflective_class", label: "فئة الانعكاس", type: "select", options: ["تحدد من المواصفة — لا اختيار افتراضي", "ASTM Type I / RA1 عند سماح المواصفة", "ASTM Type III/IV أو RA2 عند سماح المواصفة", "ASTM Type IX/XI أو RA3 عند اشتراطها", "فئة أخرى منصوص عليها بالمشروع"], group: "الامتثال", helpText: "فئة الانعكاس يحددها الكود أو الجهة الحاكمة. لا تستبدل الفئات ببعضها تلقائيًا." },
+    { key: "standard_ref", label: "رقم المواصفة أو بند العقد", type: "text", placeholder: "إن وجد", group: "الامتثال" },
+    { key: "dimensions", label: "المقاس/الكود", type: "text", placeholder: "المقاس أو رمز اللوحة القياسي", group: "المقاس", required: true },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["معدن حسب المواصفة", "سطح قائم يحتاج إعادة تجهيز", "محدد بمستند المشروع", "تحدده رواج بعد المراجعة"], group: "الخامة" },
+    { key: "imaging", label: "نظام تنفيذ الجرافيك", type: "select", options: ["نظام متوافق مع الفيلم تحدده رواج", "Digital print ضمن نظام مصنع معتمد", "Screen print ضمن نظام مصنع معتمد", "Cut/overlay film متوافق", "Electronic cut حسب النظام"], group: "الطباعة", helpText: "الطابعة والحبر والفيلم والـoverlay تُعامل كنظام متوافق؛ لا تُفترض صلاحية أي توليفة." },
+    { key: "mounting", label: "التركيب", type: "select", options: ["عمود/أعمدة", "جدار/واجهة", "هيكل قائم", "توريد فقط", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع والارتفاع وظروف التركيب إن عُرفت", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "work-zone-reflective-sign": [
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "الجهة/المشروع/المواصفة إن كانت معروفة", group: "الامتثال", required: true },
+    { key: "purpose", label: "الغرض", type: "text", placeholder: "تحذير وتوجيه مؤقت لمناطق العمل", group: "الاستخدام", required: true },
+    { key: "reflective_class", label: "فئة الانعكاس", type: "select", options: ["تحدد من المواصفة — لا اختيار افتراضي", "ASTM Type I / RA1 عند سماح المواصفة", "ASTM Type III/IV أو RA2 عند سماح المواصفة", "ASTM Type IX/XI أو RA3 عند اشتراطها", "فئة أخرى منصوص عليها بالمشروع"], group: "الامتثال", helpText: "فئة الانعكاس يحددها الكود أو الجهة الحاكمة. لا تستبدل الفئات ببعضها تلقائيًا." },
+    { key: "standard_ref", label: "رقم المواصفة أو بند العقد", type: "text", placeholder: "إن وجد", group: "الامتثال" },
+    { key: "dimensions", label: "المقاس/الكود", type: "text", placeholder: "المقاس أو رمز اللوحة القياسي", group: "المقاس", required: true },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["معدن حسب المواصفة", "سطح قائم يحتاج إعادة تجهيز", "محدد بمستند المشروع", "تحدده رواج بعد المراجعة"], group: "الخامة" },
+    { key: "imaging", label: "نظام تنفيذ الجرافيك", type: "select", options: ["نظام متوافق مع الفيلم تحدده رواج", "Digital print ضمن نظام مصنع معتمد", "Screen print ضمن نظام مصنع معتمد", "Cut/overlay film متوافق", "Electronic cut حسب النظام"], group: "الطباعة", helpText: "الطابعة والحبر والفيلم والـoverlay تُعامل كنظام متوافق؛ لا تُفترض صلاحية أي توليفة." },
+    { key: "mounting", label: "التركيب", type: "select", options: ["عمود/أعمدة", "جدار/واجهة", "هيكل قائم", "توريد فقط", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع والارتفاع وظروف التركيب إن عُرفت", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "street-name-reflective-sign": [
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "الجهة/المشروع/المواصفة إن كانت معروفة", group: "الامتثال", required: true },
+    { key: "purpose", label: "الغرض", type: "text", placeholder: "تعريف الشوارع والمواقع", group: "الاستخدام", required: true },
+    { key: "reflective_class", label: "فئة الانعكاس", type: "select", options: ["تحدد من المواصفة — لا اختيار افتراضي", "ASTM Type I / RA1 عند سماح المواصفة", "ASTM Type III/IV أو RA2 عند سماح المواصفة", "ASTM Type IX/XI أو RA3 عند اشتراطها", "فئة أخرى منصوص عليها بالمشروع"], group: "الامتثال", helpText: "فئة الانعكاس يحددها الكود أو الجهة الحاكمة. لا تستبدل الفئات ببعضها تلقائيًا." },
+    { key: "standard_ref", label: "رقم المواصفة أو بند العقد", type: "text", placeholder: "إن وجد", group: "الامتثال" },
+    { key: "dimensions", label: "المقاس/الكود", type: "text", placeholder: "المقاس أو رمز اللوحة القياسي", group: "المقاس", required: true },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["معدن حسب المواصفة", "سطح قائم يحتاج إعادة تجهيز", "محدد بمستند المشروع", "تحدده رواج بعد المراجعة"], group: "الخامة" },
+    { key: "imaging", label: "نظام تنفيذ الجرافيك", type: "select", options: ["نظام متوافق مع الفيلم تحدده رواج", "Digital print ضمن نظام مصنع معتمد", "Screen print ضمن نظام مصنع معتمد", "Cut/overlay film متوافق", "Electronic cut حسب النظام"], group: "الطباعة", helpText: "الطابعة والحبر والفيلم والـoverlay تُعامل كنظام متوافق؛ لا تُفترض صلاحية أي توليفة." },
+    { key: "mounting", label: "التركيب", type: "select", options: ["عمود/أعمدة", "جدار/واجهة", "هيكل قائم", "توريد فقط", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع والارتفاع وظروف التركيب إن عُرفت", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "facility-safety-reflective-sign": [
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "الجهة/المشروع/المواصفة إن كانت معروفة", group: "الامتثال", required: true },
+    { key: "purpose", label: "الغرض", type: "text", placeholder: "سلامة وتحذير وإرشاد داخل المواقع والمنشآت", group: "الاستخدام", required: true },
+    { key: "reflective_class", label: "فئة الانعكاس", type: "select", options: ["تحدد من المواصفة — لا اختيار افتراضي", "ASTM Type I / RA1 عند سماح المواصفة", "ASTM Type III/IV أو RA2 عند سماح المواصفة", "ASTM Type IX/XI أو RA3 عند اشتراطها", "فئة أخرى منصوص عليها بالمشروع"], group: "الامتثال", helpText: "فئة الانعكاس يحددها الكود أو الجهة الحاكمة. لا تستبدل الفئات ببعضها تلقائيًا." },
+    { key: "standard_ref", label: "رقم المواصفة أو بند العقد", type: "text", placeholder: "إن وجد", group: "الامتثال" },
+    { key: "dimensions", label: "المقاس/الكود", type: "text", placeholder: "المقاس أو رمز اللوحة القياسي", group: "المقاس", required: true },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["معدن حسب المواصفة", "سطح قائم يحتاج إعادة تجهيز", "محدد بمستند المشروع", "تحدده رواج بعد المراجعة"], group: "الخامة" },
+    { key: "imaging", label: "نظام تنفيذ الجرافيك", type: "select", options: ["نظام متوافق مع الفيلم تحدده رواج", "Digital print ضمن نظام مصنع معتمد", "Screen print ضمن نظام مصنع معتمد", "Cut/overlay film متوافق", "Electronic cut حسب النظام"], group: "الطباعة", helpText: "الطابعة والحبر والفيلم والـoverlay تُعامل كنظام متوافق؛ لا تُفترض صلاحية أي توليفة." },
+    { key: "mounting", label: "التركيب", type: "select", options: ["عمود/أعمدة", "جدار/واجهة", "هيكل قائم", "توريد فقط", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع والارتفاع وظروف التركيب إن عُرفت", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
   identity: [
     { key: "business", label: "نوع النشاط", type: "text", placeholder: "مثال: مطعم، شركة، متجر...", group: "النشاط" },
     { key: "scope", label: "النطاق", type: "select", options: ["شعار فقط", "هوية أساسية", "هوية متكاملة"], group: "النطاق" },
