@@ -293,7 +293,7 @@ export async function getDepartmentDetail(slug: string) {
   }>(
     "services?select=slug,name,short_description,hero_url,badge,service_categories(name)&department_id=eq." +
     row.id +
-    "&is_published=eq.true&order=sort_order.asc"
+    "&is_published=eq.true&verification_status=eq.approved&order=sort_order.asc"
   );
 
   const services = serviceRows?.map((service) => ({
