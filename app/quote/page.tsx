@@ -4,10 +4,8 @@ import { FormEvent, useEffect, useState } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { CONTACT, packages, services } from "@/lib/content";
-import { getServices, getPackages } from "@/lib/cms";
 
 export default function QuotePage() {
-  // Client-side fallback options remain available; live catalog integration is loaded below.
   const [name,setName]=useState("");
   const [phone,setPhone]=useState("");
   const [service,setService]=useState("");
