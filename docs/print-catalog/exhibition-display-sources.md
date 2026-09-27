@@ -47,3 +47,19 @@ The bulletin documents inkjet/screen-print compatibility and use for signs, trad
 3. For new hardware, capture finished footprint, visible graphic size/face count, portability, lighting and case requirements.
 4. Do not promise exact dimensions until the selected hardware system/template is confirmed.
 5. All services remain RFQ-only; hardware availability is supplier-dependent.
+
+
+## 2026-09-27 verification addendum
+
+- Orbus, SEG Graphics: silicone beading is sewn to the graphic and pushed into a recessed aluminum-frame channel; SEG is used across wall-mounted, suspended and freestanding systems. Source: https://www.orbus.com/seg-graphics
+- Orbus, Blaze SEG Light Boxes: illuminated SEG combines frame, LED lighting and fabric graphic; mounting can be wall, freestanding or hanging, so illumination/mounting must be explicit RFQ fields. Source: https://www.orbus.com/products-by-category/blaze-seg-light-boxes
+- Orbus, Vector Frame light box: commercial systems can be single- or double-sided and use edge lighting plus push-fit fabric graphics. Source: https://www.orbus.com/vector-frame-master-light-box-0404
+- Displayit, Trade Show Table Covers: throw, fitted and stretch/flex are distinct constructions; full-color dye sublimation is used on polyester fabrics and the table size/style must be captured before production. Source: https://displayit.com/trade-show-accessories/table-covers/
+
+### Catalog rules confirmed
+
+1. Do not model SEG, pillowcase tension fabric and retractable banner hardware as interchangeable systems.
+2. Replacement graphics require the hardware model/template or exact finished graphic dimensions and finishing method.
+3. Lightbox RFQs must explicitly capture illuminated/non-illuminated, mounting, single/double-sided requirement and electrical/site constraints.
+4. Table-cover RFQs must capture table dimensions and construction (throw/fitted/stretch); do not infer fit from nominal event-booth size.
+5. These services remain quote-only; hardware compatibility is reviewed before production.
