@@ -12,15 +12,23 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22.13.0
+          package-manager-cache: false
 
       - name: Install dependencies
         run: npm install
+
+      - name: Capture dependency lock
+        uses: actions/upload-artifact@v7
+        with:
+          path: package-lock.json
+          archive: false
+          retention-days: 1
 
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
