@@ -9,6 +9,7 @@ const paperExpanded="docs/print-catalog/paper-products-expansion-sources.md";
 const packaging="docs/print-catalog/labels-packaging-sources.md";
 const large="docs/print-catalog/large-format-signage-sources.md";
 const specialty="docs/print-catalog/textile-specialty-sources.md";
+const reflective="docs/print-catalog/large-format-signage-sources.md";
 
 export const catalogRouting:Record<string,CatalogRoute>={
   cards:{departmentSlug:"paper-printing",categorySlug:"paper-business-stationery",provenanceDoc:paper},
@@ -71,6 +72,7 @@ export const catalogRouting:Record<string,CatalogRoute>={
   letters:{departmentSlug:"signage",categorySlug:"signage-channel-letters",provenanceDoc:large},
   "dimensional-letters":{departmentSlug:"signage",categorySlug:"signage-dimensional",provenanceDoc:large},
   "acrylic-sign":{departmentSlug:"signage",categorySlug:"signage-rigid",provenanceDoc:large},
+  "reflective-sign":{departmentSlug:"signage",categorySlug:"signage-reflective-safety",provenanceDoc:reflective},
   facade:{departmentSlug:"facades",categorySlug:"facades-acp",provenanceDoc:large},
 
   "textile-sublimation":{departmentSlug:"textile-promotional",categorySlug:"specialty-sublimation",provenanceDoc:specialty},
