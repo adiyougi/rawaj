@@ -74,7 +74,7 @@ export default function HomeExperience({slides,ticker,departments,services,packa
           <form className="store-search" onSubmit={submitSearch}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
             <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="ابحث عن خدمة أو منتج..." aria-label="البحث عن خدمة"/>
-            {query && <button type="button" onClick={()=>setQuery("")}>×</button>}
+            {query && <button type="button" onClick={()=>setQuery("")} aria-label="مسح البحث">×</button>}
           </form>
 
           <div className="category-chips" aria-label="تصنيفات الخدمات">
@@ -109,7 +109,7 @@ export default function HomeExperience({slides,ticker,departments,services,packa
 
         <section className="store-section">
           <div className="store-section-head">
-            <div><small>باقات مخصصة</small><h2>أكثر من خدمة في عرض واحد</h2></div>
+            <div><small>باقات مخصصة</small><h2>أكثر من خدمة في طلب واحد</h2></div>
             <Link href="/packages">كل الباقات</Link>
           </div>
           <div className="offer-strip">
