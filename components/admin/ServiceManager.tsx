@@ -257,6 +257,19 @@ export default function ServiceManager(){
       setMessage("الخدمة لا تُنشر قبل اعتمادها. غيّر «حالة المراجعة» إلى «معتمدة للنشر» أولًا.");
       return;
     }
+    if(form.is_published && !form.templateKey){
+      setMessage("الخدمة المنشورة يجب أن تكون مرتبطة بقالب Master Catalog موثّق.");
+      return;
+    }
+    const publishTemplate=serviceTemplates.find(item=>item.key===form.templateKey);
+    if(form.is_published && (!publishTemplate || publishTemplate.verification!=="verified" || !publishTemplate.provenanceDoc)){
+      setMessage("لا يمكن النشر: القالب الفني يحتاج حالة موثقة ومصدرًا بحثيًا مسجلًا.");
+      return;
+    }
+    if(form.is_published && form.specs.length===0){
+      setMessage("الخدمة المنشورة تحتاج نموذج مواصفات طلب عرض سعر.");
+      return;
+    }
     if(form.is_published && !form.hero_url){
       setMessage("الخدمة المنشورة تحتاج صورة رئيسية. يمكنك حفظها كمسودة بدون صورة.");
       return;
