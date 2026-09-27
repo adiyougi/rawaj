@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "check": "npm run typecheck && npm run build"
+    "check": "npm run validate:catalog && npm run typecheck && npm run build",
+    "validate:catalog": "node scripts/validate-catalog.mjs"
   },
   "dependencies": {
     "next": "^15.5.0",
