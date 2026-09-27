@@ -4,6 +4,9 @@ import SiteFooter from "@/components/SiteFooter";
 import InnerHero from "@/components/InnerHero";
 import { IMAGES } from "@/lib/content";
 import { getPosts } from "@/lib/cms";
+import type { Metadata } from "next";
+
+export const metadata:Metadata={title:"مدونة رواج",description:"أدلة عملية عن الطباعة والخامات والتشطيبات واللوحات والهوية والإنتاج.",alternates:{canonical:"/blog"}};
 
 export default async function BlogPage() {
   const posts = await getPosts();
