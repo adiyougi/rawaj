@@ -32,10 +32,10 @@ export default function CartDrawer(){
             </div>
             <div className="cart-summary">
               <div><span>الخدمات المختارة</span><strong>{items.length}</strong></div>
-              <p>سيتم إرسال الطلب إلى واتساب لاستكمال السعر والمواصفات النهائية.</p>
+              <p>راجع الخدمات ثم انتقل إلى نموذج عرض السعر لإضافة بيانات التواصل وإرسال الطلب.</p>
             </div>
             <div className="cart-drawer-actions">
-              <button className="btn btn-primary full" onClick={sendToWhatsApp}>إرسال الطلب عبر واتساب</button>
+              <Link className="btn btn-primary full" href="/quote" onClick={()=>setOpen(false)}>متابعة طلب عرض السعر</Link>\n              <button className="clear-cart" onClick={sendToWhatsApp}>إرسال نسخة عبر واتساب</button>
               <button className="clear-cart" onClick={clear}>تفريغ السلة</button>
             </div>
           </>
