@@ -225,6 +225,19 @@ export const serviceSpecifications: Record<string, ServiceSpec[]> = {
     quoteQty("نسخة")
   ],
 
+  "book-hardcover": [
+    { key: "size", label: "المقاس النهائي", type: "select", options: ["A4", "A5", "Letter", "مربع", "Landscape", "مقاس مخصص"], group: "المقاس" },
+    { key: "pages", label: "عدد الصفحات", type: "number", placeholder: "مثال: 160", unit: "صفحة", group: "المحتوى", helpText: "عدد الصفحات وسماكة الورق يؤثران في بنية الـBook Block وعرض الكعب؛ يعتمد المقاس النهائي على مواصفة المورد." },
+    { key: "inside_stock", label: "ورق الصفحات الداخلية", type: "select", options: ["Coated Gloss للصور", "Coated Matte", "Uncoated للنصوص/الكتابة", "خامة خاصة حسب العينة"], group: "الخامة" },
+    { key: "case_style", label: "نظام الغلاف الصلب", type: "select", options: ["Printed Case Wrap", "Printed Case + Dust Jacket", "Cloth Wrapped Case", "PU / Synthetic Leather Case", "أحتاج توصية رواج"], group: "الغلاف", helpText: "Printed Case يلف Artwork مطبوعًا ومصفحًا حول ألواح الغلاف؛ Cloth/PU يحتاج مسار تخصيص مناسب مثل الفويل حسب المورد." },
+    { key: "binding", label: "بنية التجليد", type: "select", options: ["Sewn signatures / Smyth sewn حسب المورد", "Case-bound construction يحددها المورد", "أحتاج توصية حسب الاستخدام"], group: "التجليد", helpText: "لا يُعامل Hardcover كـPerfect Bound بغلاف سميك؛ الـCase والـBook Block ومراحل casing-in بنية مختلفة." },
+    { key: "cover_finish", label: "تشطيب الغلاف", type: "select", options: ["Matte Lamination", "Gloss Lamination", "Soft-touch / Anti-scratch حسب المورد", "Foil Stamping", "Emboss / Deboss", "Spot UV حسب التوافق", "بدون تشطيب إضافي"], group: "التشطيب" },
+    { key: "endsheets", label: "Endsheets / أوراق الربط", type: "select", options: ["قياسية حسب نظام المورد", "مطبوعة/مخصصة", "خامة أو لون خاص حسب المورد"], group: "التجليد", helpText: "Endsheets جزء بنيوي في نظام Case-bound وتُثبت مواصفاتها مع جهة الإنتاج." },
+    { key: "accessories", label: "ملحقات الكتاب", type: "select", options: ["بدون", "Ribbon Bookmark", "Head/Tail Bands", "Ribbon + Head/Tail Bands", "ملحقات أخرى حسب المورد"], group: "الملحقات" },
+    { key: "proof", label: "نوع المراجعة قبل الإنتاج", type: "select", options: ["PDF Proof", "Hardcopy / Physical Proof عند توفره", "يحدد حسب المشروع"], group: "المراجعة" },
+    quoteQty("نسخة")
+  ],
+
   "book-wire-o": [
     { key: "size", label: "المقاس النهائي", type: "select", options: ["A4", "A5", "Letter", "مقاس مخصص"], group: "المقاس" },
     { key: "pages", label: "عدد الصفحات", type: "number", placeholder: "مثال: 80", unit: "صفحة", group: "المحتوى" },
