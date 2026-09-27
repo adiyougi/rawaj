@@ -60,20 +60,17 @@ export const adminSections: Record<string, AdminSection> = {
     ]
   },
   services: {
-    slug:"services", title:"كتالوج الخدمات", description:"إدارة كل خدمة كمنتج مستقل بمواصفاتها وصورها.",
-    table:"services", orderField:"sort_order", list:["name","slug","badge","featured","is_published"],
+    slug:"services", title:"كتالوج الخدمات", description:"إدارة الخدمات عبر المحرر المتخصص والقوالب الفنية المراجعة.",
+    table:"services", orderField:"sort_order", list:["name","badge","featured","is_published"],
     fields:[
-      {name:"name",label:"اسم الخدمة",required:true},{name:"slug",label:"الرابط المختصر",required:true},
+      {name:"name",label:"اسم الخدمة",required:true},
       {name:"department_id",label:"القسم",relation:{table:"departments",value:"id",label:"name"}},
       {name:"category_id",label:"التصنيف",relation:{table:"service_categories",value:"id",label:"name"}},
       {name:"short_description",label:"وصف مختصر",type:"textarea"},{name:"description",label:"الوصف الكامل",type:"textarea"},
-      {name:"hero_url",label:"الصورة الرئيسية"},{name:"gallery",label:"المعرض JSON",type:"json"},
-      {name:"badge",label:"شارة البطاقة"},{name:"starting_price",label:"سعر يبدأ من",type:"number"},
-      {name:"price_label",label:"وصف السعر"},{name:"specifications",label:"المواصفات JSON",type:"json"},
-      {name:"highlights",label:"المميزات JSON",type:"json"},{name:"faq",label:"الأسئلة JSON",type:"json"},
+      {name:"hero_url",label:"الصورة الرئيسية"},{name:"badge",label:"شارة البطاقة"},
       {name:"featured",label:"مميزة",type:"boolean"},{name:"sort_order",label:"الترتيب",type:"number"},
-      {name:"is_published",label:"منشورة",type:"boolean"},{name:"seo_title",label:"عنوان SEO"},
-      {name:"seo_description",label:"وصف SEO",type:"textarea"}
+      {name:"is_published",label:"منشورة",type:"boolean"},{name:"seo_title",label:"عنوان الظهور في البحث"},
+      {name:"seo_description",label:"وصف الظهور في البحث",type:"textarea"}
     ]
   },
   packages: {
