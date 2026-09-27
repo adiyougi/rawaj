@@ -15,6 +15,7 @@ const cards = [
 
 export default function AdminDashboard() {
   const [counts,setCounts] = useState<Record<string,number>>({});
+  const [catalog,setCatalog] = useState({verified:0,approved:0,legacy:0});
 
   useEffect(()=>{
     (async()=>{
@@ -25,6 +26,12 @@ export default function AdminDashboard() {
         result[table] = count || 0;
       }
       setCounts(result);
+      const [{count:verified},{count:approved},{count:legacy}] = await Promise.all([
+        supabase.from("services").select("*",{count:"exact",head:true}).eq("verification_status","verified").eq("is_published",false),
+        supabase.from("services").select("*",{count:"exact",head:true}).eq("verification_status","approved").eq("is_published",true),
+        supabase.from("services").select("*",{count:"exact",head:true}).eq("verification_status","legacy")
+      ]);
+      setCatalog({verified:verified||0,approved:approved||0,legacy:legacy||0});
     })();
   },[]);
 
@@ -49,7 +56,7 @@ export default function AdminDashboard() {
           ))}
         </div>
 
-        <div className="admin-dashboard-grid">
+        <div className="admin-dashboard-grid"><article><span className="admin-kicker">MASTER CATALOG</span><h2>حالة اعتماد الكتالوج</h2><p>موثقة وتنتظر الاعتماد: <strong>{catalog.verified}</strong> · منشورة ومعتمدة: <strong>{catalog.approved}</strong> · قديمة للمراجعة: <strong>{catalog.legacy}</strong></p><a className="admin-primary" href="/admin/services">مراجعة الخدمات</a></article>
           <article>
             <span className="admin-kicker">محتوى الرئيسية</span>
             <h2>كل موديول أصبح قابلًا للإدارة.</h2>
