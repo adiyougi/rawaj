@@ -17,6 +17,7 @@ export default function QuoteForm({services,packages}:{services:Option[];package
    const response=await fetch("/api/quotes",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({customer_name:name.trim(),phone:phone.trim(),notes:details.trim()||null,items:payload})});
    const result=await response.json();
    if(!response.ok) throw new Error(result?.error||"تعذر حفظ الطلب");
+   if(!result?.id) throw new Error("تعذر تأكيد رقم الطلب");
    const req={id:String(result.id)};
    const lines=payload.map((x,i)=>`${i+1}. ${x.title} × ${x.quantity}`).join("\n");
    const wa="طلب عرض سعر جديد من منصة رواج\nرقم الطلب: "+req.id+"\nالاسم: "+name+"\nرقم التواصل: "+phone+(lines?"\n\n"+lines:"")+(details?"\n\nالتفاصيل: "+details:"");
