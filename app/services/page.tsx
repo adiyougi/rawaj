@@ -2,6 +2,9 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ServiceCatalog from "@/components/ServiceCatalog";
 import { getServices } from "@/lib/cms";
+import type { Metadata } from "next";
+
+export const metadata:Metadata={title:"كتالوج الخدمات",description:"استكشف خدمات رواج للطباعة والإعلان واللوحات والتغليف والمعارض والتخصيص، وحدد المواصفات لطلب عرض سعر.",alternates:{canonical:"/services"}};
 
 export default async function ServicesPage({searchParams}:{searchParams:Promise<{q?:string}>}){
   const [services,params]=await Promise.all([getServices(),searchParams]);
