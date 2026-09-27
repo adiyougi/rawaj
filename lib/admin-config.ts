@@ -1,4 +1,4 @@
-export type AdminFieldType = "text" | "textarea" | "number" | "boolean" | "json" | "csv" | "date" | "datetime" | "select";
+export type AdminFieldType = "text" | "textarea" | "number" | "boolean" | "json" | "csv" | "lines" | "date" | "datetime" | "select";
 
 export type AdminField = {
   name: string;
@@ -50,7 +50,7 @@ export const adminSections: Record<string, AdminSection> = {
   },
   categories: {
     slug:"categories", title:"تصنيفات الخدمات", description:"التصنيفات الرئيسية والفرعية للكتالوج.",
-    table:"service_categories", orderField:"sort_order", list:["name","slug","is_published","sort_order"],
+    table:"service_categories", orderField:"sort_order", list:["name","is_published","sort_order"],
     fields:[
       {name:"name",label:"اسم التصنيف",required:true},
       {name:"department_id",label:"القسم",relation:{table:"departments",value:"id",label:"name"}},
@@ -101,9 +101,9 @@ export const adminSections: Record<string, AdminSection> = {
       {name:"title",label:"عنوان المشروع",required:true},
       {name:"category",label:"التصنيف"},{name:"summary",label:"ملخص",type:"textarea"},
       {name:"description",label:"الوصف الكامل",type:"textarea"},{name:"cover_url",label:"صورة الغلاف"},
-      {name:"gallery",label:"المعرض JSON",type:"json"},{name:"video_url",label:"رابط الفيديو"},
+      {name:"gallery",label:"صور المعرض — رابط في كل سطر",type:"lines"},{name:"video_url",label:"رابط الفيديو"},
       {name:"project_date",label:"تاريخ المشروع",type:"date"},{name:"client_name",label:"اسم العميل"},
-      {name:"services",label:"الخدمات JSON",type:"json"},{name:"featured",label:"مميز",type:"boolean"},
+      {name:"services",label:"الخدمات المستخدمة — خدمة في كل سطر",type:"lines"},{name:"featured",label:"مميز",type:"boolean"},
       {name:"sort_order",label:"الترتيب",type:"number"},{name:"is_published",label:"منشور",type:"boolean"}
     ]
   },
@@ -141,7 +141,7 @@ export const adminSections: Record<string, AdminSection> = {
     table:"blog_posts", orderField:"published_at", list:["title","category","featured","is_published"],
     fields:[
       {name:"title",label:"عنوان المقال",required:true},
-      {name:"excerpt",label:"المقتطف",type:"textarea"},{name:"content",label:"المحتوى JSON",type:"json"},
+      {name:"excerpt",label:"المقتطف",type:"textarea"},{name:"content",label:"فقرات المقال — فقرة في كل سطر",type:"lines"},
       {name:"category",label:"التصنيف"},{name:"tags",label:"الوسوم",type:"csv"},
       {name:"cover_url",label:"صورة الغلاف"},{name:"author_name",label:"الكاتب"},
       {name:"published_at",label:"تاريخ النشر",type:"datetime"},{name:"reading_minutes",label:"دقائق القراءة",type:"number"},
