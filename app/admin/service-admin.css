@@ -99,3 +99,10 @@
 .admin-quote-item dl{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 0}.admin-quote-item dl>div{display:flex;gap:4px;background:#fff;border:1px solid #e7e2d9;border-radius:999px;padding:4px 7px;font-size:8px}.admin-quote-item dt{color:var(--admin-muted)}.admin-quote-item dd{margin:0;font-weight:800}
 .quote-status{display:grid;gap:6px}.quote-status>span{font-size:9px;font-weight:800;color:var(--admin-muted)}
 @media(max-width:720px){.quote-admin-controls{grid-template-columns:1fr}.quote-admin-card{grid-template-columns:1fr}.quote-status{border-top:1px solid var(--admin-line);padding-top:10px}}
+
+
+/* Dashboard RFQ inbox */
+.dashboard-inbox{grid-column:span 2}.dashboard-inbox.attention{border-color:#d9b7bb;box-shadow:inset 3px 0 0 var(--admin-red)}
+.dashboard-recent-quotes{display:grid;gap:6px;margin:12px 0 16px}.dashboard-recent-quotes>a{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--admin-line);border-radius:11px;padding:9px 10px;color:inherit;text-decoration:none;background:#faf9f6}.dashboard-recent-quotes>a:hover{border-color:#aaa49a}
+.dashboard-recent-quotes span{display:grid;gap:2px;min-width:0}.dashboard-recent-quotes strong{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dashboard-recent-quotes small{font-size:8px;color:var(--admin-muted)}.dashboard-recent-quotes em{font-style:normal;font-size:8px;font-weight:800;white-space:nowrap;background:#fff;border:1px solid var(--admin-line);border-radius:999px;padding:4px 7px}
+@media(max-width:720px){.dashboard-inbox{grid-column:auto}}
