@@ -4,6 +4,9 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import ServiceCard from "@/components/ServiceCard";
 import { getDepartmentDetail } from "@/lib/cms";
+import type { Metadata } from "next";
+
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{const {slug}=await params;const data=await getDepartmentDetail(slug);if(!data)return {title:"القسم غير موجود"};const description=("description" in data.department?data.department.description:data.department.text)||"";return {title:data.department.title,description,alternates:{canonical:"/departments/"+slug},openGraph:{title:data.department.title,description,images:data.department.image?[data.department.image]:[]}};}
 
 export default async function DepartmentPage({params}:{params:Promise<{slug:string}>}){
   const {slug}=await params;
