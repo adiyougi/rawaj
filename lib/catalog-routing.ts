@@ -10,6 +10,7 @@ const packaging="docs/print-catalog/labels-packaging-sources.md";
 const large="docs/print-catalog/large-format-signage-sources.md";
 const specialty="docs/print-catalog/textile-specialty-sources.md";
 const reflective="docs/print-catalog/large-format-signage-sources.md";
+const exhibitions="docs/print-catalog/exhibition-display-sources.md";
 
 export const catalogRouting:Record<string,CatalogRoute>={
   cards:{departmentSlug:"paper-printing",categorySlug:"paper-business-stationery",provenanceDoc:paper},
@@ -47,17 +48,17 @@ export const catalogRouting:Record<string,CatalogRoute>={
   "coroplast-sign":{departmentSlug:"digital-printing",categorySlug:"large-rigid",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},
   "foam-board-display":{departmentSlug:"digital-printing",categorySlug:"large-rigid",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},
 
-  "retractable-banner-stand":{departmentSlug:"exhibitions-displays",categorySlug:"display-banner-stands",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},
-  "tension-fabric-banner":{departmentSlug:"exhibitions-displays",categorySlug:"display-fabric",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},
-  "pop-up-backwall":{departmentSlug:"exhibitions-displays",categorySlug:"display-backwalls",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},
-  "seg-fabric-frame":{departmentSlug:"exhibitions-displays",categorySlug:"display-seg",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},
-  "seg-lightbox":{departmentSlug:"exhibitions-displays",categorySlug:"display-seg",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},
-  "table-cover":{departmentSlug:"exhibitions-displays",categorySlug:"display-tables-counters",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},
-  "trade-show-counter":{departmentSlug:"exhibitions-displays",categorySlug:"display-tables-counters",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},
-  "event-tent":{departmentSlug:"exhibitions-displays",categorySlug:"display-outdoor",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},
-  "event-flag":{departmentSlug:"exhibitions-displays",categorySlug:"display-outdoor",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},
-  "hanging-display":{departmentSlug:"exhibitions-displays",categorySlug:"display-hanging",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},
-  "modular-exhibit":{departmentSlug:"exhibitions-displays",categorySlug:"display-modular",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},
+  "retractable-banner-stand":{departmentSlug:"exhibitions-displays",categorySlug:"display-banner-stands",provenanceDoc:exhibitions},
+  "tension-fabric-banner":{departmentSlug:"exhibitions-displays",categorySlug:"display-fabric",provenanceDoc:exhibitions},
+  "pop-up-backwall":{departmentSlug:"exhibitions-displays",categorySlug:"display-backwalls",provenanceDoc:exhibitions},
+  "seg-fabric-frame":{departmentSlug:"exhibitions-displays",categorySlug:"display-seg",provenanceDoc:exhibitions},
+  "seg-lightbox":{departmentSlug:"exhibitions-displays",categorySlug:"display-seg",provenanceDoc:exhibitions},
+  "table-cover":{departmentSlug:"exhibitions-displays",categorySlug:"display-tables-counters",provenanceDoc:exhibitions},
+  "trade-show-counter":{departmentSlug:"exhibitions-displays",categorySlug:"display-tables-counters",provenanceDoc:exhibitions},
+  "event-tent":{departmentSlug:"exhibitions-displays",categorySlug:"display-outdoor",provenanceDoc:exhibitions},
+  "event-flag":{departmentSlug:"exhibitions-displays",categorySlug:"display-outdoor",provenanceDoc:exhibitions},
+  "hanging-display":{departmentSlug:"exhibitions-displays",categorySlug:"display-hanging",provenanceDoc:exhibitions},
+  "modular-exhibit":{departmentSlug:"exhibitions-displays",categorySlug:"display-modular",provenanceDoc:exhibitions},
 
   banner:{departmentSlug:"digital-printing",categorySlug:"large-banners",provenanceDoc:large},
   "mesh-banner":{departmentSlug:"digital-printing",categorySlug:"large-banners",provenanceDoc:large},
