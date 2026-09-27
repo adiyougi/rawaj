@@ -1,5 +1,5 @@
 export type SpecialtyContent={description:string;highlights:string[];faq:Array<{question:string;answer:string}>};
-const generic=(description:string,highlights:string[],question:string,answer:string):SpecialtyContent=>({description,highlights,faq:[{question,answer},{question:"هل يوجد سعر ثابت؟",answer:"لا. الخدمة بنظام طلب عرض سعر بعد مراجعة الخامة والمقاس والكمية والتجهيزات."}]});
+const generic=(description:string,highlight:string,question:string,answer:string):SpecialtyContent=>({description,highlights:[highlight],faq:[{question,answer},{question:"هل يوجد سعر ثابت؟",answer:"لا. الخدمة بنظام طلب عرض سعر بعد مراجعة الخامة والمقاس والكمية والتجهيزات."}]});
 export const specialtyContent:Record<string,SpecialtyContent>={
 "textile-sublimation":generic("طباعة تصعيد حراري على أقمشة بوليستر مناسبة، حيث تتحول الصبغة بالحرارة وتندمج مع الألياف بدل تكوين طبقة سطحية.","يجب تحديد تركيب القماش ولونه ومقاس القطعة.","هل تصلح لكل الأقمشة؟","تعمل أساسًا مع البوليستر أو الأسطح المجهزة للتصعيد؛ الأقمشة الطبيعية تحتاج تقنية أخرى."),
 "sublimation-hard-goods":generic("تخصيص منتجات صلبة مجهزة بطبقة استقبال للتصعيد الحراري مثل بعض الأكواب والألواح والمنتجات الترويجية.","يجب تأكيد أن المنتج مخصص للتصعيد وقالب الطباعة الخاص به.","هل يمكن الطباعة على أي كوب أو قطعة؟","لا. السطح يحتاج طلاءً أو تجهيزًا متوافقًا مع التصعيد."),
