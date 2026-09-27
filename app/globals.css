@@ -191,3 +191,21 @@ body{background:var(--bg);font-family:"IBM Plex Sans Arabic","Alexandria",system
 
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 :focus-visible{outline:3px solid color-mix(in srgb,var(--red) 70%,white);outline-offset:3px}
+
+
+/* Rawaj brand emphasis + mobile theme access */
+:root{--red:#e3132d;--red2:#ff3144}
+.header-cart-btn{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 8px 22px color-mix(in srgb,var(--red) 18%,transparent)}
+.header-cart-btn:hover{background:#c90f28;border-color:#c90f28}
+.mobile-menu-cta{background:var(--red)}
+.category-chips button.active{background:var(--red);border-color:var(--red);color:#fff}
+.shop-badge{background:var(--red);color:#fff}
+.quick-add{background:var(--red);color:#fff;border-color:var(--red)}
+.quick-add:hover{background:#c90f28}
+.app-hero-dots button.active{background:var(--red)}
+.store-section-head>a,.shop-service-copy>small{color:var(--red)}
+.bottom-nav .active{color:var(--red);background:color-mix(in srgb,var(--red) 11%,transparent)}
+@media(max-width:720px){
+  .theme-toggle{display:grid!important;place-items:center;width:36px;height:36px;min-width:36px;border-radius:11px}
+  .theme-toggle span{font-size:15px;line-height:1}
+}
