@@ -32,7 +32,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const saved = localStorage.getItem("rawaj-cart");
     if (saved) {
-      try { setItems(JSON.parse(saved)); } catch {}
+      try { const parsed=JSON.parse(saved); if(Array.isArray(parsed)) setItems(parsed.slice(0,30).filter((x:any)=>x&&typeof x.id==="string"&&typeof x.title==="string"&&Number.isFinite(x.qty)&&x.qty>0)); } catch { localStorage.removeItem("rawaj-cart"); }
     }
     setHydrated(true);
   }, []);

@@ -1,8 +1,12 @@
 [build]
   command = "npm run build"
+  publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22.13.0"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 [context.production]
   command = "npm run build"
@@ -12,3 +16,7 @@
 
 [context.branch-deploy]
   command = "npm run build"
+
+# Research/development branch: never spend Netlify build credits.
+[context.autopilot]
+  ignore = "exit 0"

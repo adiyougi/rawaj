@@ -1,0 +1,38 @@
+import { NextResponse } from "next/server";
+
+type Item={title?:unknown;quantity?:unknown;specifications?:unknown};
+type QuoteItem={title:string;quantity:number;specifications:Record<string,unknown>};
+const SUPABASE_URL=process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SERVER_KEY=process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+function clean(value:unknown,max:number){return typeof value==="string"?value.trim().slice(0,max):"";}
+const buckets=new Map<string,{count:number;reset:number}>();
+function limited(key:string){const now=Date.now(),old=buckets.get(key);if(!old||old.reset<now){buckets.set(key,{count:1,reset:now+60000});return false;}old.count++;return old.count>8;}
+
+export async function POST(request:Request){
+ const forwarded=request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()||"unknown";
+ if(limited(forwarded)) return NextResponse.json({error:"طلبات كثيرة خلال وقت قصير. حاول بعد دقيقة."},{status:429});
+ if(!SUPABASE_URL||!SERVER_KEY) return NextResponse.json({error:"خدمة الطلبات غير مهيأة على الخادم"},{status:503});
+ try{
+  const body=await request.json();
+  const name=clean(body.customer_name,120),company=clean(body.company_name,160),phone=clean(body.phone,40),whatsapp=clean(body.whatsapp,40),email=clean(body.email,180),city=clean(body.city,120),deadline=clean(body.deadline,20),notes=clean(body.notes,3000);
+  const rawItems:Item[]=Array.isArray(body.items)?body.items.slice(0,30):[];
+  if(!rawItems.length) return NextResponse.json({error:"اختر خدمة أو أضف خدمة إلى السلة"},{status:400});
+  const items:QuoteItem[]=rawItems.reduce<QuoteItem[]>((result,item)=>{
+   const title=clean(item.title,180);
+   const specifications:Record<string,unknown>=typeof item.specifications==="object"&&item.specifications&&!Array.isArray(item.specifications)?item.specifications as Record<string,unknown>:{};
+   if(!title||JSON.stringify(specifications).length>6000) return result;
+   result.push({title,quantity:Math.min(9999,Math.max(1,Number(item.quantity)||1)),specifications});
+   return result;
+  },[]);
+  if(name.length<2||phone.length<5) return NextResponse.json({error:"أدخل الاسم ورقم التواصل بشكل صحيح"},{status:400});
+  const headers={apikey:SERVER_KEY,Authorization:"Bearer "+SERVER_KEY,"Content-Type":"application/json",Prefer:"return=representation"};
+  const safeDeadline=/^\d{4}-\d{2}-\d{2}$/.test(deadline)?deadline:null;
+  const created=await fetch(SUPABASE_URL+"/rest/v1/quote_requests",{method:"POST",headers,body:JSON.stringify({customer_name:name,company_name:company||null,phone,whatsapp:whatsapp||null,email:email||null,city:city||null,deadline:safeDeadline,notes:notes||null,source:"website",status:"new"}),cache:"no-store"});
+  if(!created.ok) throw new Error("quote_request_failed");
+  const rows=await created.json();const id=rows?.[0]?.id;if(!id) throw new Error("quote_id_missing");
+  if(items.length){const saved=await fetch(SUPABASE_URL+"/rest/v1/quote_request_items",{method:"POST",headers,body:JSON.stringify(items.map((item:QuoteItem)=>({...item,quote_request_id:id}))),cache:"no-store"});if(!saved.ok) throw new Error("quote_items_failed");}
+  await fetch(SUPABASE_URL+"/rest/v1/quote_events",{method:"POST",headers,body:JSON.stringify({quote_request_id:id,event_type:"created",to_status:"new",message:"تم إنشاء الطلب من المنصة.",is_internal:true}),cache:"no-store"}).catch(()=>null);
+  return NextResponse.json({id},{status:201});
+ }catch{return NextResponse.json({error:"تعذر حفظ الطلب حاليًا"},{status:500});}
+}

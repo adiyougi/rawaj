@@ -5,108 +5,1159 @@ export type ServiceSpec = {
   placeholder?: string;
   options?: string[];
   unit?: string;
+  group?: string;
+  helpText?: string;
+  required?: boolean;
 };
+
+const quoteQty = (unit = "نسخة"): ServiceSpec => ({
+  key: "qty",
+  label: "الكمية المطلوبة",
+  type: "number",
+  placeholder: "مثال: 1000",
+  unit,
+  group: "الكمية"
+});
 
 export const serviceSpecifications: Record<string, ServiceSpec[]> = {
   cards: [
-    { key: "size", label: "المقاس", type: "select", options: ["9 × 5 سم", "8.5 × 5.5 سم", "مقاس مخصص"] },
-    { key: "sides", label: "وجه الطباعة", type: "select", options: ["وجه واحد", "وجهين"] },
-    { key: "paper", label: "نوع الورق", type: "select", options: ["كوشيه", "بريستول", "ورق فاخر", "أحتاج اقتراح رواج"] },
-    { key: "qty", label: "الكمية", type: "number", placeholder: "مثال: 500", unit: "حبة" },
-    { key: "lamination", label: "السلفنة", type: "select", options: ["بدون", "مطفي", "لامع"] },
-    { key: "finish", label: "إضافات وتشطيب", type: "select", options: ["عادي", "زوايا دائرية", "فويل", "UV موضعي", "قص خاص"] }
+    { key: "size", label: "المقاس النهائي", type: "select", options: ["90 × 50 مم", "85 × 55 مم", "مربع", "مقاس مخصص"], group: "المقاس" },
+    { key: "sides", label: "أوجه الطباعة", type: "select", options: ["وجه واحد", "وجهين"], group: "الطباعة" },
+    { key: "stock", label: "الخامة", type: "select", options: ["كرتون مطلي C2S", "كرتون غير مطلي", "ورق/كرتون فاخر محبب أو طبيعي", "بلاستيك شفاف أو أبيض", "أحتاج عينة واقتراح رواج"], group: "الخامة", helpText: "الخامة النهائية تُثبت حسب العينة وتقنية الطباعة المتاحة." },
+    { key: "shape", label: "الشكل والقص", type: "select", options: ["مستطيل", "مربع", "زوايا دائرية", "قص خاص حسب التصميم"], group: "القص" },
+    { key: "lamination", label: "التغليف السطحي", type: "select", options: ["بدون", "مطفي", "لامع", "Silk / Velvet حسب المورد"], group: "التشطيب" },
+    { key: "special_finish", label: "تشطيب خاص", type: "select", options: ["بدون", "فويل معدني", "Spot UV", "فويل + Spot UV حسب إمكانية المورد"], group: "التشطيب" },
+    quoteQty("بطاقة")
   ],
-  invoices: [
-    { key: "size", label: "المقاس", type: "select", options: ["A4", "A5", "مقاس مخصص"] },
-    { key: "copies", label: "عدد النسخ في المجموعة", type: "select", options: ["أصل + نسخة", "أصل + نسختين", "مخصص"] },
-    { key: "books", label: "عدد الدفاتر", type: "number", placeholder: "مثال: 20", unit: "دفتر" },
-    { key: "numbering", label: "ترقيم", type: "select", options: ["بدون ترقيم", "ترقيم متسلسل"] },
-    { key: "binding", label: "التجليد", type: "select", options: ["لصق", "دبوس", "حسب الاستخدام"] }
-  ],
-  brochures: [
-    { key: "size", label: "المقاس", type: "select", options: ["A4", "A5", "DL", "مقاس مخصص"] },
-    { key: "fold", label: "الطي", type: "select", options: ["بدون طي", "طية واحدة", "طيتان", "أكورديون"] },
-    { key: "paper", label: "الورق", type: "select", options: ["كوشيه خفيف", "كوشيه ثقيل", "ورق فاخر"] },
-    { key: "qty", label: "الكمية", type: "number", placeholder: "مثال: 1000", unit: "حبة" },
-    { key: "finish", label: "التشطيب", type: "select", options: ["بدون", "سلفنة مطفية", "سلفنة لامعة", "UV موضعي"] }
-  ],
+
   letterheads: [
-    { key: "item", label: "المنتج", type: "select", options: ["ورق رسمي", "ظرف", "ورق + ظرف"] },
-    { key: "size", label: "المقاس", type: "select", options: ["A4", "A5", "ظرف DL", "مخصص"] },
-    { key: "paper", label: "نوع الورق", type: "select", options: ["أوفست", "فاخر", "أحتاج اقتراح"] },
-    { key: "qty", label: "الكمية", type: "number", placeholder: "مثال: 1000" }
+    { key: "size", label: "المقاس النهائي", type: "select", options: ["A4", "A5", "Letter", "Legal", "مقاس مخصص"], group: "المقاس" },
+    { key: "paper", label: "نوع الورق", type: "select", options: ["ورق غير مطلي مناسب للكتابة والطابعات المكتبية", "ورق فاخر غير مطلي حسب العينة", "خامة خاصة حسب الطلب"], group: "الخامة", helpText: "الأوراق الرسمية تُفضّل غير مطلية حتى تقبل الكتابة والطباعة المكتبية." },
+    { key: "sides", label: "أوجه الطباعة", type: "select", options: ["وجه أمامي فقط", "وجهين"], group: "الطباعة" },
+    { key: "bundling", label: "تجهيز الرزم", type: "select", options: ["بدون تجهيز خاص", "تغليف رزم / شرنك حسب الكمية"], group: "التجهيز" },
+    quoteQty("ورقة")
   ],
+
+  envelopes: [
+    { key: "size", label: "مقاس الظرف", type: "select", options: ["DL", "C6", "C5", "C4", "A7", "#10", "9 × 12 بوصة", "مقاس مخصص"], group: "المقاس", helpText: "سلسلة C مخصصة أساسًا لمواءمة مقاسات سلسلة A وفق المعايير الدولية." },
+    { key: "stock", label: "خامة الظرف", type: "select", options: ["ورق أبيض غير مطلي", "Premium Opaque", "Linen غير مطلي", "ورق طبيعي / فاخر", "خامة خاصة حسب الطلب"], group: "الخامة" },
+    { key: "window", label: "نافذة العنوان", type: "select", options: ["بدون نافذة", "نافذة قياسية", "موضع مخصص حسب النموذج"], group: "البنية" },
+    { key: "opening", label: "جهة الفتح", type: "select", options: ["الضلع الطويل", "الضلع القصير", "حسب نوع الظرف"], group: "البنية" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["وجه خارجي", "وجهان", "طباعة داخلية/خارجية حسب المورد"], group: "الطباعة" },
+    { key: "variable_data", label: "عناوين متغيرة", type: "select", options: ["غير مطلوبة", "عناوين/بيانات متغيرة"], group: "الطباعة" },
+    quoteQty("ظرف")
+  ],
+
+  invoices: [
+    { key: "size", label: "المقاس النهائي", type: "select", options: ["A4", "A5", "A6", "Letter", "Legal", "مقاس مخصص"], group: "المقاس" },
+    { key: "parts", label: "عدد أجزاء المجموعة", type: "select", options: ["جزآن", "3 أجزاء", "4 أجزاء", "أكثر حسب متطلبات العمل وتوفر الخامة"], group: "NCR", helpText: "النظام القياسي يتكون من CB في الأعلى وCF في الأسفل، ومع أكثر من ورقتين تستخدم CFB في الوسط." },
+    { key: "set_colors", label: "تسلسل ألوان النسخ", type: "select", options: ["أبيض + أصفر", "أبيض + أصفر + وردي", "أبيض + أصفر + وردي + ذهبي", "تسلسل آخر حسب توفر ورق NCR"], group: "NCR" },
+    { key: "ink", label: "طباعة النموذج", type: "select", options: ["أسود", "ألوان كاملة", "وجه أمامي وظهر فارغ", "طباعة على الوجهين حسب الحاجة"], group: "الطباعة" },
+    { key: "format", label: "طريقة التجميع", type: "select", options: ["مجموعات منفصلة", "بلوك مع ظهر كرتوني", "دفتر بغطاء Wrap-around"], group: "التجميع" },
+    { key: "sets_per_pad", label: "عدد المجموعات في البلوك/الدفتر", type: "select", options: ["25", "50", "100", "عدد مخصص"], group: "التجميع" },
+    { key: "glued_edge", label: "جهة لصق المجموعة", type: "select", options: ["أعلى", "يسار", "يمين", "أسفل", "تحدد حسب التصميم"], group: "التجميع" },
+    { key: "perforation", label: "تخريم الفصل", type: "select", options: ["بدون", "تخريم فصل داخل الدفتر", "يُحدد حسب نموذج الاستخدام"], group: "التجميع", helpText: "يستخدم لتسهيل نزع النسخ، وقد تُترك النسخة الأخيرة مثبتة في بعض دفاتر النماذج." },
+    { key: "numbering", label: "الترقيم المتسلسل", type: "select", options: ["بدون", "ترقيم أسود", "ترقيم أحمر"], group: "الترقيم" },
+    { key: "start_number", label: "رقم البداية", type: "text", placeholder: "مثال: 0001001", group: "الترقيم" },
+    { key: "filing_holes", label: "تخريم للأرشفة", type: "select", options: ["بدون", "مطلوب — يحدد الموضع مع رواج"], group: "التجهيز" },
+    { key: "pads_qty", label: "عدد البلوكات/الدفاتر", type: "number", placeholder: "مثال: 20", unit: "دفتر", group: "الكمية" }
+  ],
+
+  flyers: [
+    { key: "size", label: "المقاس النهائي", type: "select", options: ["A6", "A5", "A4", "DL", "Letter", "مقاس مخصص"], group: "المقاس" },
+    { key: "paper", label: "نوع الخامة", type: "select", options: ["ورق مطلي Gloss", "ورق مطلي Matte", "ورق غير مطلي", "كرتون خفيف/ثقيل حسب الاستخدام"], group: "الخامة" },
+    { key: "sides", label: "أوجه الطباعة", type: "select", options: ["وجه واحد", "وجهين"], group: "الطباعة" },
+    { key: "coating", label: "الطلاء/الحماية", type: "select", options: ["بدون", "Matte", "Gloss", "High Gloss / UV حسب الخامة والمورد"], group: "التشطيب" },
+    quoteQty("نسخة")
+  ],
+
+  brochures: [
+    { key: "open_size", label: "المقاس قبل الطي", type: "select", options: ["A4", "A3", "Letter", "Legal", "11 × 17 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "fold", label: "نوع الطي", type: "select", options: ["نصف طية Half Fold", "ثلاثي Tri-Fold", "Z-Fold", "Gate Fold", "Double Gate Fold", "Double Parallel", "Accordion", "Roll Fold", "Right-Angle Fold", "بدون طي"], group: "الطي" },
+    { key: "paper", label: "نوع الخامة", type: "select", options: ["ورق مطلي Gloss", "ورق مطلي Matte", "ورق غير مطلي", "كرتون خفيف حسب التصميم"], group: "الخامة" },
+    { key: "sides", label: "أوجه الطباعة", type: "select", options: ["وجه واحد", "وجهين"], group: "الطباعة" },
+    { key: "coating", label: "الطلاء/الحماية", type: "select", options: ["بدون", "Matte", "Gloss", "High Gloss / UV", "Aqueous / Satin Aqueous حسب المورد"], group: "التشطيب" },
+    { key: "score", label: "التخديد قبل الطي", type: "select", options: ["يُحدد تلقائيًا حسب الخامة", "مطلوب للخامات السميكة"], group: "الطي", helpText: "الخامات السميكة قد تحتاج تخديدًا قبل الطي لتقليل تشقق سطح الطباعة." },
+    quoteQty("نسخة")
+  ],
+
+  "presentation-folders": [
+    { key: "size", label: "المقاس النهائي", type: "select", options: ["9 × 12 بوصة", "6 × 9 بوصة", "5.25 × 10.5 بوصة", "9 × 14.5 بوصة Legal", "مقاس مخصص"], group: "المقاس" },
+    { key: "stock", label: "الخامة", type: "select", options: ["14PT C2S", "16PT C2S", "Uncoated / Natural", "Pearl Metallic", "خامة فاخرة حسب العينة"], group: "الخامة" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["الخارج فقط", "الخارج + الداخل", "الخارج ملون والداخل لون واحد", "يحدد حسب التصميم"], group: "الطباعة" },
+    { key: "pockets", label: "الجيوب", type: "select", options: ["جيب يمين", "جيب يسار", "جيبان", "Pocket style مخصص"], group: "البنية" },
+    { key: "card_slit", label: "فتحة كرت شخصي", type: "select", options: ["بدون", "يمين أفقي", "يمين رأسي", "يسار أفقي", "يسار رأسي", "على الجيبين"], group: "التجهيز" },
+    { key: "finish", label: "التشطيب السطحي", type: "select", options: ["بدون", "UV", "Spot UV", "Silk Lamination", "Velvet / Soft-touch Lamination", "حسب المورد والخامة"], group: "التشطيب" },
+    quoteQty("فولدر")
+  ],
+
+  menus: [
+    { key: "format", label: "شكل المنيو", type: "select", options: ["Flat / بدون طي", "Half Fold", "Tri-fold", "Z-Fold", "Accordion", "مقاس/بنية مخصصة"], group: "البنية" },
+    { key: "size", label: "المقاس", type: "select", options: ["A5", "A4", "A3", "Letter", "11 × 17 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "stock", label: "الخامة", type: "select", options: ["70lb Uncoated", "80lb Paper", "100lb Paper", "10PT Cardstock", "14PT Uncoated Cardstock", "14PT Cardstock", "16PT Cardstock", "Synthetic / Waterproof — خدمة منفصلة عند الحاجة"], group: "الخامة" },
+    { key: "printing", label: "أوجه الطباعة", type: "select", options: ["وجه واحد", "وجهين"], group: "الطباعة" },
+    { key: "coating", label: "الحماية", type: "select", options: ["بدون", "Gloss", "Matte", "Lamination حسب الاستخدام", "يحدد وفق قابلية التنظيف المطلوبة"], group: "التشطيب" },
+    { key: "scoring", label: "التخديد", type: "select", options: ["لا يحتاج", "يحتاج Scoring قبل الطي", "تحدده رواج حسب سماكة الخامة"], group: "التجهيز" },
+    { key: "drilling", label: "تخريم", type: "select", options: ["بدون", "فتحة واحدة", "3 فتحات", "موقع خاص"], group: "التجهيز" },
+    quoteQty("نسخة")
+  ],
+
+  tickets: [
+    { key: "size", label: "المقاس", type: "select", options: ["2 × 5.5 بوصة", "2.75 × 5.5 بوصة", "2.75 × 8.5 بوصة", "3.5 × 8.5 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "stock", label: "الخامة", type: "select", options: ["10PT Cardstock", "14PT Uncoated Cardstock", "خامة مخصصة"], group: "الخامة" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["وجه ملون وظهر فارغ", "وجهين Full Color"], group: "الطباعة" },
+    { key: "coating", label: "الطلاء", type: "select", options: ["بدون / Uncoated للكتابة", "Gloss", "Matte", "High Gloss UV"], group: "التشطيب" },
+    { key: "perforation", label: "خطوط الفصل Perforation", type: "select", options: ["بدون", "خط واحد", "خطان", "3 خطوط", "موضع مخصص"], group: "التجهيز" },
+    { key: "numbering", label: "ترقيم متسلسل", type: "select", options: ["بدون", "أسود", "لون آخر حسب الإمكانية"], group: "الترقيم" },
+    { key: "number_start", label: "رقم البداية", type: "text", placeholder: "مثال: 000100", group: "الترقيم" },
+    { key: "number_location", label: "موضع الترقيم", type: "select", options: ["أعلى يمين", "أعلى يسار", "أسفل يمين", "أسفل يسار", "على طرف التذكرة", "موضع محدد في التصميم"], group: "الترقيم" },
+    quoteQty("تذكرة")
+  ],
+
+  postcards: [
+    { key: "size", label: "المقاس", type: "select", options: ["4 × 6 بوصة", "5 × 7 بوصة", "4 × 9 بوصة", "5.5 × 8.5 بوصة", "6 × 9 بوصة", "6 × 11 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "stock", label: "الخامة", type: "select", options: ["14PT C2S", "16PT C2S", "100LB Gloss Cover", "Uncoated / Writable", "Ultra-thick / specialty stock"], group: "الخامة" },
+    { key: "printing", label: "أوجه الطباعة", type: "select", options: ["وجه واحد", "وجهين", "وجه ملون + ظهر للكتابة/العنوان"], group: "الطباعة" },
+    { key: "coating", label: "التشطيب", type: "select", options: ["بدون", "Matte", "Aqueous", "Satin Aqueous", "UV Front Only", "UV on printed side", "Spot UV حسب المنتج"], group: "التشطيب" },
+    { key: "score", label: "Scoring / طي", type: "select", options: ["بدون", "Score in half", "One score", "Two scores"], group: "التجهيز" },
+    { key: "tearoff", label: "جزء Tear-off", type: "select", options: ["بدون", "Perforated coupon / card section", "يحدد حسب التصميم"], group: "التجهيز" },
+    quoteQty("بطاقة")
+  ],
+
+  "hang-tags": [
+    { key: "size", label: "المقاس", type: "select", options: ["1.5 × 3.5 بوصة", "2 × 3.5 بوصة", "2 × 4 بوصة", "2 × 5 بوصة", "3 × 3 بوصة", "4 × 6 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "shape", label: "الشكل", type: "select", options: ["Rectangle", "Square", "Rounded corners", "Custom die-cut"], group: "القص" },
+    { key: "stock", label: "الخامة", type: "select", options: ["14PT C2S", "14PT Uncoated", "16PT C2S", "18PT C1S", "خامة فاخرة مخصصة"], group: "الخامة" },
+    { key: "printing", label: "أوجه الطباعة", type: "select", options: ["وجه واحد", "وجهين"], group: "الطباعة" },
+    { key: "coating", label: "التشطيب", type: "select", options: ["بدون", "Aqueous", "Matte", "UV", "Spot UV", "Silk / Laminated specialty"], group: "التشطيب" },
+    { key: "hole", label: "فتحة التعليق", type: "select", options: ["بدون", "Drill hole 1/8 بوصة", "Bottleneck / die-cut تعليق", "موضع مخصص"], group: "التجهيز" },
+    quoteQty("Tag")
+  ],
+
+  "door-hangers": [
+    { key: "size", label: "المقاس", type: "select", options: ["3.5 × 8.5 بوصة", "3.5 × 11 بوصة", "4 × 7 بوصة", "4.25 × 11 بوصة", "4.25 × 14 بوصة"], group: "المقاس" },
+    { key: "stock", label: "الخامة", type: "select", options: ["14PT C2S", "14PT Uncoated", "16PT C2S", "100LB Gloss Cover", "100LB Gloss Book", "Synthetic waterproof"], group: "الخامة" },
+    { key: "printing", label: "أوجه الطباعة", type: "select", options: ["وجه واحد", "وجهين"], group: "الطباعة" },
+    { key: "coating", label: "التشطيب", type: "select", options: ["بدون", "Aqueous", "Satin Aqueous", "UV Front Only", "UV on printed side"], group: "التشطيب" },
+    { key: "diecut", label: "فتحة الباب / Die-cut", type: "select", options: ["Standard", "Arch", "Starburst", "Custom"], group: "القص" },
+    { key: "tearoff", label: "جزء Tear-off", type: "select", options: ["بدون", "Perforated tear-off", "موضع مخصص"], group: "التجهيز" },
+    quoteQty("قطعة")
+  ],
+
+  "greeting-invitations": [
+    { key: "product", label: "نوع البطاقة", type: "select", options: ["دعوة", "Greeting Card", "Save the Date", "بطاقة شكر", "بطاقة مناسبة/تهنئة", "بطاقة مؤسسية"], group: "المنتج" },
+    { key: "size", label: "المقاس", type: "select", options: ["A6 / قريب منه", "A5 مطوي", "5 × 7 بوصة", "5.5 × 8.5 بوصة مطوي", "6 × 9 بوصة مطوي", "مقاس مخصص"], group: "المقاس" },
+    { key: "stock", label: "الخامة", type: "select", options: ["14PT C2S", "14PT Uncoated", "Natural", "16PT C2S", "Kraft", "Linen", "Pearl Metallic", "خامة فاخرة حسب العينة"], group: "الخامة" },
+    { key: "printing", label: "مناطق الطباعة", type: "select", options: ["الخارج فقط", "الخارج + الداخل", "وجهين بدون طي"], group: "الطباعة" },
+    { key: "finish", label: "التشطيب", type: "select", options: ["بدون", "Matte", "Aqueous", "Spot UV", "Velvet / Soft-touch", "Raised Foil", "Foil specialty حسب المورد"], group: "التشطيب" },
+    { key: "foil", label: "لون الفويل — إن اختير", type: "select", options: ["غير مطبق", "Gold", "Silver", "Holographic", "لون/نظام خاص"], group: "التشطيب" },
+    { key: "score", label: "الطي", type: "select", options: ["بدون طي", "Score + Fold in half"], group: "التجهيز" },
+    { key: "envelope", label: "المظروف", type: "select", options: ["بدون", "مظروف أبيض", "Natural/Kraft", "Pearl/Specialty", "مطبوعة ومخصصة — خدمة مظاريف"], group: "الملحقات" },
+    quoteQty("بطاقة")
+  ],
+
+  "wall-calendars": [
+    { key: "size", label: "المقاس المغلق", type: "select", options: ["11 × 8.5 بوصة", "8.5 × 5.5 بوصة", "12 × 9 بوصة", "12 × 12 بوصة", "6 × 6 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "months", label: "عدد الشهور/المحتوى", type: "select", options: ["12 شهر", "13 شهر", "18 شهر", "محتوى مخصص"], group: "المحتوى" },
+    { key: "binding", label: "التجليد", type: "select", options: ["Saddle Stitch", "Spiral", "Wire-O"], group: "التجليد" },
+    { key: "paper", label: "ورق الصفحات", type: "select", options: ["Gloss", "Matte", "Uncoated", "يحدد حسب الاستخدام"], group: "الخامة" },
+    { key: "cover", label: "الغلاف", type: "select", options: ["Self cover", "غلاف أثقل", "بدون غلاف مستقل"], group: "الخامة" },
+    quoteQty("تقويم")
+  ],
+
+  "desk-calendars": [
+    { key: "size", label: "المقاس", type: "select", options: ["10 × 4.5 بوصة", "8.5 × 5.5 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "months", label: "عدد الشهور/الأوراق", type: "select", options: ["12 شهر", "13 شهر", "محتوى مخصص"], group: "المحتوى" },
+    { key: "binding", label: "التجليد", type: "select", options: ["Wire-O", "Spiral", "Saddle Stitch", "Perfect Bound — حسب التصميم"], group: "التجليد" },
+    { key: "paper", label: "خامة الصفحات", type: "select", options: ["Gloss", "Matte", "Uncoated", "خامة خاصة"], group: "الخامة" },
+    { key: "stand", label: "قاعدة/حامل", type: "select", options: ["قاعدة كرتونية مدمجة", "قاعدة/ستاند خاص", "يحدد مع رواج"], group: "البنية" },
+    quoteQty("تقويم")
+  ],
+
+  notepads: [
+    { key: "size", label: "مقاس الورقة", type: "select", options: ["4.25 × 5.5 بوصة", "4 × 6 بوصة", "5.5 × 8.5 بوصة", "8.5 × 11 بوصة", "A5", "A4", "مقاس مخصص"], group: "المقاس" },
+    { key: "sheets", label: "عدد الأوراق في الباد", type: "select", options: ["25", "50", "100", "عدد مخصص"], group: "المحتوى" },
+    { key: "paper", label: "نوع الورق", type: "select", options: ["Uncoated مناسب للكتابة", "Gloss paper", "ورق خاص للكتابة"], group: "الخامة" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["وجه واحد", "وجهين"], group: "الطباعة" },
+    { key: "glue", label: "جهة اللصق", type: "select", options: ["أعلى", "يسار", "يمين", "أسفل"], group: "التجميع" },
+    { key: "backing", label: "ظهر الباد", type: "select", options: ["Cardboard backing", "بدون ظهر", "ظهر مخصص"], group: "التجميع" },
+    { key: "drill", label: "تخريم", type: "select", options: ["بدون", "فتحة واحدة", "3 فتحات"], group: "التجهيز" },
+    { key: "pads", label: "عدد البادات", type: "number", placeholder: "مثال: 100", unit: "باد", group: "الكمية" }
+  ],
+
+  notebooks: [
+    { key: "size", label: "مقاس الدفتر", type: "select", options: ["A6", "A5", "A4", "5.5 × 8.5 بوصة", "8.5 × 11 بوصة", "مقاس مخصص"], group: "المقاس" },
+    { key: "inside_pattern", label: "نمط الصفحات", type: "select", options: ["Blank", "Ruled / مسطر", "Graph / مربعات", "Custom printed pages"], group: "المحتوى" },
+    { key: "sheets", label: "عدد الأوراق", type: "select", options: ["25", "50", "100", "عدد مخصص"], group: "المحتوى" },
+    { key: "inside_paper", label: "ورق الداخل", type: "select", options: ["Uncoated مناسب للكتابة", "ورق مخصص حسب الاستخدام"], group: "الخامة" },
+    { key: "cover", label: "الغلاف", type: "select", options: ["14PT Cardstock", "18PT Cardstock", "غلاف مطبوع + Lamination", "غلاف مخصص"], group: "الخامة" },
+    { key: "binding", label: "التجليد", type: "select", options: ["Wire-O", "Spiral", "تجليد آخر حسب التصميم"], group: "التجليد" },
+    { key: "wire_color", label: "لون السلك", type: "select", options: ["أسود", "أبيض", "لون آخر حسب المورد"], group: "التجليد" },
+    quoteQty("دفتر")
+  ],
+
   catalogs: [
-    { key: "size", label: "المقاس النهائي", type: "select", options: ["A4", "A5", "مربع", "مخصص"] },
-    { key: "pages", label: "عدد الصفحات", type: "number", placeholder: "مثال: 24", unit: "صفحة" },
-    { key: "paper", label: "ورق الصفحات", type: "select", options: ["كوشيه", "مطفي", "فاخر"] },
-    { key: "binding", label: "التجليد", type: "select", options: ["دبوس", "غراء حراري", "سلك", "مخصص"] },
-    { key: "qty", label: "الكمية", type: "number", placeholder: "مثال: 200", unit: "نسخة" }
+    { key: "size", label: "المقاس النهائي", type: "select", options: ["A4", "A5", "مربع", "Letter", "مقاس مخصص"], group: "المقاس" },
+    { key: "pages", label: "عدد الصفحات", type: "number", placeholder: "مثال: 48", unit: "صفحة", group: "المحتوى" },
+    { key: "binding", label: "نوع التجليد", type: "select", options: ["Saddle Stitch — تدبيس في الكعب", "Perfect Bound — غراء وكعب مربع", "Spiral", "Wire-O"], group: "التجليد", helpText: "الاختيار يعتمد على عدد الصفحات وطريقة الاستخدام والحاجة إلى كعب مطبوع أو فتح مسطح." },
+    { key: "inside_stock", label: "ورق الصفحات الداخلية", type: "select", options: ["مطلي Gloss", "مطلي Matte", "غير مطلي للكتابة", "خامة خاصة حسب العينة"], group: "الخامة" },
+    { key: "cover_stock", label: "خامة الغلاف", type: "select", options: ["نفس خامة الداخل", "كرتون مطلي أثقل", "كرتون Matte أثقل", "خامة فاخرة حسب العينة"], group: "الخامة" },
+    { key: "cover_finish", label: "تشطيب الغلاف", type: "select", options: ["بدون", "سلفنة مطفية", "سلفنة لامعة", "Soft Touch", "UV / Aqueous حسب الخامة والمورد"], group: "التشطيب" },
+    quoteQty("نسخة")
   ],
+
+  "booklet-saddle": [
+    { key: "size", label: "المقاس النهائي", type: "select", options: ["A4", "A5", "A6", "Letter", "مربع", "مقاس مخصص"], group: "المقاس" },
+    { key: "pages", label: "عدد الصفحات", type: "number", placeholder: "مثال: 24", unit: "صفحة", group: "المحتوى", helpText: "التدبيس في الكعب يعتمد على ملازم مطوية، لذلك يُراجع عدد الصفحات مع رواج قبل الإنتاج." },
+    { key: "inside_stock", label: "ورق الداخل", type: "select", options: ["Gloss", "Matte", "غير مطلي"], group: "الخامة" },
+    { key: "cover", label: "الغلاف", type: "select", options: ["Self Cover — نفس ورق الداخل", "غلاف أثقل مستقل"], group: "الخامة" },
+    { key: "cover_finish", label: "تشطيب الغلاف", type: "select", options: ["بدون", "سلفنة", "UV / Aqueous حسب الخامة"], group: "التشطيب" },
+    quoteQty("نسخة")
+  ],
+
+  "book-perfect": [
+    { key: "size", label: "المقاس النهائي", type: "select", options: ["A4", "A5", "Letter", "مربع", "مقاس مخصص"], group: "المقاس" },
+    { key: "pages", label: "عدد الصفحات", type: "number", placeholder: "مثال: 120", unit: "صفحة", group: "المحتوى" },
+    { key: "inside_stock", label: "ورق الداخل", type: "select", options: ["Gloss", "Matte", "غير مطلي"], group: "الخامة" },
+    { key: "cover_stock", label: "خامة الغلاف", type: "select", options: ["كرتون مطلي", "كرتون Matte", "خامة فاخرة حسب العينة"], group: "الخامة" },
+    { key: "cover_finish", label: "تشطيب الغلاف", type: "select", options: ["بدون", "سلفنة مطفية", "سلفنة لامعة", "Soft Touch", "UV / Aqueous حسب المورد"], group: "التشطيب" },
+    { key: "spine", label: "الكعب", type: "select", options: ["كعب مطبوع", "بدون نص على الكعب", "يحدد بعد حساب السماكة"], group: "التجليد" },
+    quoteQty("نسخة")
+  ],
+
+  "book-hardcover": [
+    { key: "size", label: "المقاس النهائي", type: "select", options: ["A4", "A5", "Letter", "مربع", "Landscape", "مقاس مخصص"], group: "المقاس" },
+    { key: "pages", label: "عدد الصفحات", type: "number", placeholder: "مثال: 160", unit: "صفحة", group: "المحتوى", helpText: "عدد الصفحات وسماكة الورق يؤثران في بنية الـBook Block وعرض الكعب؛ يعتمد المقاس النهائي على مواصفة المورد." },
+    { key: "inside_stock", label: "ورق الصفحات الداخلية", type: "select", options: ["Coated Gloss للصور", "Coated Matte", "Uncoated للنصوص/الكتابة", "خامة خاصة حسب العينة"], group: "الخامة" },
+    { key: "case_style", label: "نظام الغلاف الصلب", type: "select", options: ["Printed Case Wrap", "Printed Case + Dust Jacket", "Cloth Wrapped Case", "PU / Synthetic Leather Case", "أحتاج توصية رواج"], group: "الغلاف", helpText: "Printed Case يلف Artwork مطبوعًا ومصفحًا حول ألواح الغلاف؛ Cloth/PU يحتاج مسار تخصيص مناسب مثل الفويل حسب المورد." },
+    { key: "binding", label: "بنية التجليد", type: "select", options: ["Sewn signatures / Smyth sewn حسب المورد", "Case-bound construction يحددها المورد", "أحتاج توصية حسب الاستخدام"], group: "التجليد", helpText: "لا يُعامل Hardcover كـPerfect Bound بغلاف سميك؛ الـCase والـBook Block ومراحل casing-in بنية مختلفة." },
+    { key: "cover_finish", label: "تشطيب الغلاف", type: "select", options: ["Matte Lamination", "Gloss Lamination", "Soft-touch / Anti-scratch حسب المورد", "Foil Stamping", "Emboss / Deboss", "Spot UV حسب التوافق", "بدون تشطيب إضافي"], group: "التشطيب" },
+    { key: "endsheets", label: "Endsheets / أوراق الربط", type: "select", options: ["قياسية حسب نظام المورد", "مطبوعة/مخصصة", "خامة أو لون خاص حسب المورد"], group: "التجليد", helpText: "Endsheets جزء بنيوي في نظام Case-bound وتُثبت مواصفاتها مع جهة الإنتاج." },
+    { key: "accessories", label: "ملحقات الكتاب", type: "select", options: ["بدون", "Ribbon Bookmark", "Head/Tail Bands", "Ribbon + Head/Tail Bands", "ملحقات أخرى حسب المورد"], group: "الملحقات" },
+    { key: "proof", label: "نوع المراجعة قبل الإنتاج", type: "select", options: ["PDF Proof", "Hardcopy / Physical Proof عند توفره", "يحدد حسب المشروع"], group: "المراجعة" },
+    quoteQty("نسخة")
+  ],
+
+  "book-wire-o": [
+    { key: "size", label: "المقاس النهائي", type: "select", options: ["A4", "A5", "Letter", "مقاس مخصص"], group: "المقاس" },
+    { key: "pages", label: "عدد الصفحات", type: "number", placeholder: "مثال: 80", unit: "صفحة", group: "المحتوى" },
+    { key: "inside_stock", label: "ورق الداخل", type: "select", options: ["مطلي", "غير مطلي", "خامة خاصة"], group: "الخامة" },
+    { key: "cover", label: "نوع الغلاف", type: "select", options: ["غلاف ورقي/كرتوني", "غلاف شفاف + ظهر كرتوني", "حسب الاستخدام"], group: "الخامة" },
+    { key: "orientation", label: "جهة التجليد", type: "select", options: ["الضلع الطويل", "الضلع القصير"], group: "التجليد" },
+    quoteQty("نسخة")
+  ],
+
+  "book-spiral": [
+    { key: "size", label: "المقاس النهائي", type: "select", options: ["A4", "A5", "Letter", "مقاس مخصص"], group: "المقاس" },
+    { key: "pages", label: "عدد الصفحات", type: "number", placeholder: "مثال: 100", unit: "صفحة", group: "المحتوى" },
+    { key: "inside_stock", label: "ورق الداخل", type: "select", options: ["مطلي", "غير مطلي", "خامة خاصة"], group: "الخامة" },
+    { key: "cover", label: "نوع الغلاف", type: "select", options: ["غلاف كرتوني", "غلاف شفاف + ظهر كرتوني", "حسب الاستخدام"], group: "الخامة" },
+    { key: "orientation", label: "جهة التجليد", type: "select", options: ["الضلع الطويل", "الضلع القصير"], group: "التجليد" },
+    quoteQty("نسخة")
+  ],
+
+
+  "roll-labels": [
+    { key: "application_surface", label: "سطح التطبيق", type: "select", options: ["زجاج", "PET", "HDPE / LDPE", "PP", "كرتون / كرتون مموج", "معدن", "سطح آخر"], group: "الاستخدام", helpText: "نوع السطح يؤثر مباشرة في اختيار اللاصق وقوة التثبيت." },
+    { key: "conditions", label: "ظروف الاستخدام", type: "select", options: ["داخلي وجاف", "رطوبة / تكاثف", "تبريد", "تجميد", "زيوت أو مواد كيميائية", "استخدام خارجي", "عبوة قابلة للعصر"], group: "الاستخدام" },
+    { key: "size", label: "مقاس الليبل", type: "text", placeholder: "العرض × الارتفاع بالملم", group: "المقاس" },
+    { key: "shape", label: "الشكل", type: "select", options: ["مستطيل", "مربع", "دائري", "بيضاوي", "قص مخصص"], group: "القص" },
+    { key: "face_material", label: "مادة الوجه", type: "select", options: ["ورق أبيض مطفي", "ورق أبيض لامع", "ورق محبب / فاخر", "ورق معدني", "BOPP أبيض", "BOPP شفاف", "BOPP فضي / كروم", "MDO قابل للعصر", "فيلم هولوغرافي", "أحتاج توصية رواج"], group: "الخامة" },
+    { key: "adhesive", label: "نوع اللاصق", type: "select", options: ["دائم", "قابل للإزالة", "للتبريد / درجات منخفضة", "للتجميد", "Wash-off للعبوات القابلة لإعادة الاستخدام", "لاصق متخصص — يحدد بعد معرفة السطح"], group: "اللاصق", helpText: "الاختيار النهائي يعتمد على السطح ودرجة حرارة التطبيق والخدمة والرطوبة." },
+    { key: "white_ink", label: "طباعة أبيض تحتي", type: "select", options: ["غير مطلوبة", "مطلوبة على الخامة الشفافة / المعدنية", "يحدد بعد مراجعة التصميم"], group: "الطباعة" },
+    { key: "finish", label: "الحماية السطحية", type: "select", options: ["بدون", "ورنيش مطفي", "ورنيش لامع", "لامينيشن مطفي", "لامينيشن لامع", "قابل للطباعة Thermal Transfer"], group: "التشطيب" },
+    { key: "liner", label: "بطانة الرول Liner", type: "select", options: ["ورق", "PET للتطبيق الآلي السريع", "يحدد مع مورد رواج"], group: "التجهيز" },
+    { key: "unwind", label: "اتجاه فك الرول", type: "select", options: ["غير مهم", "من أعلى", "من أسفل", "من اليمين", "من اليسار", "يحدد حسب ماكينة التطبيق"], group: "التجهيز" },
+    quoteQty("ليبل")
+  ],
+
+  "sheet-labels": [
+    { key: "application_surface", label: "سطح التطبيق", type: "select", options: ["ورق / كرتون", "زجاج", "PET", "HDPE / LDPE", "PP", "معدن", "سطح آخر"], group: "الاستخدام" },
+    { key: "size", label: "مقاس الليبل", type: "text", placeholder: "العرض × الارتفاع بالملم", group: "المقاس" },
+    { key: "shape", label: "الشكل", type: "select", options: ["مستطيل", "مربع", "دائري", "بيضاوي", "قص مخصص"], group: "القص" },
+    { key: "face_material", label: "مادة الوجه", type: "select", options: ["ورق مطفي", "ورق لامع", "ورق معاد التدوير", "ورق محبب", "BOPP أبيض", "BOPP شفاف", "فيلم متين مقاوم للماء", "خامة خاصة"], group: "الخامة" },
+    { key: "adhesive", label: "اللاصق", type: "select", options: ["دائم", "قابل للإزالة", "متخصص للرطوبة/البرودة", "أحتاج توصية رواج"], group: "اللاصق" },
+    { key: "finish", label: "التشطيب", type: "select", options: ["بدون", "ورنيش مطفي", "ورنيش لامع", "لامينيشن مطفي", "لامينيشن لامع"], group: "التشطيب" },
+    quoteQty("ليبل")
+  ],
+
+  "folding-carton": [
+    { key: "length", label: "الطول الداخلي", type: "number", placeholder: "مثال: 120", unit: "مم", group: "المقاس" },
+    { key: "width", label: "العرض الداخلي", type: "number", placeholder: "مثال: 60", unit: "مم", group: "المقاس" },
+    { key: "depth", label: "العمق الداخلي", type: "number", placeholder: "مثال: 35", unit: "مم", group: "المقاس" },
+    { key: "style", label: "بنية العلبة", type: "select", options: ["Straight Tuck End", "Reverse Tuck End", "Tuck End Auto Bottom", "Snap Lock Bottom", "Sleeve", "Pillow Box", "Tray / Lid", "بنية مخصصة"], group: "البنية" },
+    { key: "board", label: "نوع الكرتون", type: "select", options: ["SBS / SBB أبيض مصمت", "FBB كرتون علب متعدد الطبقات", "Kraft / Uncoated", "خامة خاصة حسب المنتج"], group: "الخامة", helpText: "يحدد النوع والسماكة وفق وزن المنتج، الطباعة، الطي والتشطيبات المطلوبة." },
+    { key: "print_process", label: "تقنية الطباعة", type: "select", options: ["Offset", "Digital", "UV", "تحدد وفق الكمية والخامة"], group: "الطباعة" },
+    { key: "print_sides", label: "مناطق الطباعة", type: "select", options: ["الخارج فقط", "الخارج + الداخل", "مواضع محددة"], group: "الطباعة" },
+    { key: "surface_finish", label: "التشطيب السطحي", type: "select", options: ["بدون", "Varnish", "Aqueous Coating", "UV Coating", "Spot UV", "Lamination", "Soft Touch"], group: "التشطيب" },
+    { key: "special_finish", label: "تشطيب بنيوي/فاخر", type: "select", options: ["بدون", "Hot Foil", "Cold Foil", "Emboss", "Deboss", "Window Patching", "أكثر من تشطيب — يراجع مع رواج"], group: "التشطيب" },
+    { key: "insert", label: "إدخالات داخلية", type: "select", options: ["بدون", "Paperboard Insert", "Corrugated Insert", "Divider", "Molded Pulp / Insert متخصص"], group: "الملحقات" },
+    quoteQty("علبة")
+  ],
+
+  "corrugated-box": [
+    { key: "length", label: "الطول الداخلي", type: "number", placeholder: "مثال: 400", unit: "مم", group: "المقاس" },
+    { key: "width", label: "العرض الداخلي", type: "number", placeholder: "مثال: 300", unit: "مم", group: "المقاس" },
+    { key: "height", label: "الارتفاع الداخلي", type: "number", placeholder: "مثال: 250", unit: "مم", group: "المقاس" },
+    { key: "style", label: "نمط الصندوق", type: "select", options: ["RSC / FEFCO 0201", "Slotted Box — نمط آخر", "Die-cut Box", "Tray / Folder", "Telescopic Box", "FEFCO code محدد", "يحتاج تصميم هندسي"], group: "البنية", helpText: "FEFCO هو نظام دولي لترميز تصاميم التغليف المموج." },
+    { key: "wall", label: "تركيب اللوح", type: "select", options: ["Single Wall", "Double Wall", "Triple Wall", "يحدد هندسيًا حسب الحمولة"], group: "الخامة" },
+    { key: "flute", label: "نوع الفلوت", type: "select", options: ["A", "B", "C", "E", "F / G / N Microflute", "تركيبة فلوت مزدوجة", "يحدد بعد معرفة الحمل والاستخدام"], group: "الخامة" },
+    { key: "liner", label: "نوع اللينر", type: "select", options: ["Kraftliner", "Testliner", "White top / Printable liner حسب المورد", "يحدد وفق الطباعة والقوة المطلوبة"], group: "الخامة" },
+    { key: "print", label: "الطباعة", type: "select", options: ["بدون طباعة", "Flexographic", "Digital direct print", "تحدد حسب الجودة والكمية"], group: "الطباعة" },
+    { key: "joint", label: "وصلة المصنع", type: "select", options: ["Glued", "Stitched", "Taped", "حسب FEFCO style"], group: "التجميع" },
+    { key: "features", label: "خصائص إضافية", type: "select", options: ["بدون", "مقبض/فتحات Die-cut", "Perforation", "Tear tape", "Display feature", "بنية مخصصة"], group: "التجهيز" },
+    { key: "product_weight", label: "وزن المنتج داخل الكرتون", type: "number", placeholder: "الوزن التقريبي", unit: "كجم", group: "الاستخدام" },
+    { key: "use", label: "الاستخدام", type: "select", options: ["شحن ونقل", "تخزين", "تجارة إلكترونية", "عرض Retail", "منتج ثقيل / صناعي", "استخدام آخر"], group: "الاستخدام" },
+    quoteQty("كرتون")
+  ],
+
   banner: [
-    { key: "width", label: "العرض", type: "number", placeholder: "بالمتر", unit: "م" },
-    { key: "height", label: "الارتفاع", type: "number", placeholder: "بالمتر", unit: "م" },
-    { key: "material", label: "الخامة", type: "select", options: ["بنر", "أحتاج اقتراح رواج"] },
-    { key: "finish", label: "التجهيز", type: "select", options: ["بدون", "عيون معدنية", "لحام أطراف", "مخصص"] },
-    { key: "qty", label: "الكمية", type: "number", placeholder: "مثال: 2" }
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 3", unit: "م", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 1", unit: "م", group: "المقاس" },
+    { key: "environment", label: "مكان الاستخدام", type: "select", options: ["داخلي", "خارجي قصير المدة", "خارجي طويل المدة", "واجهة/سور", "فعالية أو معرض"], group: "الاستخدام" },
+    { key: "banner_type", label: "نوع خامة البنر", type: "select", options: ["PVC Banner Frontlit", "Blockout Banner للطباعة على وجهين/حجب الضوء", "أحتاج توصية رواج"], group: "الخامة" },
+    { key: "sides", label: "أوجه الطباعة", type: "select", options: ["وجه واحد", "وجهان — بخامة مناسبة"], group: "الطباعة" },
+    { key: "edge_finish", label: "تجهيز الحواف", type: "select", options: ["قص فقط", "لحام/ثني الحواف", "حواف مقواة حسب طريقة التعليق"], group: "التشطيب" },
+    { key: "mounting", label: "طريقة التعليق", type: "select", options: ["بدون تجهيز", "عيون معدنية Grommets", "Pole Pockets / جيوب أعمدة", "حبال/ملحقات حسب الموقع", "يحدد بعد معاينة الموقع"], group: "التركيب" },
+    { key: "install", label: "التركيب", type: "select", options: ["طباعة فقط", "طباعة + تركيب"], group: "التركيب" },
+    quoteQty("قطعة")
   ],
   flex: [
-    { key: "width", label: "العرض", type: "number", placeholder: "بالمتر", unit: "م" },
-    { key: "height", label: "الارتفاع", type: "number", placeholder: "بالمتر", unit: "م" },
-    { key: "usage", label: "الاستخدام", type: "select", options: ["لوحة مضيئة", "واجهة", "إعلان خارجي", "غير ذلك"] },
-    { key: "installation", label: "التركيب", type: "select", options: ["طباعة فقط", "طباعة + تركيب"] }
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 4", unit: "م", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 1.2", unit: "م", group: "المقاس" },
+    { key: "application", label: "الاستخدام", type: "select", options: ["وجه Lightbox مضيء", "واجهة مضيئة كبيرة", "استبدال وجه لوحة قائمة", "مشروع جديد كامل"], group: "الاستخدام" },
+    { key: "face_material", label: "نوع الوجه المضيء", type: "select", options: ["Backlit Flexible Face / فلكس مضيء", "أحتاج توصية رواج حسب حجم اللوحة"], group: "الخامة" },
+    { key: "box_status", label: "حالة صندوق الإضاءة", type: "select", options: ["موجود — طباعة وتجهيز الوجه فقط", "موجود ويحتاج صيانة/تعديل", "غير موجود — تنفيذ كامل"], group: "البنية" },
+    { key: "lighting", label: "الإضاءة", type: "select", options: ["LED ضمن تنفيذ رواج", "الإضاءة موجودة", "يحتاج تقييم فني"], group: "الإضاءة" },
+    { key: "sides", label: "عدد الأوجه", type: "select", options: ["وجه واحد", "وجهين"], group: "البنية" },
+    { key: "install", label: "التركيب", type: "select", options: ["توريد الوجه فقط", "توريد + تركيب", "تنفيذ كامل للصندوق والوجه والإضاءة"], group: "التركيب" },
+    { key: "location", label: "موقع التركيب", type: "text", placeholder: "المدينة / المنطقة / وصف الارتفاع والوصول", group: "التركيب" }
+  ],
+
+  "mesh-banner": [
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 10", unit: "م", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 6", unit: "م", group: "المقاس" },
+    { key: "application", label: "الاستخدام", type: "select", options: ["سقالة/مبنى", "سور خارجي", "فعالية", "منطقة معرضة للرياح", "استخدام آخر"], group: "الاستخدام" },
+    { key: "material", label: "الخامة", type: "select", options: ["Mesh Banner مثقب", "أحتاج توصية رواج حسب الموقع والرياح"], group: "الخامة" },
+    { key: "edge_finish", label: "تجهيز الحواف", type: "select", options: ["حواف مقواة", "لحام/ثني الحواف", "يحدد وفق نظام التثبيت"], group: "التشطيب" },
+    { key: "mounting", label: "التثبيت", type: "select", options: ["عيون معدنية", "نظام شد", "تركيب موقعي كامل", "يحدد بعد المعاينة"], group: "التركيب" },
+    { key: "location", label: "موقع التركيب والارتفاع", type: "text", placeholder: "وصف الموقع وارتفاع التركيب التقريبي", group: "التركيب" },
+    quoteQty("قطعة")
+  ],
+
+  "vinyl-graphics": [
+    { key: "surface", label: "سطح التطبيق", type: "select", options: ["زجاج", "معدن مطلي", "ACP / ألواح واجهات", "PVC صلب", "أكريليك", "سطح أملس آخر", "غير متأكد"], group: "الاستخدام" },
+    { key: "environment", label: "مكان الاستخدام", type: "select", options: ["داخلي", "خارجي قصير المدة", "خارجي متوسط/طويل المدة"], group: "الاستخدام" },
+    { key: "size", label: "المقاس/المساحة", type: "text", placeholder: "العرض × الارتفاع أو المساحة التقريبية", group: "المقاس" },
+    { key: "film", label: "فئة الفيلم", type: "select", options: ["PVC أبيض", "PVC شفاف", "Removable قابل للإزالة", "Polymeric طويل المدة", "Cast للأسطح المعقدة", "أحتاج توصية رواج"], group: "الخامة", helpText: "اختيار الفيلم يعتمد على عمر الاستخدام وشكل السطح وظروفه." },
+    { key: "adhesive", label: "اللاصق", type: "select", options: ["دائم", "قابل للإزالة", "يحدد حسب السطح والاستخدام"], group: "اللاصق" },
+    { key: "laminate", label: "الحماية", type: "select", options: ["بدون", "Gloss Overlaminate", "Matte Overlaminate", "Optically Clear عند الحاجة", "يحدد حسب العمر والاستخدام"], group: "التشطيب" },
+    { key: "cut", label: "القص", type: "select", options: ["قص مستطيل", "Contour Cut", "Plotter Cut بدون طباعة", "تقسيم بانلات كبيرة"], group: "القص" },
+    { key: "install", label: "التركيب", type: "select", options: ["توريد فقط", "توريد + تركيب"], group: "التركيب" },
+    quoteQty("قطعة/مشروع")
+  ],
+
+  "window-graphics": [
+    { key: "window_type", label: "نوع التطبيق", type: "select", options: ["فينيل مطبوع كامل", "Perforated One-Way Vision", "شفاف بطباعة White Ink", "Frosted / Etched-look للخصوصية", "قص فينيل بدون طباعة"], group: "الاستخدام" },
+    { key: "mount_side", label: "جهة التطبيق", type: "select", options: ["خارج الزجاج", "داخل الزجاج", "يحدد حسب الخامة والموقع"], group: "التركيب" },
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 1.5", unit: "م", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 2.2", unit: "م", group: "المقاس" },
+    { key: "perforation", label: "نسبة الرؤية — للـOne-Way Vision", type: "select", options: ["غير مطبق", "50/50", "65/35", "يحدد حسب الخصوصية والإضاءة"], group: "الخامة" },
+    { key: "adhesion", label: "مدة الاستخدام", type: "select", options: ["حملة مؤقتة / قابل للإزالة", "متوسط المدة", "تركيب طويل المدة"], group: "اللاصق" },
+    { key: "laminate", label: "الحماية", type: "select", options: ["بدون", "Optically Clear compatible overlaminate", "حماية أخرى حسب الفيلم"], group: "التشطيب", helpText: "الـperforated window film قد يحتاج لامينيت شفاف بصريًا متوافقًا حسب النظام والتعرض." },
+    { key: "install", label: "التركيب", type: "select", options: ["توريد فقط", "توريد + تركيب"], group: "التركيب" },
+    { key: "location", label: "الموقع", type: "text", placeholder: "نوع المبنى/المحل والمدينة والارتفاع إن وجد", group: "التركيب" }
+  ],
+
+  "wall-graphics": [
+    { key: "wall_surface", label: "سطح الجدار", type: "select", options: ["دهان أملس", "دهان خشن/محبب", "جبس/دراي وول مطلي", "زجاج/لوح أملس", "سطح آخر"], group: "الاستخدام" },
+    { key: "paint_age", label: "حالة الدهان", type: "select", options: ["جاف ومستقر", "حديث — يحتاج انتظار/تقييم", "قديم أو متقشر", "غير متأكد"], group: "الاستخدام" },
+    { key: "width", label: "عرض المنطقة", type: "number", placeholder: "مثال: 5", unit: "م", group: "المقاس" },
+    { key: "height", label: "ارتفاع المنطقة", type: "number", placeholder: "مثال: 2.8", unit: "م", group: "المقاس" },
+    { key: "duration", label: "مدة الاستخدام", type: "select", options: ["فعالية مؤقتة", "متوسط المدة", "ديكور طويل المدة"], group: "الاستخدام" },
+    { key: "film", label: "نوع المادة", type: "select", options: ["Wall Vinyl مخصص", "Removable Wall Film", "Textured Wall Film", "Wallpaper / Wallcovering", "أحتاج معاينة وتوصية"], group: "الخامة" },
+    { key: "finish", label: "المظهر", type: "select", options: ["مطفي", "لامع", "Textured", "يحدد حسب المادة"], group: "التشطيب" },
+    { key: "install", label: "التركيب", type: "select", options: ["توريد فقط", "توريد + تركيب ومعاينة السطح"], group: "التركيب" }
+  ],
+
+  "floor-graphics": [
+    { key: "surface", label: "نوع الأرضية", type: "select", options: ["سيراميك/بورسلان أملس", "رخام/جرانيت أملس", "Vinyl flooring", "خرسانة ملساء", "أرضية أخرى"], group: "الاستخدام" },
+    { key: "location", label: "مكان الاستخدام", type: "select", options: ["داخلي Retail", "معرض/فعالية", "ممر توجيهي", "سلامة وتحذير", "خارجي — يحتاج نظام مخصص"], group: "الاستخدام" },
+    { key: "duration", label: "المدة", type: "select", options: ["قصيرة", "متوسطة", "يحدد حسب نظام المادة"], group: "الاستخدام" },
+    { key: "size", label: "المقاس", type: "text", placeholder: "العرض × الارتفاع أو شكل القص", group: "المقاس" },
+    { key: "system", label: "نظام الجرافيك", type: "select", options: ["Direct-print anti-slip film", "Printed film + approved anti-slip overlaminate", "يحدد بعد معرفة الأرضية والمدة"], group: "الخامة", helpText: "مقاومة الانزلاق متطلب وظيفي أساسي في جرافيك الأرضيات." },
+    { key: "cut", label: "القص", type: "select", options: ["مستطيل", "دائري", "Contour Cut", "مجموعة مسارات/علامات"], group: "القص" },
+    { key: "install", label: "التركيب", type: "select", options: ["توريد فقط", "توريد + تركيب"], group: "التركيب" },
+    quoteQty("قطعة/مجموعة")
+  ],
+
+  "vehicle-wrap": [
+    { key: "vehicle", label: "نوع المركبة", type: "select", options: ["سيارة سيدان", "SUV", "بيك أب", "فان", "حافلة", "شاحنة", "أسطول مركبات", "نوع آخر"], group: "الاستخدام" },
+    { key: "coverage", label: "نطاق التغطية", type: "select", options: ["شعارات وكتابات فقط", "Partial Wrap", "Full Wrap", "Fleet Graphics", "يحدد بعد معاينة المركبة"], group: "الاستخدام" },
+    { key: "surface_shape", label: "تعقيد السطح", type: "select", options: ["ألواح مسطحة/منحنيات بسيطة", "منحنيات مركبة", "تجاويف وقنوات عميقة", "غير متأكد"], group: "الاستخدام" },
+    { key: "film", label: "فئة فيلم الراب", type: "select", options: ["Cast vehicle wrap film", "Polymeric film للأسطح الأبسط", "Reflective / specialty film", "أحتاج توصية رواج"], group: "الخامة" },
+    { key: "laminate", label: "Overlaminate", type: "select", options: ["Gloss", "Matte", "Luster / Satin", "Optically Clear", "يحدد مع نظام الفيلم"], group: "التشطيب", helpText: "يجب اختيار الفيلم والـoverlaminate كنظام متوافق حسب الاستخدام والأسطح." },
+    { key: "windows", label: "زجاج المركبة", type: "select", options: ["لا يشمل الزجاج", "Perforated window graphics حيث يسمح التطبيق", "يحدد بعد المعاينة والاشتراطات المحلية"], group: "النوافذ" },
+    { key: "artwork", label: "التصميم", type: "select", options: ["ملف جاهز", "أحتاج تصميم الراب من رواج", "تكييف هوية موجودة على المركبة"], group: "التصميم" },
+    { key: "installation", label: "التنفيذ", type: "select", options: ["طباعة فقط", "طباعة + تركيب احترافي"], group: "التركيب" },
+    { key: "vehicles_qty", label: "عدد المركبات", type: "number", placeholder: "مثال: 1", unit: "مركبة", group: "الكمية" }
   ],
   stickers: [
-    { key: "size", label: "المقاس", type: "text", placeholder: "مثال: 10 × 10 سم" },
-    { key: "material", label: "الخامة", type: "select", options: ["استيكر أبيض", "شفاف", "فينيل", "أحتاج اقتراح"] },
-    { key: "cut", label: "القص", type: "select", options: ["مستقيم", "كونتور", "قص خاص"] },
-    { key: "lamination", label: "الحماية", type: "select", options: ["بدون", "سلفنة", "حسب الاستخدام"] },
-    { key: "qty", label: "الكمية", type: "number", placeholder: "العدد أو المساحة" }
+    { key: "application", label: "نوع الاستخدام", type: "select", options: ["ملصق دعائي", "ملصق منتج", "زجاج/نافذة", "تغليف", "استخدام خارجي", "استخدام آخر"], group: "الاستخدام" },
+    { key: "surface", label: "سطح التطبيق", type: "select", options: ["ورق/كرتون", "زجاج", "معدن", "PET", "HDPE/LDPE", "PP", "سطح آخر"], group: "الاستخدام" },
+    { key: "size", label: "المقاس", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    { key: "material", label: "الخامة", type: "select", options: ["ورق مطفي", "ورق لامع", "BOPP / PP أبيض", "BOPP / PP شفاف", "فينيل أبيض", "فينيل شفاف", "معدني / فضي", "أحتاج توصية رواج"], group: "الخامة" },
+    { key: "adhesive", label: "اللاصق", type: "select", options: ["دائم", "قابل للإزالة", "متخصص للبرودة/الرطوبة", "يحدد بعد معرفة السطح"], group: "اللاصق" },
+    { key: "cut", label: "القص", type: "select", options: ["مستقيم", "Die-cut / كونتور", "Kiss-cut على شيت", "قص مخصص"], group: "القص" },
+    { key: "finish", label: "الحماية", type: "select", options: ["بدون", "ورنيش", "لامينيشن مطفي", "لامينيشن لامع"], group: "التشطيب" },
+    quoteQty("ملصق")
   ],
   lightbox: [
-    { key: "size", label: "الأبعاد", type: "text", placeholder: "العرض × الارتفاع" },
-    { key: "sides", label: "نوع اللوحة", type: "select", options: ["أمامية", "جانبية / وجهين"] },
-    { key: "lighting", label: "الإضاءة", type: "select", options: ["LED", "حسب توصية رواج"] },
-    { key: "install", label: "التركيب", type: "select", options: ["تنفيذ فقط", "تنفيذ + تركيب"] },
-    { key: "location", label: "موقع التركيب", type: "text", placeholder: "اسم المنطقة أو وصف الموقع" }
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 2", unit: "م", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 0.8", unit: "م", group: "المقاس" },
+    { key: "sides", label: "عدد الأوجه", type: "select", options: ["وجه واحد", "وجهين"], group: "البنية" },
+    { key: "face", label: "نوع الوجه", type: "select", options: ["Acrylic / أكريليك", "Flexible backlit face", "Textile face للاستخدام الداخلي", "يحدد حسب الحجم والتصميم"], group: "الخامة" },
+    { key: "lighting", label: "نظام الإضاءة", type: "select", options: ["LED داخلي", "Edge-lit حسب التصميم", "تحديث إضاءة صندوق قائم", "يحدد هندسيًا"], group: "الإضاءة" },
+    { key: "location_type", label: "مكان الاستخدام", type: "select", options: ["داخلي", "خارجي"], group: "الاستخدام" },
+    { key: "existing", label: "حالة اللوحة", type: "select", options: ["مشروع جديد", "تغيير وجه فقط", "تحديث الإضاءة", "صيانة وإعادة تأهيل"], group: "البنية" },
+    { key: "install", label: "الخدمة", type: "select", options: ["تصنيع فقط", "تصنيع + تركيب", "معاينة ثم عرض سعر"], group: "التركيب" },
+    { key: "location", label: "موقع التركيب والارتفاع", type: "text", placeholder: "المدينة / المنطقة / الارتفاع التقريبي", group: "التركيب" }
   ],
   letters: [
-    { key: "material", label: "الخامة", type: "select", options: ["أكريليك", "ستيل", "مزيج خامات", "أحتاج اقتراح"] },
-    { key: "height", label: "ارتفاع الحروف التقريبي", type: "number", placeholder: "بالسنتيمتر", unit: "سم" },
-    { key: "lighting", label: "الإضاءة", type: "select", options: ["بدون إضاءة", "إضاءة أمامية", "إضاءة خلفية", "مخصص"] },
-    { key: "install", label: "التركيب", type: "select", options: ["تصنيع فقط", "تصنيع + تركيب"] }
+    { key: "letter_type", label: "نوع الحروف", type: "select", options: ["Face-lit Channel Letters", "Halo-lit / Reverse Channel", "Face + Halo", "Block Acrylic illuminated", "يحدد حسب التصميم"], group: "البنية" },
+    { key: "face_material", label: "وجه الحرف", type: "select", options: ["Acrylic sign-grade", "معدن/وجه غير شفاف حسب التصميم", "خامة خاصة"], group: "الخامة" },
+    { key: "return_material", label: "جوانب/جسم الحرف", type: "select", options: ["ألمنيوم", "ستانلس ستيل", "مادة أخرى حسب التصميم"], group: "الخامة" },
+    { key: "height", label: "ارتفاع الحرف التقريبي", type: "number", placeholder: "مثال: 40", unit: "سم", group: "المقاس" },
+    { key: "depth", label: "عمق الحرف", type: "select", options: ["يحدد هندسيًا حسب الحجم والإضاءة", "لدي عمق محدد — أذكره في الملاحظات"], group: "المقاس" },
+    { key: "lighting", label: "الإضاءة", type: "select", options: ["LED أبيض", "LED لون محدد", "RGB / RGBW", "بدون إضاءة"], group: "الإضاءة" },
+    { key: "mounting", label: "طريقة التثبيت", type: "select", options: ["على RaceWay", "تثبيت مباشر على الواجهة", "على خلفية/لوح حامل", "يحدد بعد المعاينة"], group: "التركيب" },
+    { key: "location_type", label: "الاستخدام", type: "select", options: ["داخلي", "خارجي"], group: "الاستخدام" },
+    { key: "install", label: "الخدمة", type: "select", options: ["تصنيع فقط", "تصنيع + تركيب", "تنفيذ كامل مع التمديدات المطلوبة"], group: "التركيب" },
+    { key: "location", label: "الموقع والارتفاع", type: "text", placeholder: "وصف موقع التركيب", group: "التركيب" }
+  ],
+
+  "dimensional-letters": [
+    { key: "material", label: "الخامة", type: "select", options: ["Acrylic", "Stainless Steel", "Aluminum", "PVC / Foam PVC", "Wood / MDF داخلي", "مزيج خامات", "أحتاج اقتراح رواج"], group: "الخامة" },
+    { key: "height", label: "ارتفاع الحروف", type: "number", placeholder: "مثال: 25", unit: "سم", group: "المقاس" },
+    { key: "thickness", label: "السماكة/البروز", type: "text", placeholder: "إن كانت محددة، أو اتركها لتوصية رواج", group: "المقاس" },
+    { key: "finish", label: "المظهر", type: "select", options: ["لون مصمت", "Metallic / Brushed", "Mirror", "Painted", "Natural material finish", "حسب العينة"], group: "التشطيب" },
+    { key: "backing", label: "الخلفية", type: "select", options: ["بدون خلفية", "لوح حامل", "ACP background", "Acrylic background", "حسب التصميم"], group: "البنية" },
+    { key: "install", label: "التركيب", type: "select", options: ["تصنيع فقط", "تصنيع + تركيب"], group: "التركيب" },
+    { key: "location", label: "مكان الاستخدام", type: "select", options: ["داخلي", "خارجي"], group: "الاستخدام" }
+  ],
+
+  "acrylic-sign": [
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 60", unit: "سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 40", unit: "سم", group: "المقاس" },
+    { key: "acrylic_type", label: "نوع الأكريليك", type: "select", options: ["Clear", "White / Opal", "Colored", "LED sign-grade", "Light-guiding edge-lit", "يحدد حسب التطبيق"], group: "الخامة" },
+    { key: "fabrication", label: "التصنيع", type: "select", options: ["Flat panel", "Cut / Routed shape", "Formed / Thermoformed", "Layered acrylic", "Edge-lit panel"], group: "البنية" },
+    { key: "graphics", label: "الجرافيك", type: "select", options: ["UV print", "Vinyl graphics", "Back-painted", "Engraved / etched look", "مزيج تقنيات"], group: "الطباعة" },
+    { key: "lighting", label: "الإضاءة", type: "select", options: ["بدون", "Backlit", "Edge-lit", "LED ضمن التركيب"], group: "الإضاءة" },
+    { key: "mounting", label: "التثبيت", type: "select", options: ["Standoffs", "Direct mount", "Frame", "Suspended", "يحدد بعد التصميم"], group: "التركيب" },
+    { key: "location", label: "مكان الاستخدام", type: "select", options: ["داخلي", "خارجي"], group: "الاستخدام" },
+    quoteQty("لوحة")
   ],
   facade: [
-    { key: "size", label: "أبعاد الواجهة", type: "text", placeholder: "العرض × الارتفاع التقريبي" },
-    { key: "material", label: "الخامة المطلوبة", type: "select", options: ["أليكوبوند", "مزيج خامات", "أحتاج اقتراح رواج"] },
-    { key: "design", label: "التصميم", type: "select", options: ["لدي تصميم", "أحتاج تصميم 3D من رواج"] },
-    { key: "signage", label: "اللوحة أو الحروف", type: "select", options: ["ضمن المشروع", "غير مطلوبة", "يحدد لاحقًا"] },
-    { key: "location", label: "موقع المشروع", type: "text", placeholder: "المدينة / المنطقة" }
+    { key: "width", label: "عرض الواجهة التقريبي", type: "number", placeholder: "مثال: 8", unit: "م", group: "المقاس" },
+    { key: "height", label: "ارتفاع الواجهة التقريبي", type: "number", placeholder: "مثال: 4", unit: "م", group: "المقاس" },
+    { key: "scope", label: "نطاق المشروع", type: "select", options: ["كسوة ACP فقط", "ACP + حروف/لوحة", "واجهة تجارية متكاملة", "إعادة تأهيل واجهة قائمة"], group: "البنية" },
+    { key: "panel_system", label: "نظام الكسوة", type: "select", options: ["ألواح ACP / Aluminum Composite Panels", "ألواح مطوية Routed & Folded Trays", "مزيج خامات", "يحدد بعد التصميم والمعاينة"], group: "الخامة", helpText: "التفاصيل الإنشائية والسماكات والتثبيت تُحدد هندسيًا بعد معاينة الموقع." },
+    { key: "finish", label: "مظهر السطح", type: "select", options: ["Solid color", "Metallic", "Anodized look", "Natural / textured look", "لون/عينة مخصصة"], group: "التشطيب" },
+    { key: "design", label: "التصميم", type: "select", options: ["لدي مخططات نهائية", "أحتاج تصميم واجهة من رواج", "أحتاج تصور 3D + مخططات تنفيذ"], group: "التصميم" },
+    { key: "signage", label: "الهوية على الواجهة", type: "select", options: ["بدون", "Channel Letters", "حروف غير مضيئة", "Lightbox", "مزيج لوحات وحروف"], group: "اللوحات" },
+    { key: "existing_surface", label: "حالة الواجهة الحالية", type: "select", options: ["مبنى جديد", "واجهة قائمة تحتاج تغطية", "تحتاج إزالة/معالجة قبل التنفيذ", "غير متأكد"], group: "الاستخدام" },
+    { key: "access", label: "الوصول لموقع العمل", type: "select", options: ["أرضي/سهل", "ارتفاع متوسط", "ارتفاع كبير أو يحتاج معدات رفع", "يحدد بالمعاينة"], group: "التركيب" },
+    { key: "location", label: "موقع المشروع", type: "text", placeholder: "المدينة / المنطقة / وصف الموقع", group: "التركيب" }
   ],
+
+  "paper-shopping-bag": [
+    { key: "use", label: "الاستخدام", type: "select", options: ["متجر/ريتيل", "بوتيك/هدايا", "بقالة/سوبرماركت", "مطاعم/تيك أواي — يحتاج مراجعة ملاءمة المادة", "استخدام آخر"], group: "الاستخدام" },
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 30", unit: "سم", group: "المقاس" },
+    { key: "gusset", label: "الجنب/القاعدة Gusset", type: "number", placeholder: "مثال: 12", unit: "سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 35", unit: "سم", group: "المقاس" },
+    { key: "paper", label: "نوع ورق الكيس", type: "select", options: ["Kraft bag paper", "Machine Finished (MF) — مظهر مطفي", "Machine Glazed (MG) — سطح أنعم/ألمع", "Premium bag paper", "أحتاج توصية رواج"], group: "الخامة", helpText: "اختيار الدرجة والوزن النهائي مرتبط بالحجم والحمولة وطريقة التصنيع والمورد." },
+    { key: "paper_color", label: "لون الورق", type: "select", options: ["بني Kraft", "أبيض", "لون/درجة خاصة حسب المورد", "أحتاج عينة"], group: "الخامة" },
+    { key: "handle", label: "المقبض", type: "select", options: ["بدون مقبض", "Flat Paper Handle", "Twisted Paper Handle", "نوع خاص — يحتاج مراجعة المورد"], group: "البنية" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["Flexographic", "Offset", "Digital", "تحددها رواج حسب الكمية والبنية"], group: "الطباعة" },
+    { key: "food_contact", label: "هل سيلامس غذاء مباشرة؟", type: "select", options: ["لا", "نعم — يجب طلب Declaration/Compliance من المورد", "غير متأكد"], group: "الامتثال", helpText: "لا تعتبر أي خامة مناسبة للملامسة الغذائية تلقائيًا؛ يلزم توثيق المنتج/المورد المحدد." },
+    quoteQty("كيس")
+  ],
+
+  "paper-cup": [
+    { key: "use", label: "استخدام الكوب", type: "select", options: ["مشروبات ساخنة", "مشروبات باردة", "استخدام ساخن وبارد ضمن نظام مورد معتمد", "آيس كريم/طعام — يراجع كمنتج Foodservice منفصل", "استخدام آخر — مراجعة فنية"], group: "الاستخدام" },
+    { key: "capacity", label: "السعة", type: "select", options: ["4 oz", "6 oz", "8 oz", "10 oz", "12 oz", "16 oz", "20 oz", "22 oz", "مقاس/سعة مخصصة حسب المورد"], group: "المقاس", helpText: "المقاسات الفعلية وقطر الفوهة تختلف بين أنظمة الموردين؛ السعة وحدها لا تكفي لمطابقة الغطاء." },
+    { key: "wall", label: "بنية الكوب", type: "select", options: ["Single Wall", "Double Wall / Insulated", "Multi-wall / نظام عازل خاص حسب المورد", "أحتاج توصية رواج"], group: "البنية", helpText: "الأكواب الساخنة قد تستخدم Single Wall أو أنظمة Multi/Double Wall للعزل حسب متطلبات الاستخدام والمورد." },
+    { key: "rim_diameter", label: "قطر فوهة الكوب", type: "number", placeholder: "إن كان محددًا لمطابقة الغطاء", unit: "مم", group: "المقاس" },
+    { key: "board_system", label: "خامة الكوب/نظام الحاجز", type: "select", options: ["Cupstock مخصص للأكواب + Barrier مناسب", "PE-coated cup board — حسب مورد معتمد", "Dispersion barrier cup board — حسب مورد معتمد", "Bio/renewable coating — فقط عند توثيق المورد", "أحتاج توصية رواج"], group: "الخامة", helpText: "لا يُعامل أي ورق عادي كخامة كوب. يلزم Cupstock ونظام حاجز قابل للتشكيل واللحام ومناسب للاستخدام المحدد." },
+    { key: "printing", label: "الطباعة الخارجية", type: "select", options: ["طباعة شعار/هوية", "Full-color artwork", "ألوان محدودة", "تحدد تقنية الطباعة حسب الكمية والمورد"], group: "الطباعة" },
+    { key: "lid", label: "الغطاء", type: "select", options: ["بدون غطاء", "غطاء مشروب ساخن", "غطاء مشروب بارد", "غطاء مخصص — يجب مطابقته لقطر/نظام الكوب"], group: "الملحقات", helpText: "يتم تثبيت الغطاء فقط بعد مطابقة قطر الفوهة ونظام المورد؛ لا تعتمد المطابقة على السعة الاسمية وحدها." },
+    { key: "sleeve", label: "Sleeve / غلاف حراري إضافي", type: "select", options: ["غير مطلوب", "مطلوب للكوب الساخن", "يحدد حسب بنية الكوب ودرجة العزل"], group: "الملحقات" },
+    { key: "food_contact", label: "توثيق ملامسة الغذاء", type: "select", options: ["مطلوب — مستندات المورد للخامة النهائية", "لدي مواصفة/اشتراط محدد وسأرفقه", "غير متأكد — تتولى رواج المراجعة"], group: "الامتثال", helpText: "لا تُنسب صلاحية ملامسة الغذاء أو قابلية التدوير/التحلل لأي كوب عام؛ يجب مراجعة الخامة والطلاء والمورد الفعلي." },
+    { key: "artwork", label: "حالة التصميم", type: "select", options: ["ملف جاهز على Dieline المورد", "لدي تصميم يحتاج تكييفًا على القالب", "أحتاج تصميم رواج"], group: "التصميم" },
+    quoteQty("كوب")
+  ],
+
+  "industrial-paper-sack": [
+    { key: "product", label: "المادة المعبأة", type: "select", options: ["مواد بناء/مساحيق", "حبيبات/Pellets", "أغذية أو مكونات غذائية — مراجعة امتثال", "أعلاف/بذور", "مواد كيميائية — مراجعة فنية", "منتج آخر"], group: "المنتج" },
+    { key: "bag_style", label: "نمط الكيس", type: "select", options: ["Open Mouth Bag", "Pasted Valve Bag", "Pinch Bottom Bag", "SOS / Self-Opening Sack", "Window Bag", "يحدد حسب ماكينة التعبئة"], group: "البنية" },
+    { key: "fill_weight", label: "وزن التعبئة المستهدف", type: "number", placeholder: "مثال: 25", unit: "كجم", group: "الكمية" },
+    { key: "dimensions", label: "الأبعاد المطلوبة", type: "text", placeholder: "العرض × القاعدة/الجنب × الطول إن كانت معروفة", group: "المقاس" },
+    { key: "paper_system", label: "بنية الورق", type: "select", options: ["Sack Kraft أحادي الطبقة", "Multi-ply Sack Kraft", "White/Bleached Sack Kraft", "Unbleached/Brown Sack Kraft", "تحدد هندسيًا حسب المنتج والتعبئة"], group: "الخامة" },
+    { key: "closure", label: "طريقة الإغلاق", type: "select", options: ["Sewn / خياطة", "Glued / لصق", "Valve self-close", "Valve heat/ultrasonic seal — حسب النظام", "يحدد حسب خط التعبئة"], group: "الإغلاق" },
+    { key: "barrier", label: "متطلبات الحاجز", type: "select", options: ["لا متطلبات خاصة", "رطوبة", "غبار", "نكهة/رائحة", "حاجز خاص — يحتاج تصميم مورد"], group: "الحاجز", helpText: "الحاجز خاص ببنية الكيس والمورد ولا يُضمن من اسم الورق وحده." },
+    { key: "easy_open", label: "فتح سهل", type: "select", options: ["غير مطلوب", "Tear-open strip", "Effusion / controlled opening", "يحدد حسب نمط الكيس"], group: "التجهيز" },
+    { key: "printing", label: "متطلبات الطباعة", type: "select", options: ["علامة/نص بسيط", "عدة ألوان", "تغطية رسومية كبيرة", "تحدد التقنية بعد اعتماد بنية الكيس"], group: "الطباعة" },
+    { key: "filling_line", label: "خط التعبئة", type: "text", placeholder: "اسم/نوع ماكينة التعبئة إن كان معروفًا", group: "خط التعبئة" },
+    quoteQty("كيس")
+  ],
+
+  "premade-flexible-pouch": [
+    { key: "product", label: "نوع المنتج داخل العبوة", type: "select", options: ["مسحوق/بودرة", "حبوب/سناك", "منتج جاف", "سائل/صلصة", "منتج غير غذائي", "منتج آخر — يحتاج مراجعة"], group: "المنتج" },
+    { key: "format", label: "شكل العبوة", type: "select", options: ["Stand-up Pouch", "Flat Pouch", "Side-gusseted Pouch", "Shaped Pouch", "Inverted Pouch", "شكل مخصص"], group: "البنية" },
+    { key: "dimensions", label: "الأبعاد", type: "text", placeholder: "العرض × الارتفاع × الجنب/القاعدة", group: "المقاس" },
+    { key: "fill_weight", label: "وزن/حجم التعبئة", type: "text", placeholder: "مثال: 250 جم أو 500 مل", group: "الكمية" },
+    { key: "appearance", label: "مظهر البنية", type: "select", options: ["شفاف/نافذة", "Opaque غير شفاف", "Metalized / حاجب للضوء", "Foil-containing structure", "تحددها رواج حسب متطلبات الحماية"], group: "الخامة" },
+    { key: "barrier", label: "متطلبات الحماية", type: "select", options: ["لا أعرف — أحتاج توصية", "رطوبة", "أكسجين", "ضوء", "رائحة/نكهة", "متطلبات متعددة", "متطلبات خاصة/اختبارات"], group: "الحاجز", helpText: "هذا حقل متطلبات أداء؛ البنية الفعلية والمواد تُحدد مع المورد ولا تُفترض تلقائيًا." },
+    { key: "closure", label: "الإغلاق/إعادة الإغلاق", type: "select", options: ["بدون Reclose", "Press-to-close Zipper", "Pour Spout / Fitment", "Closure خاص — مراجعة مورد"], group: "الإغلاق" },
+    { key: "easy_open", label: "سهولة الفتح", type: "select", options: ["بدون", "Tear Notch", "Laser Score / Tear-off", "يحدد حسب البنية"], group: "التجهيز" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["Full-color branded print", "ألوان محدودة", "متطلبات خاصة/أبيض/تأثيرات — مراجعة المورد"], group: "الطباعة" },
+    { key: "compliance", label: "متطلبات تنظيمية/ملامسة غذاء", type: "select", options: ["غير مطلوبة", "ملامسة غذاء — يلزم مستندات المورد", "منتج حساس/منظم — مراجعة خاصة", "غير متأكد"], group: "الامتثال" },
+    quoteQty("عبوة")
+  ],
+
+  "flexible-rollstock": [
+    { key: "product", label: "المنتج", type: "select", options: ["مسحوق", "سناك/منتج جاف", "حبوب", "سائل", "منتج غير غذائي", "آخر"], group: "المنتج" },
+    { key: "machine", label: "نوع ماكينة التعبئة", type: "select", options: ["VFFS", "HFFS", "Sachet machine", "Stick-pack machine", "Flow-wrap", "غير معروف — أحتاج مطابقة مع خط التعبئة"], group: "خط التعبئة" },
+    { key: "web_width", label: "عرض الرول/Web", type: "number", placeholder: "إن كان معروفًا", unit: "مم", group: "المقاس" },
+    { key: "repeat", label: "Repeat Length / خطوة الطباعة", type: "number", placeholder: "إن كانت معروفة", unit: "مم", group: "المقاس" },
+    { key: "appearance", label: "مظهر البنية", type: "select", options: ["Clear", "Opaque", "Metalized", "Foil-containing", "تحدد بعد متطلبات المنتج"], group: "الخامة" },
+    { key: "barrier", label: "متطلبات الحاجز", type: "select", options: ["لا أعرف", "رطوبة", "أكسجين", "ضوء", "رائحة/نكهة", "متطلبات متعددة/خاصة"], group: "الحاجز" },
+    { key: "seal", label: "متطلبات اللحام/Sealing", type: "select", options: ["قياسي — يراجع مع الماكينة", "سرعة تعبئة عالية", "منتج يحتاج Seal خاص", "غير معروف"], group: "الإغلاق" },
+    { key: "feature", label: "ميزة تحويل إضافية", type: "select", options: ["بدون", "Pre-applied zipper", "Perforation/Scoring", "Easy-open", "ميزة خاصة — مراجعة المورد"], group: "التجهيز" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["Full-color branded print", "ألوان محدودة", "Variable/SKU family — مراجعة", "تحدد التقنية حسب الكمية والبنية"], group: "الطباعة" },
+    { key: "compliance", label: "الامتثال", type: "select", options: ["غير مطلوب", "Food-contact documentation required", "متطلبات منتج منظم", "غير متأكد"], group: "الامتثال" },
+    quoteQty("رول")
+  ],
+
+  "textile-sublimation": [
+    { key: "product", label: "نوع المنتج", type: "select", options: ["قماش رول", "راية / علم", "Sportswear / Jersey", "تيشيرت بوليستر", "Soft Signage", "قطعة مخيطة جاهزة", "منتج نسيجي آخر"], group: "المنتج" },
+    { key: "fabric", label: "تركيب القماش", type: "select", options: ["100% Polyester", "خليط عالي البوليستر", "Polyester pretreated للطباعة المباشرة", "غير معروف — أحتاج تقييم رواج"], group: "الخامة", helpText: "السوبليميشن التقليدي يثبت الصبغة داخل ألياف البوليستر، لذلك نسبة البوليستر وتجهيز القماش عاملان أساسيان." },
+    { key: "base_color", label: "لون الخامة", type: "select", options: ["أبيض", "فاتح", "ملون — يحتاج مراجعة التصميم", "داكن — غالبًا نحتاج تقنية بديلة"], group: "الخامة" },
+    { key: "process", label: "مسار التنفيذ", type: "select", options: ["Transfer Sublimation", "Direct Sublimation على قماش مهيأ", "تحدده رواج حسب المنتج"], group: "الطباعة" },
+    { key: "print_area", label: "مساحة/مقاس الطباعة", type: "text", placeholder: "مثال: كامل القماش أو 30 × 40 سم", group: "المقاس" },
+    { key: "artwork", label: "حالة التصميم", type: "select", options: ["ملف جاهز للطباعة", "لدي تصميم يحتاج تجهيز", "أحتاج التصميم من رواج"], group: "التصميم" },
+    { key: "finishing", label: "التجهيز النهائي", type: "select", options: ["طباعة فقط", "قص", "قص + خياطة", "منتج جاهز كامل", "حسب نوع المشروع"], group: "التجهيز" },
+    quoteQty("قطعة/متر")
+  ],
+
+  "sublimation-hard-goods": [
+    { key: "product", label: "المنتج", type: "select", options: ["Mug / كوب", "Tumbler / Drinkware", "لوح ألمنيوم مطلي", "لوح صور", "Coaster", "Phone Case", "قطعة سيراميك مطلية", "منتج Sublimation blank آخر"], group: "المنتج" },
+    { key: "blank", label: "حالة المنتج الخام", type: "select", options: ["سأوفر Blank مخصص للسوبليميشن", "أحتاج رواج توفر المنتج", "غير متأكد من وجود Poly-coating"], group: "الخامة", helpText: "السوبليميشن التقليدي يحتاج سطحًا بوليمريًا/Poly-coated أو مادة مصممة أصلًا للسوبليميشن." },
+    { key: "shape", label: "شكل السطح", type: "select", options: ["مسطح", "أسطواني", "مخروطي/متدرج", "شكل خاص"], group: "البنية" },
+    { key: "print_scope", label: "نطاق الطباعة", type: "select", options: ["وجه واحد", "وجهين", "Wrap حول المنتج", "موضع مخصص"], group: "الطباعة" },
+    { key: "size", label: "مساحة الطباعة", type: "text", placeholder: "الأبعاد التقريبية أو اسم المقاس القياسي", group: "المقاس" },
+    { key: "personalization", label: "بيانات متغيرة", type: "select", options: ["لا", "أسماء", "أرقام", "أسماء + أرقام", "بيانات أخرى من ملف"], group: "التخصيص" },
+    { key: "artwork", label: "التصميم", type: "select", options: ["جاهز", "يحتاج تهيئة", "أحتاج تصميم رواج"], group: "التصميم" },
+    quoteQty("قطعة")
+  ],
+
+  "dtf-apparel": [
+    { key: "garment", label: "نوع القطعة", type: "select", options: ["T-shirt", "Polo", "Hoodie / Sweatshirt", "Uniform", "Sportswear", "Tote Bag", "Cap / منتج يحتاج تقييم", "قطعة نسيجية أخرى"], group: "الملابس" },
+    { key: "fabric", label: "الخامة", type: "select", options: ["Cotton", "Polyester", "Cotton/Poly Blend", "Synthetic blend", "خامة أخرى — تحتاج اختبار"], group: "الخامة", helpText: "DTF يعمل على نطاق واسع من الأقمشة، لكن توافق الفيلم/المسحوق والقماش يجب تقييمه قبل الإنتاج النهائي." },
+    { key: "garment_color", label: "لون القطعة", type: "select", options: ["فاتح", "داكن", "ألوان متعددة"], group: "الخامة" },
+    { key: "placement", label: "موضع الطباعة", type: "select", options: ["صدر أمامي", "ظهر", "يسار الصدر", "كم", "أكثر من موضع", "موضع مخصص"], group: "الموضع" },
+    { key: "print_size", label: "مقاس الطباعة", type: "text", placeholder: "مثال: 28 × 35 سم", group: "المقاس" },
+    { key: "garment_supply", label: "توفير الملابس", type: "select", options: ["رواج توفر الملابس", "العميل يوفر الملابس", "أحتاج عرضًا للخيارين"], group: "التجهيز" },
+    { key: "personalization", label: "تخصيص أسماء/أرقام", type: "select", options: ["غير مطلوب", "أسماء", "أرقام", "أسماء + أرقام", "بيانات متغيرة أخرى"], group: "التخصيص" },
+    { key: "artwork", label: "الملف", type: "select", options: ["PNG/Artwork جاهز بخلفية شفافة", "ملف يحتاج تجهيز", "أحتاج تصميم رواج"], group: "التصميم" },
+    quoteQty("قطعة")
+  ],
+
+  "dtg-apparel": [
+    { key: "garment", label: "نوع القطعة", type: "select", options: ["T-shirt", "Sweatshirt", "Hoodie", "Tote/قطعة قطنية", "قطعة أخرى تحتاج تقييم"], group: "الملابس" },
+    { key: "fabric", label: "الخامة", type: "select", options: ["100% Cotton", "Cotton-rich blend", "Cotton/Poly blend", "Linen/Rayon — حسب الجهاز", "خامة أخرى — تحتاج اختبار"], group: "الخامة", helpText: "DTG يكون عادة أفضل على القطن والخامات الغنية بالقطن؛ الخلطات والخامات الأخرى تعتمد على نظام الطباعة والحبر." },
+    { key: "garment_color", label: "لون القطعة", type: "select", options: ["أبيض/فاتح", "داكن — يحتاج White Ink/pretreatment", "ألوان متعددة"], group: "الخامة" },
+    { key: "placement", label: "موضع الطباعة", type: "select", options: ["أمام", "خلف", "يسار الصدر", "موضع مخصص"], group: "الموضع" },
+    { key: "print_size", label: "مقاس الطباعة", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    { key: "garment_supply", label: "توفير الملابس", type: "select", options: ["رواج توفر الملابس", "العميل يوفر الملابس", "أحتاج عرضًا للخيارين"], group: "التجهيز" },
+    { key: "artwork", label: "التصميم", type: "select", options: ["جاهز", "يحتاج تجهيز", "أحتاج تصميم رواج"], group: "التصميم" },
+    quoteQty("قطعة")
+  ],
+
+  "screen-print-apparel": [
+    { key: "garment", label: "نوع القطعة", type: "select", options: ["T-shirt", "Polo", "Hoodie", "Uniform", "Sportswear", "Tote Bag", "Fabric panel", "قطعة أخرى"], group: "الملابس" },
+    { key: "fabric", label: "الخامة", type: "select", options: ["Cotton", "Polyester", "Cotton/Poly Blend", "Nylon", "Stretch/Performance fabric", "خامة أخرى"], group: "الخامة", helpText: "نوع الخامة يؤثر على نظام الحبر ومقاومة Dye Migration، خصوصًا في البوليستر والملابس الرياضية." },
+    { key: "garment_color", label: "لون القطعة", type: "select", options: ["فاتح", "داكن", "ألوان متعددة"], group: "الخامة" },
+    { key: "colors", label: "عدد ألوان التصميم", type: "select", options: ["لون واحد", "لونان", "3-4 ألوان", "5-8 ألوان", "Process/تفاصيل معقدة — تحتاج مراجعة"], group: "الألوان" },
+    { key: "ink_system", label: "نظام الحبر المطلوب", type: "select", options: ["تحدده رواج حسب الخامة والاستخدام", "Plastisol", "Water-based / Soft Hand", "High-solids water-based", "Low-bleed للبوليستر", "Special Effect"], group: "الطباعة" },
+    { key: "effect", label: "تأثير خاص — إن وجد", type: "select", options: ["بدون", "Metallic", "Reflective", "Glow in the dark", "Glitter/Shimmer", "Suede/Texture", "تأثير خاص آخر"], group: "التشطيب" },
+    { key: "placement", label: "موضع الطباعة", type: "select", options: ["أمام", "خلف", "يسار الصدر", "كم", "أكثر من موضع"], group: "الموضع" },
+    { key: "print_size", label: "مقاس الطباعة", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    { key: "garment_supply", label: "توفير الملابس", type: "select", options: ["رواج توفر الملابس", "العميل يوفر الملابس", "الخياران"], group: "التجهيز" },
+    quoteQty("قطعة")
+  ],
+
+  embroidery: [
+    { key: "item", label: "القطعة", type: "select", options: ["Polo / Shirt", "Jacket", "Cap", "Uniform", "Towel", "Bag", "Patch", "Performance wear", "قطعة أخرى"], group: "الملابس" },
+    { key: "fabric", label: "نوع القماش", type: "select", options: ["Woven ثابت", "Knit / Jersey", "Stretch / Performance", "Fleece", "Towel / Napped fabric", "Cap structure", "Denim/Canvas", "غير معروف"], group: "الخامة", helpText: "نوع القماش يغيّر إعدادات digitizing والـunderlay والـbacking؛ هذه التفاصيل يحددها الفني ولا يطلب من العميل ضبطها." },
+    { key: "placement", label: "موضع التطريز", type: "select", options: ["يسار الصدر", "يمين الصدر", "منتصف الصدر", "ظهر", "كم", "مقدمة الكاب", "جانب/خلف الكاب", "موضع مخصص"], group: "الموضع" },
+    { key: "size", label: "حجم التطريز", type: "text", placeholder: "مثال: 8 سم عرض", group: "المقاس" },
+    { key: "thread_colors", label: "عدد ألوان الخيط", type: "select", options: ["لون واحد", "2-3 ألوان", "4-6 ألوان", "أكثر", "مطابقة ألوان الهوية حسب المتاح"], group: "الخيوط" },
+    { key: "design_status", label: "ملف التطريز", type: "select", options: ["لدي ملف ماكينة جاهز", "لدي شعار Vector/PDF فقط", "لدي صورة تحتاج Digitizing", "أحتاج تصميم الشعار"], group: "التصميم" },
+    { key: "garment_supply", label: "توفير القطع", type: "select", options: ["رواج توفرها", "العميل يوفرها", "أحتاج عرضًا للخيارين"], group: "التجهيز" },
+    { key: "personalization", label: "أسماء فردية", type: "select", options: ["لا", "نعم — أسماء متغيرة", "أسماء + أرقام/مسميات"], group: "التخصيص" },
+    quoteQty("قطعة")
+  ],
+
+  "heat-transfer-vinyl": [
+    { key: "garment", label: "نوع القطعة", type: "select", options: ["T-shirt", "Polo", "Hoodie", "Sportswear", "Uniform", "Bag", "Leather item", "قطعة أخرى"], group: "الملابس" },
+    { key: "fabric", label: "الخامة", type: "select", options: ["Cotton", "Poly/Cotton blend", "100% Polyester", "Leather — حسب مادة HTV", "خامة أخرى تحتاج اختبار"], group: "الخامة", helpText: "درجة الحرارة والضغط وملاءمة HTV تختلف باختلاف المادة، لذلك يتم اختيار الفيلم بعد معرفة القماش." },
+    { key: "finish", label: "نوع HTV / المظهر", type: "select", options: ["Standard", "Metallic", "Sparkle/Glitter", "Flock / مخملي", "Glow", "Specialty — يحدد حسب الطلب"], group: "الخامة" },
+    { key: "colors", label: "ألوان التصميم", type: "select", options: ["لون واحد", "لونان", "عدة ألوان/طبقات", "أحتاج تقنية أخرى للألوان الكاملة"], group: "الألوان" },
+    { key: "placement", label: "موضع النقل", type: "select", options: ["أمام", "خلف", "يسار الصدر", "كم", "أكثر من موضع"], group: "الموضع" },
+    { key: "size", label: "مقاس التصميم", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    quoteQty("قطعة")
+  ],
+
+  "uv-direct-object": [
+    { key: "object", label: "نوع المنتج", type: "select", options: ["هدية دعائية", "Phone case", "Bottle / Drinkware", "Pen/Pencil", "Award", "Acrylic block", "Panel/Plate", "Industrial part", "Leather good", "منتج آخر"], group: "المنتج" },
+    { key: "material", label: "مادة السطح", type: "select", options: ["Plastic", "Acrylic", "Metal / Brushed Metal", "Wood", "Paper/Cardboard", "Ceramic", "Glass", "Leather / Synthetic Leather", "مادة أخرى"], group: "الخامة", helpText: "قابلية الالتصاق والـprimer تختلف حسب مادة السطح؛ رواج تختبر التوافق قبل الإنتاج الكمي." },
+    { key: "shape", label: "شكل المنتج", type: "select", options: ["مسطح", "قطعة سميكة/3D", "أسطواني", "مخروطي/منحني", "غير منتظم"], group: "البنية" },
+    { key: "dimensions", label: "أبعاد المنتج", type: "text", placeholder: "الطول × العرض × الارتفاع", group: "المقاس" },
+    { key: "surface_color", label: "لون/شفافية السطح", type: "select", options: ["أبيض/فاتح", "داكن", "شفاف", "معدني/عاكس", "ألوان متعددة"], group: "الخامة" },
+    { key: "white", label: "أبيض تحتي", type: "select", options: ["غير مطلوب", "مطلوب على الشفاف/الداكن", "تحدده رواج بعد التصميم"], group: "الطباعة" },
+    { key: "effect", label: "تأثير UV خاص", type: "select", options: ["بدون", "Gloss spot", "Texture / Raised effect", "Primer عند الحاجة للالتصاق", "مزيج تأثيرات"], group: "التشطيب" },
+    { key: "personalization", label: "تخصيص متغير", type: "select", options: ["لا", "أسماء", "أرقام", "QR/Serial", "بيانات متغيرة من ملف"], group: "التخصيص" },
+    quoteQty("قطعة")
+  ],
+
+  "uv-dtf": [
+    { key: "object", label: "المنتج المستهدف", type: "select", options: ["Bottle / Tumbler", "Mug", "Phone case", "Gift item", "Container", "Leather good", "منتج ذو شكل غير منتظم", "منتج آخر"], group: "المنتج" },
+    { key: "surface", label: "مادة السطح", type: "select", options: ["Glass", "Plastic", "Acrylic", "Metal", "Ceramic", "Leather / Synthetic Leather", "سطح آخر"], group: "الخامة" },
+    { key: "shape", label: "شكل السطح", type: "select", options: ["مسطح", "منحني", "أسطواني", "زوايا/حواف ممتدة", "غير منتظم"], group: "البنية", helpText: "UV DTF مفيد خصوصًا للأجسام التي يصعب أو يستحيل وضعها تحت طابعة UV مباشرة." },
+    { key: "size", label: "مقاس النقل", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    { key: "surface_condition", label: "حالة السطح", type: "select", options: ["أملس ونظيف", "محبب/خشن", "مطلي", "غير معروف — يحتاج اختبار"], group: "الاستخدام" },
+    { key: "personalization", label: "تخصيص متغير", type: "select", options: ["لا", "أسماء", "أرقام", "بيانات أخرى"], group: "التخصيص" },
+    quoteQty("قطعة")
+  ],
+
+  "promotional-pen": [
+    { key: "pen_type", label: "نوع القلم", type: "select", options: ["قلم بلاستيكي", "قلم معدني", "قلم خشبي/بامبو", "قلم فاخر", "موديل خاص — أرسل صورة مرجعية"], group: "المنتج" },
+    { key: "body_material", label: "مادة جسم القلم", type: "select", options: ["Plastic", "Painted/Coated Metal", "Anodized Metal", "Stainless/Metal", "Wood/Bamboo", "غير معروف — يحدد من العينة"], group: "الخامة" },
+    { key: "branding", label: "طريقة وضع الشعار", type: "select", options: ["توصية رواج حسب الخامة", "Pad Printing", "UV Direct Print", "Laser Engraving / Marking للخامات المتوافقة", "تقنية أخرى من المورد"], group: "الطباعة", helpText: "ليست كل تقنيات التخصيص مناسبة لكل جسم قلم؛ تُثبت الطريقة بعد معرفة الخامة والسطح." },
+    { key: "branding_area", label: "موضع/مساحة الشعار", type: "text", placeholder: "مثال: جسم القلم — 45 × 7 مم، أو أرفق قالب المورد", group: "المقاس" },
+    { key: "colors", label: "ألوان الشعار", type: "select", options: ["لون واحد", "لونان", "Full Color", "حفر بدون لون", "حسب التقنية"], group: "الألوان" },
+    { key: "personalization", label: "تخصيص أسماء فردية", type: "select", options: ["لا", "نعم — أسماء", "أسماء + مسميات", "ترقيم/Serial"], group: "التخصيص" },
+    { key: "supply", label: "توفير المنتج", type: "select", options: ["رواج توفر الأقلام", "العميل يوفر الأقلام — يحتاج اختبار توافق", "أحتاج عرضًا للخيارين"], group: "التجهيز" },
+    { key: "packaging", label: "التغليف الفردي", type: "select", options: ["بدون", "كيس/غلاف بسيط", "علبة هدية", "حسب موديل القلم"], group: "الملحقات" },
+    quoteQty("قلم")
+  ],
+
+  "promotional-drinkware": [
+    { key: "product", label: "نوع المنتج", type: "select", options: ["Mug / كوب", "Tumbler", "Water Bottle", "Thermos / Flask", "Travel Mug", "Glassware", "Drinkware آخر"], group: "المنتج" },
+    { key: "material", label: "الخامة", type: "select", options: ["Ceramic", "Sublimation-coated Ceramic/Metal", "Stainless Steel", "Aluminum", "Plastic", "Glass", "خامة أخرى"], group: "الخامة" },
+    { key: "capacity", label: "السعة", type: "text", placeholder: "مثال: 350 مل / 500 مل / 20 oz", group: "المقاس" },
+    { key: "shape", label: "شكل السطح", type: "select", options: ["أسطواني مستقيم", "Tapered / مخروطي", "بمقبض", "سطح منحني خاص", "غير متأكد"], group: "البنية" },
+    { key: "branding", label: "تقنية التخصيص", type: "select", options: ["توصية رواج حسب المنتج", "Sublimation — فقط Blank/Coating متوافق", "Laser Engraving للخامة المتوافقة", "UV Direct / Rotary UV", "Pad / Screen Printing حسب السطح والمورد"], group: "الطباعة" },
+    { key: "print_scope", label: "نطاق التخصيص", type: "select", options: ["شعار موضعي", "وجه واحد", "وجهين", "Wrap حول الجسم", "موضع خاص"], group: "الموضع" },
+    { key: "personalization", label: "بيانات متغيرة", type: "select", options: ["لا", "أسماء", "أسماء + أرقام", "QR / Serial", "بيانات من ملف"], group: "التخصيص" },
+    { key: "supply", label: "توفير المنتج", type: "select", options: ["رواج توفر المنتج", "العميل يوفر المنتج — اختبار توافق مطلوب", "الخياران"], group: "التجهيز" },
+    { key: "packaging", label: "التغليف", type: "select", options: ["تغليف المصنع", "علبة فردية", "علبة هدية مخصصة", "Gift Set"], group: "الملحقات" },
+    quoteQty("قطعة")
+  ],
+
+  "promotional-lanyard": [
+    { key: "material", label: "الخامة", type: "select", options: ["Polyester — مناسب لسوبليميشن", "Polyester woven/supplier construction", "خامة أخرى حسب المورد"], group: "الخامة" },
+    { key: "width", label: "عرض الشريط", type: "select", options: ["10 مم", "15 مم", "20 مم", "25 مم", "مقاس مخصص"], group: "المقاس" },
+    { key: "length", label: "الطول", type: "select", options: ["مقاس رقبة قياسي حسب المورد", "طول مخصص", "غير متأكد"], group: "المقاس" },
+    { key: "branding", label: "طريقة التخصيص", type: "select", options: ["Dye Sublimation Full Color على Polyester", "Screen Print حسب البنية", "Woven/Jacquard — توريد متخصص", "أحتاج توصية"], group: "الطباعة", helpText: "السوبليميشن موثق على أشرطة Polyester؛ الخيارات الأخرى تعتمد على بناء الشريط والمورد." },
+    { key: "sides", label: "أوجه التصميم", type: "select", options: ["وجه واحد", "وجهين", "Loop كامل"], group: "الطباعة" },
+    { key: "attachment", label: "الملحق السفلي", type: "select", options: ["Metal hook", "Lobster clip", "Badge reel", "Keyring", "Card holder", "ملحق خاص"], group: "الملحقات" },
+    { key: "safety", label: "Safety Breakaway", type: "select", options: ["غير مطلوب", "مطلوب", "يحدد حسب الاستخدام"], group: "الملحقات" },
+    quoteQty("حبل")
+  ],
+
+  "promotional-keychain": [
+    { key: "style", label: "نوع الـKeychain", type: "select", options: ["Metal", "Acrylic", "Wood", "Leather / Synthetic Leather", "Plastic/Rubber", "Bottle opener / Functional", "تصميم خاص"], group: "المنتج" },
+    { key: "material", label: "الخامة", type: "select", options: ["Metal", "Anodized/Coated Metal", "Acrylic", "Wood", "Leather", "Plastic", "Mixed materials"], group: "الخامة" },
+    { key: "size", label: "المقاس", type: "text", placeholder: "الأبعاد التقريبية أو موديل المنتج", group: "المقاس" },
+    { key: "branding", label: "التخصيص", type: "select", options: ["Laser Engraving / Marking", "UV Direct Print", "Pad Printing", "Printed insert", "توصية رواج حسب الخامة"], group: "الطباعة" },
+    { key: "personalization", label: "أسماء/أرقام متغيرة", type: "select", options: ["لا", "أسماء", "أرقام", "QR/Serial", "بيانات متعددة"], group: "التخصيص" },
+    { key: "packaging", label: "التغليف", type: "select", options: ["Bulk", "كيس فردي", "علبة صغيرة", "Gift packaging"], group: "الملحقات" },
+    quoteQty("قطعة")
+  ],
+
+  "promotional-notebook": [
+    { key: "format", label: "نوع الدفتر", type: "select", options: ["Hardcover notebook", "Softcover notebook", "PU/Leather-look notebook", "Wire-O promotional notebook", "Eco/Kraft style", "موديل مورد خاص"], group: "المنتج" },
+    { key: "size", label: "المقاس", type: "select", options: ["A5", "A6", "A4", "Pocket", "مقاس مورد خاص"], group: "المقاس" },
+    { key: "cover_material", label: "خامة الغلاف", type: "select", options: ["Paper/Card cover", "PU / Synthetic leather", "Fabric", "Wood/Bamboo detail", "Mixed material", "غير معروف"], group: "الخامة" },
+    { key: "inside", label: "المحتوى الداخلي", type: "select", options: ["دفتر جاهز بخطوط", "Dot grid", "Blank", "طباعة داخلية مخصصة", "Planner/Diary structure"], group: "المحتوى" },
+    { key: "branding", label: "تخصيص الغلاف", type: "select", options: ["UV Direct Print", "Screen/Pad Print حسب الغلاف", "Laser Engraving للخامة المتوافقة", "Foil/Deboss إذا وفره مورد الدفتر", "Printed cover كامل", "توصية رواج"], group: "الطباعة" },
+    { key: "personalization", label: "تخصيص فردي", type: "select", options: ["بدون", "اسم على الغلاف", "اسم + مسمى", "بيانات متغيرة"], group: "التخصيص" },
+    { key: "accessories", label: "ملحقات", type: "select", options: ["بدون", "Elastic band", "Pen loop", "Ribbon marker", "Gift box", "حسب موديل المورد"], group: "الملحقات" },
+    quoteQty("دفتر")
+  ],
+
+  "corporate-gift-set": [
+    { key: "occasion", label: "الغرض من الهدية", type: "select", options: ["موظفون", "عملاء VIP", "فعالية/مؤتمر", "افتتاح/إطلاق", "موسم/مناسبة", "هدية ترحيبية", "غرض آخر"], group: "الاستخدام" },
+    { key: "items", label: "محتويات المجموعة", type: "text", placeholder: "مثال: Notebook + Pen + Tumbler + بطاقة شكر", group: "المحتوى" },
+    { key: "items_source", label: "توفير المنتجات", type: "select", options: ["رواج تقترح وتوفر كل المنتجات", "لدي منتجات محددة", "مزيج بين منتجاتي وتوريد رواج"], group: "التجهيز" },
+    { key: "branding", label: "التخصيص", type: "select", options: ["نفس الهوية على جميع القطع", "تقنيات مختلفة حسب خامة كل قطعة", "أسماء شخصية على بعض القطع", "أحتاج اقتراح كامل من رواج"], group: "التخصيص" },
+    { key: "packaging", label: "تغليف المجموعة", type: "select", options: ["Box قياسي", "Gift Box مخصص", "Mailer/Packaging branded", "Bag + insert", "أحتاج تصميم تغليف كامل"], group: "الملحقات" },
+    { key: "insert", label: "بطاقة/Insert داخل المجموعة", type: "select", options: ["بدون", "بطاقة شكر", "رسالة شخصية", "كتيب/تعريف", "QR / Voucher"], group: "الملحقات" },
+    { key: "personalization", label: "تخصيص كل مجموعة باسم المستلم", type: "select", options: ["لا", "نعم — اسم", "اسم + مسمى/شركة", "بيانات متغيرة من ملف"], group: "التخصيص" },
+    { key: "delivery", label: "التسليم", type: "select", options: ["كل الكمية لموقع واحد", "مجموعات منفصلة جاهزة للتوزيع", "توزيع متعدد المواقع — يحتاج دراسة"], group: "التجهيز" },
+    quoteQty("مجموعة")
+  ],
+
+  "laser-cutting": [
+    { key: "material", label: "الخامة", type: "select", options: ["Acrylic / PMMA", "MDF", "Plywood / Wood", "Paper / Cardboard", "Leather", "Textile", "Laserable plastic", "Metal — يحتاج تحديد نوع الليزر والسماكة", "خامة أخرى"], group: "الخامة" },
+    { key: "thickness", label: "السماكة", type: "text", placeholder: "مثال: 3 مم", group: "الخامة" },
+    { key: "sheet_size", label: "مقاس الخام/القطعة", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    { key: "operation", label: "العملية", type: "select", options: ["قص فقط", "قص + حفر/نقش", "قص + ترقيم/علامات", "مشروع تجميع متعدد القطع"], group: "المعالجة" },
+    { key: "edge_quality", label: "متطلب الحافة", type: "select", options: ["قياسي", "حافة أكريليك عالية الوضوح حسب الخامة", "سيتم صنفرة/دهان لاحقًا", "متطلب خاص"], group: "التشطيب" },
+    { key: "file", label: "ملف القص", type: "select", options: ["Vector جاهز", "PDF/AI يحتاج مراجعة", "صورة/رسم يحتاج تحويل", "أحتاج تصميم رواج"], group: "التصميم" },
+    quoteQty("قطعة")
+  ],
+
+  "laser-engraving": [
+    { key: "item", label: "المنتج", type: "select", options: ["لوحة/Tag", "هدية", "Award", "Nameplate", "Part/Component", "قطعة مخصصة"], group: "المنتج" },
+    { key: "material", label: "الخامة", type: "select", options: ["Anodized Aluminum", "Coated/Painted Metal", "Stainless Steel — Fiber/Marking", "Acrylic / PMMA", "Wood / Veneer / MDF", "Glass", "Leather", "Laserable plastic", "خامة أخرى"], group: "الخامة", helpText: "تقنية الليزر تختلف حسب الخامة؛ بعض المعادن تحتاج Fiber Laser أو marking system بدل CO₂." },
+    { key: "operation", label: "نوع التنفيذ", type: "select", options: ["Engraving / حفر", "Marking / وسم", "Etching effect", "حفر + قص", "يحدد بعد فحص الخامة"], group: "المعالجة" },
+    { key: "area", label: "مساحة الحفر", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    { key: "personalization", label: "بيانات متغيرة", type: "select", options: ["لا", "أسماء", "أرقام تسلسلية", "QR/Barcode", "أسماء + أرقام", "بيانات من ملف"], group: "التخصيص" },
+    { key: "file", label: "الملف", type: "select", options: ["Vector جاهز", "PDF/Logo يحتاج مراجعة", "أحتاج تصميم/تجهيز رواج"], group: "التصميم" },
+    quoteQty("قطعة")
+  ],
+
+  "rigid-uv-print": [
+    { key: "substrate", label: "الخامة الصلبة", type: "select", options: ["Acrylic", "Aluminum Composite / ACM", "PVC Foam Board", "Corrugated Plastic", "Corrugated Cardboard", "Pasteboard / Display Board", "PET / Synthetic Sheet", "خامة أخرى تحتاج اختبار"], group: "الخامة" },
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 100", unit: "سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 70", unit: "سم", group: "المقاس" },
+    { key: "thickness", label: "السماكة", type: "text", placeholder: "إن كانت معروفة", group: "الخامة" },
+    { key: "application", label: "الاستخدام", type: "select", options: ["لوحة داخلية", "لوحة خارجية", "POP / POS", "معرض أو كشك", "ديكور داخلي", "قطعة تصنيع مخصصة"], group: "الاستخدام" },
+    { key: "print", label: "الطباعة", type: "select", options: ["Direct UV Color", "Color + White Ink", "White + Color + Effects حسب الجهاز", "تحدده رواج حسب الخامة"], group: "الطباعة" },
+    { key: "fabrication", label: "التصنيع بعد الطباعة", type: "select", options: ["قص مستقيم", "Contour / Digital Cut", "CNC Routing", "Drilling", "بدون تصنيع إضافي", "مزيج عمليات"], group: "المعالجة" },
+    { key: "mounting", label: "التجهيز/التركيب", type: "select", options: ["توريد اللوح فقط", "Standoffs", "تعليق", "Frame", "تثبيت موقعي", "يحدد حسب المشروع"], group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "pvc-foam-board": [
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 100", unit: "سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 70", unit: "سم", group: "المقاس" },
+    { key: "thickness", label: "السماكة", type: "select", options: ["1 مم", "2 مم", "3 مم", "6 مم", "10 مم", "12.7 مم", "سماكة أخرى حسب المورد"], group: "الخامة", helpText: "السماكات المتاحة تختلف حسب المورد؛ الاستخدام الخارجي أو البنيوي يحتاج مراجعة السماكة والتثبيت." },
+    { key: "color", label: "لون اللوح", type: "select", options: ["أبيض", "أسود", "لون جاهز حسب المورد", "طباعة تغطي السطح"], group: "الخامة" },
+    { key: "application", label: "الاستخدام", type: "select", options: ["Interior Sign", "Exterior Sign", "POP/POS Display", "Exhibit/Kiosk", "Window Display", "Dimensional element"], group: "الاستخدام" },
+    { key: "graphics", label: "الجرافيك", type: "select", options: ["Direct Digital/UV Print", "Vinyl Applied", "Screen Print", "Paint + Graphics", "بدون طباعة — تصنيع فقط"], group: "الطباعة" },
+    { key: "fabrication", label: "التصنيع", type: "select", options: ["قص مستقيم", "Knife Cut للسماكات المناسبة", "CNC Route", "Die-cut للسماكات المناسبة", "Heat Form / تشكيل", "مزيج عمليات"], group: "المعالجة" },
+    { key: "install", label: "التركيب", type: "select", options: ["توريد فقط", "توريد + تركيب", "جزء من مشروع عرض/ديكور"], group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "acm-printed-panel": [
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 120", unit: "سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 240", unit: "سم", group: "المقاس" },
+    { key: "thickness", label: "سماكة اللوح", type: "select", options: ["2 مم", "3 مم", "4 مم", "سماكة/نظام آخر"], group: "الخامة" },
+    { key: "surface", label: "سطح اللوح", type: "select", options: ["أبيض للطباعة", "أسود", "Metallic / Brushed specialty", "لون جاهز", "يحدد حسب المورد"], group: "الخامة" },
+    { key: "application", label: "الاستخدام", type: "select", options: ["Signage داخلي", "Signage خارجي", "POP / Display", "Exhibit/Kiosk", "لوحة ديكور", "جزء مُشكّل ثلاثي الأبعاد"], group: "الاستخدام" },
+    { key: "graphics", label: "طريقة الجرافيك", type: "select", options: ["Direct Digital/UV Print", "Screen Print", "Applied Vinyl", "Painted + Graphics"], group: "الطباعة" },
+    { key: "fabrication", label: "التصنيع", type: "select", options: ["قص فقط", "CNC Routing", "Route & Return / ثني", "Curved/Formed", "Drilling", "مزيج عمليات"], group: "المعالجة" },
+    { key: "install", label: "التنفيذ", type: "select", options: ["توريد لوحة", "توريد + تجهيز تثبيت", "تركيب كامل"], group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "coroplast-sign": [
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 60", unit: "سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 40", unit: "سم", group: "المقاس" },
+    { key: "thickness", label: "السماكة", type: "text", placeholder: "إن كانت محددة أو اتركها لرواج", group: "الخامة" },
+    { key: "application", label: "الاستخدام", type: "select", options: ["Yard / Site Sign", "Real Estate", "Construction", "POP / Retail", "Trade Show", "Directional", "Promotion"], group: "الاستخدام" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["وجه واحد", "وجهين", "Direct Digital", "Screen Print — للكميات المناسبة"], group: "الطباعة" },
+    { key: "shape", label: "القص", type: "select", options: ["مستطيل", "Die-cut Shape", "Custom Contour", "Routing / Fabrication"], group: "القص" },
+    { key: "hardware", label: "ملحقات العرض", type: "select", options: ["بدون", "Stake / حامل أرضي", "تعليق", "Frame", "يحدد حسب الموقع"], group: "الملحقات" },
+    quoteQty("لوحة")
+  ],
+
+  "foam-board-display": [
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 70", unit: "سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 100", unit: "سم", group: "المقاس" },
+    { key: "thickness", label: "السماكة", type: "select", options: ["3/16 بوصة", "3/8 بوصة", "1/2 بوصة", "3/4 بوصة", "1 بوصة", "1.5 بوصة", "2 بوصة", "3 بوصة", "حسب الخامة المتاحة"], group: "الخامة" },
+    { key: "application", label: "الاستخدام", type: "select", options: ["Interior Sign", "POP/POS", "Exhibit/Kiosk", "Window Display", "Mounted Print", "Dimensional Display"], group: "الاستخدام" },
+    { key: "graphics", label: "الجرافيك", type: "select", options: ["Direct Digital Print", "Mounted Print", "Screen Print", "Painted/Graphic combination"], group: "الطباعة" },
+    { key: "fabrication", label: "التصنيع", type: "select", options: ["قص", "Routing", "Shape Cut", "Layered dimensional build"], group: "المعالجة" },
+    { key: "mounting", label: "العرض/التثبيت", type: "select", options: ["بدون", "Wall Mount", "Easel/Stand", "Hanging", "ضمن كشك/معرض"], group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "retractable-banner-stand": [
+    { key: "hardware", label: "الهاردوير", type: "select", options: ["جهاز جديد + جرافيك", "استبدال جرافيك لجهاز موجود", "أحتاج اختيار نظام كامل"], group: "أنظمة العرض" },
+    { key: "class", label: "فئة الجهاز", type: "select", options: ["Economy", "Mid-range", "Premium", "Interchangeable cassette", "يحدد حسب تكرار الاستخدام"], group: "أنظمة العرض" },
+    { key: "width", label: "عرض الجرافيك", type: "text", placeholder: "أدخل المقاس إن كان الجهاز موجودًا", group: "المقاس" },
+    { key: "height", label: "ارتفاع الجرافيك", type: "text", placeholder: "أدخل المقاس أو اتركه لاختيار النظام", group: "المقاس" },
+    { key: "graphic_material", label: "خامة الجرافيك", type: "select", options: ["Vinyl", "Fabric", "Polyester", "PVC-free media", "تحدد حسب نظام الجهاز"], group: "الخامة" },
+    { key: "usage", label: "الاستخدام", type: "select", options: ["معرض", "مؤتمر", "متجر", "مكتب/لوبي", "تنقل متكرر لفريق المبيعات"], group: "الاستخدام" },
+    { key: "carry", label: "حقيبة نقل", type: "select", options: ["مطلوبة", "غير مطلوبة", "ضمن الجهاز حسب المورد"], group: "الملحقات" },
+    quoteQty("ستاند")
+  ],
+
+  "tension-fabric-banner": [
+    { key: "system", label: "نظام القماش", type: "select", options: ["Pillowcase Tension Fabric", "SEG / Push-fit Fabric", "Fabric Banner Stand", "يحدد حسب شكل العرض"], group: "أنظمة العرض" },
+    { key: "width", label: "العرض", type: "text", placeholder: "مثال: 90 سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "text", placeholder: "مثال: 220 سم", group: "المقاس" },
+    { key: "sides", label: "عدد الأوجه", type: "select", options: ["وجه واحد", "وجهين"], group: "البنية" },
+    { key: "graphic", label: "نوع الجرافيك", type: "select", options: ["Stretch Dye-sublimated Fabric", "SEG Fabric", "يحدد حسب الإطار"], group: "الخامة" },
+    { key: "hardware", label: "الإطار", type: "select", options: ["إطار جديد", "استبدال الجرافيك فقط", "أحتاج نظام كامل"], group: "أنظمة العرض" },
+    { key: "usage", label: "الاستخدام", type: "select", options: ["Retail", "Corporate", "Event", "Trade Show"], group: "الاستخدام" },
+    quoteQty("نظام")
+  ],
+
+  "pop-up-backwall": [
+    { key: "width", label: "العرض التقريبي", type: "text", placeholder: "مثال: 3 متر", group: "المقاس" },
+    { key: "shape", label: "شكل الباك وول", type: "select", options: ["Straight", "Curved", "Extra Tall", "Custom"], group: "البنية" },
+    { key: "graphic_system", label: "نظام الجرافيك", type: "select", options: ["Tension Fabric", "Push-fit Fabric", "Panel Graphics", "Backlit Fabric", "يحدد حسب النظام"], group: "أنظمة العرض" },
+    { key: "hardware", label: "الهاردوير", type: "select", options: ["جديد", "استبدال الجرافيك لجهاز موجود", "نظام كامل مع حقيبة نقل"], group: "أنظمة العرض" },
+    { key: "accessories", label: "ملحقات", type: "select", options: ["بدون", "إضاءة", "Monitor Mount", "Counter", "رف بروشورات", "مزيج ملحقات"], group: "الملحقات" },
+    quoteQty("نظام")
+  ],
+
+  "seg-fabric-frame": [
+    { key: "mounting", label: "نوع الإطار", type: "select", options: ["Wall-mounted", "Freestanding", "Hanging", "Modular frame"], group: "أنظمة العرض" },
+    { key: "width", label: "العرض", type: "text", placeholder: "المقاس المطلوب", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "text", placeholder: "المقاس المطلوب", group: "المقاس" },
+    { key: "sides", label: "الأوجه", type: "select", options: ["وجه واحد", "وجهين"], group: "البنية" },
+    { key: "graphic", label: "الجرافيك", type: "select", options: ["SEG Dye-sublimated Fabric", "استبدال جرافيك فقط", "إطار + جرافيك"], group: "الخامة" },
+    { key: "lighting", label: "الإضاءة", type: "select", options: ["بدون إضاءة", "أحتاج Lightbox — استخدم نموذج SEG Lightbox"], group: "الإضاءة" },
+    quoteQty("إطار")
+  ],
+
+  "seg-lightbox": [
+    { key: "mounting", label: "نوع التركيب", type: "select", options: ["Freestanding", "Wall-mounted", "Hanging", "Modular Exhibit"], group: "أنظمة العرض" },
+    { key: "width", label: "العرض", type: "text", placeholder: "المقاس المطلوب", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "text", placeholder: "المقاس المطلوب", group: "المقاس" },
+    { key: "sides", label: "الأوجه", type: "select", options: ["وجه واحد", "وجهين"], group: "البنية" },
+    { key: "graphic", label: "الجرافيك", type: "select", options: ["Backlit SEG Fabric", "استبدال الجرافيك فقط", "إطار + LED + جرافيك"], group: "الخامة" },
+    { key: "usage", label: "الاستخدام", type: "select", options: ["Retail", "Showroom/Lobby", "Trade Show", "Pop-up Retail", "Gallery/Event"], group: "الاستخدام" },
+    quoteQty("Lightbox")
+  ],
+
+  "table-cover": [
+    { key: "table", label: "مقاس الطاولة", type: "select", options: ["4 ft", "6 ft", "8 ft", "Tall 4 ft Demo Table", "Round Table", "مقاس مخصص"], group: "المقاس" },
+    { key: "style", label: "ستايل الغطاء", type: "select", options: ["Draped / Table Throw", "Fitted", "Stretch", "Convertible", "Outdoor fitted"], group: "البنية" },
+    { key: "coverage", label: "التغطية", type: "select", options: ["4 جوانب", "3 جوانب مع فتح الخلف", "حسب نوع الغطاء"], group: "البنية" },
+    { key: "fabric", label: "الخامة", type: "select", options: ["Washable Polyester Dye-sublimation", "Power Stretch Polyester", "Outdoor Canvas / Spill-resistant", "تحدد حسب النظام"], group: "الخامة" },
+    { key: "carry", label: "حقيبة حمل", type: "select", options: ["بدون", "مطلوبة", "حسب المنتج"], group: "الملحقات" },
+    quoteQty("غطاء")
+  ],
+
+  "trade-show-counter": [
+    { key: "counter_type", label: "نوع الكاونتر", type: "select", options: ["Collapsible Fabric Counter", "SEG Counter", "Backlit Counter", "Reception Counter", "Custom Exhibit Counter"], group: "أنظمة العرض" },
+    { key: "hardware", label: "الهاردوير", type: "select", options: ["جديد كامل", "استبدال الجرافيك فقط", "لدي هيكل يحتاج قياس"], group: "أنظمة العرض" },
+    { key: "graphic", label: "الجرافيك", type: "select", options: ["Tension Fabric", "SEG Fabric", "Printed Panel", "Backlit Fabric"], group: "الخامة" },
+    { key: "storage", label: "تخزين داخلي", type: "select", options: ["غير مطلوب", "رف داخلي", "مساحة تخزين مغلقة", "حسب النظام"], group: "الملحقات" },
+    { key: "use", label: "الاستخدام", type: "select", options: ["Trade Show", "Event", "Reception", "Retail / Promotion"], group: "الاستخدام" },
+    quoteQty("كاونتر")
+  ],
+
+  "event-tent": [
+    { key: "size", label: "مقاس الخيمة", type: "text", placeholder: "مثال: 3 × 3 م", group: "المقاس" },
+    { key: "hardware", label: "الهيكل", type: "select", options: ["هيكل جديد + طباعة", "استبدال Canopy فقط", "لدي هيكل يحتاج مطابقة"], group: "أنظمة العرض" },
+    { key: "print_scope", label: "نطاق الطباعة", type: "select", options: ["السقف فقط", "السقف + Valances", "Full printed canopy", "Canopy + Walls"], group: "الطباعة" },
+    { key: "walls", label: "الجدران", type: "select", options: ["بدون", "Half Wall", "Full Wall", "عدة جدران", "جدران مطبوعة كاملة"], group: "الملحقات" },
+    { key: "use", label: "الاستخدام", type: "select", options: ["فعالية خارجية", "مهرجان", "رياضة", "ترويج ميداني", "سوق/بازار"], group: "الاستخدام" },
+    { key: "anchoring", label: "التثبيت", type: "select", options: ["أرض ترابية", "سطح صلب", "يحدد حسب الموقع والرياح"], group: "التركيب" },
+    quoteQty("خيمة")
+  ],
+
+  "event-flag": [
+    { key: "shape", label: "شكل العلم", type: "select", options: ["Feather", "Straight", "Teardrop", "Edge", "Rectangle / Banner Flag"], group: "البنية" },
+    { key: "size", label: "الحجم", type: "select", options: ["Small", "Medium", "Large", "Extra Large", "مقاس مخصص"], group: "المقاس" },
+    { key: "sides", label: "الطباعة", type: "select", options: ["وجه واحد", "وجهين"], group: "الطباعة" },
+    { key: "hardware", label: "العمود والهاردوير", type: "select", options: ["طقم كامل", "استبدال العلم فقط", "لدي عمود يحتاج مطابقة"], group: "أنظمة العرض" },
+    { key: "base", label: "قاعدة التثبيت", type: "select", options: ["Ground Stake", "قاعدة لسطح صلب", "قاعدة موزونة/مائية", "يحدد حسب الموقع"], group: "التركيب" },
+    { key: "use", label: "الاستخدام", type: "select", options: ["Outdoor Event", "Sports", "Festival", "Storefront", "Indoor Event"], group: "الاستخدام" },
+    quoteQty("علم")
+  ],
+
+  "hanging-display": [
+    { key: "shape", label: "الشكل", type: "select", options: ["Circle/Ring", "Square", "Rectangle", "Triangle", "Custom Fabric Structure"], group: "البنية" },
+    { key: "dimensions", label: "الأبعاد", type: "text", placeholder: "العرض × الارتفاع أو القطر", group: "المقاس" },
+    { key: "graphic", label: "نوع الجرافيك", type: "select", options: ["Pillowcase Tension Fabric", "SEG Fabric", "Hanging Banner", "Custom sewn fabric"], group: "الخامة" },
+    { key: "hardware", label: "الهاردوير", type: "select", options: ["نظام كامل", "استبدال جرافيك", "تصنيع مخصص"], group: "أنظمة العرض" },
+    { key: "rigging", label: "التعليق/Rigging", type: "select", options: ["الهاردوير فقط", "مع تجهيز نقاط التعليق", "يحتاج تنسيق مع موقع المعرض"], group: "التركيب" },
+    { key: "venue", label: "مكان الاستخدام", type: "text", placeholder: "المعرض/القاعة وارتفاع التعليق إن كان معروفًا", group: "الاستخدام" },
+    quoteQty("نظام")
+  ],
+
+  "modular-exhibit": [
+    { key: "footprint", label: "مساحة البوث", type: "text", placeholder: "مثال: 3 × 3 م أو 6 × 3 م", group: "المقاس" },
+    { key: "system", label: "نوع النظام", type: "select", options: ["Portable Modular", "Aluminum Extrusion + SEG", "Tension Fabric Structure", "Custom Modular Exhibit", "Rental/Reusable System"], group: "أنظمة العرض" },
+    { key: "walls", label: "الجدران والجرافيك", type: "select", options: ["Backwall واحد", "Corner / L-shape", "عدة جدران", "Backlit SEG", "مزيج جرافيك"], group: "البنية" },
+    { key: "counter", label: "كاونتر استقبال", type: "select", options: ["بدون", "Counter", "Backlit Counter", "Storage Counter"], group: "الملحقات" },
+    { key: "av", label: "شاشات/AV", type: "select", options: ["بدون", "Monitor Mount", "عدة شاشات", "احتياج AV مخصص"], group: "الملحقات" },
+    { key: "lighting", label: "الإضاءة", type: "select", options: ["إضاءة القاعة فقط", "Spotlights", "Integrated LED", "Backlit Graphics"], group: "الإضاءة" },
+    { key: "storage", label: "التخزين", type: "select", options: ["غير مطلوب", "خزانة/مخزن صغير", "غرفة تخزين", "حسب التصميم"], group: "الملحقات" },
+    { key: "service", label: "الخدمة المطلوبة", type: "select", options: ["توريد النظام والجرافيك", "تصميم + توريد", "تصميم + توريد + تركيب", "إدارة كاملة للبوث"], group: "التركيب" },
+    { key: "venue", label: "المعرض والموقع", type: "text", placeholder: "اسم المعرض/القاعة/المدينة إن عُرف", group: "الاستخدام" }
+  ],
+
+
+  "reflective-sign": [
+    { key: "purpose", label: "استخدام اللوحة", type: "select", options: ["إرشاد واتجاهات", "تحذير وسلامة", "مرور/طريق", "مواقف", "موقع عمل مؤقت", "لوحة معلومات عاكسة", "استخدام آخر يحتاج مراجعة"], group: "الاستخدام", required: true },
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "مثال: جهة طرق/بلدية/مواصفة مشروع — إن كانت معروفة", group: "الامتثال", helpText: "اختيار الخامة النهائي يخضع لمتطلبات الجهة والمواصفة المحلية، وليس لاسم تجاري فقط." },
+    { key: "reflective_class", label: "فئة الانعكاس المطلوبة", type: "select", options: ["غير محددة — تحددها رواج بعد مراجعة المتطلبات", "RA1 / ASTM Type I عند سماح المواصفة", "RA2 / High Intensity Prismatic عند سماح المواصفة", "ASTM Type IX/XI أو فئة عالية الأداء حسب المواصفة", "فئة أخرى منصوص عليها في مستند المشروع"], group: "الامتثال", helpText: "الفئات ليست درجات تجميلية قابلة للاستبدال بحرية. يجب مطابقة متطلبات الجهة الحاكمة ونظام الخامة المعتمد." },
+    { key: "standard_ref", label: "مرجع المواصفة/الكود", type: "text", placeholder: "رقم المواصفة أو بند العقد إن وجد", group: "الامتثال" },
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 60", unit: "سم", group: "المقاس", required: true },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 90", unit: "سم", group: "المقاس", required: true },
+    { key: "shape", label: "شكل اللوحة", type: "select", options: ["مستطيل/مربع", "دائري", "مثلث", "شكل قياسي حسب الجهة", "قص مخصص حسب المخطط"], group: "التصنيع" },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["ألمنيوم/صاج حسب المواصفة", "لوحة معدنية قائمة تحتاج إعادة تجهيز", "الخامة محددة في مستند المشروع", "تحددها رواج بعد مراجعة الاستخدام"], group: "الخامة", helpText: "بعض الأفلام العاكسة مصممة لأسطح معدنية محددة؛ توافق السطح واللاصق يراجع كنظام واحد." },
+    { key: "imaging", label: "تنفيذ الألوان والرموز", type: "select", options: ["تحددها رواج كنظام معتمد للخامة", "Screen print متوافق مع نظام الفيلم", "Digital print متوافق ومعتمد للخامة", "Cut/overlay film متوافق", "قص رموز/حروف من فيلم عاكس"], group: "الطباعة", helpText: "لا تُفترض صلاحية أي حبر أو طابعة للفيلم العاكس؛ طريقة التصوير تُراجع وفق نظام الشركة المصنعة والمواصفة." },
+    { key: "mounting", label: "طريقة التركيب", type: "select", options: ["على عمود", "على جدار/واجهة", "على هيكل قائم", "لوحة مؤقتة/موقع عمل", "توريد فقط بدون تركيب", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع، الارتفاع، عدد الأعمدة أو أي متطلبات تركيب معروفة", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "traffic-regulatory-sign": [
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "الجهة/المشروع/المواصفة إن كانت معروفة", group: "الامتثال", required: true },
+    { key: "purpose", label: "الغرض", type: "text", placeholder: "تنظيم/منع/إلزام", group: "الاستخدام", required: true },
+    { key: "reflective_class", label: "فئة الانعكاس", type: "select", options: ["تحدد من المواصفة — لا اختيار افتراضي", "ASTM Type I / RA1 عند سماح المواصفة", "ASTM Type III/IV أو RA2 عند سماح المواصفة", "ASTM Type IX/XI أو RA3 عند اشتراطها", "فئة أخرى منصوص عليها بالمشروع"], group: "الامتثال", helpText: "فئة الانعكاس يحددها الكود أو الجهة الحاكمة. لا تستبدل الفئات ببعضها تلقائيًا." },
+    { key: "standard_ref", label: "رقم المواصفة أو بند العقد", type: "text", placeholder: "إن وجد", group: "الامتثال" },
+    { key: "dimensions", label: "المقاس/الكود", type: "text", placeholder: "المقاس أو رمز اللوحة القياسي", group: "المقاس", required: true },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["معدن حسب المواصفة", "سطح قائم يحتاج إعادة تجهيز", "محدد بمستند المشروع", "تحدده رواج بعد المراجعة"], group: "الخامة" },
+    { key: "imaging", label: "نظام تنفيذ الجرافيك", type: "select", options: ["نظام متوافق مع الفيلم تحدده رواج", "Digital print ضمن نظام مصنع معتمد", "Screen print ضمن نظام مصنع معتمد", "Cut/overlay film متوافق", "Electronic cut حسب النظام"], group: "الطباعة", helpText: "الطابعة والحبر والفيلم والـoverlay تُعامل كنظام متوافق؛ لا تُفترض صلاحية أي توليفة." },
+    { key: "mounting", label: "التركيب", type: "select", options: ["عمود/أعمدة", "جدار/واجهة", "هيكل قائم", "توريد فقط", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع والارتفاع وظروف التركيب إن عُرفت", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "traffic-warning-sign": [
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "الجهة/المشروع/المواصفة إن كانت معروفة", group: "الامتثال", required: true },
+    { key: "purpose", label: "الغرض", type: "text", placeholder: "تحذير من خطر أو تغير بالطريق", group: "الاستخدام", required: true },
+    { key: "reflective_class", label: "فئة الانعكاس", type: "select", options: ["تحدد من المواصفة — لا اختيار افتراضي", "ASTM Type I / RA1 عند سماح المواصفة", "ASTM Type III/IV أو RA2 عند سماح المواصفة", "ASTM Type IX/XI أو RA3 عند اشتراطها", "فئة أخرى منصوص عليها بالمشروع"], group: "الامتثال", helpText: "فئة الانعكاس يحددها الكود أو الجهة الحاكمة. لا تستبدل الفئات ببعضها تلقائيًا." },
+    { key: "standard_ref", label: "رقم المواصفة أو بند العقد", type: "text", placeholder: "إن وجد", group: "الامتثال" },
+    { key: "dimensions", label: "المقاس/الكود", type: "text", placeholder: "المقاس أو رمز اللوحة القياسي", group: "المقاس", required: true },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["معدن حسب المواصفة", "سطح قائم يحتاج إعادة تجهيز", "محدد بمستند المشروع", "تحدده رواج بعد المراجعة"], group: "الخامة" },
+    { key: "imaging", label: "نظام تنفيذ الجرافيك", type: "select", options: ["نظام متوافق مع الفيلم تحدده رواج", "Digital print ضمن نظام مصنع معتمد", "Screen print ضمن نظام مصنع معتمد", "Cut/overlay film متوافق", "Electronic cut حسب النظام"], group: "الطباعة", helpText: "الطابعة والحبر والفيلم والـoverlay تُعامل كنظام متوافق؛ لا تُفترض صلاحية أي توليفة." },
+    { key: "mounting", label: "التركيب", type: "select", options: ["عمود/أعمدة", "جدار/واجهة", "هيكل قائم", "توريد فقط", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع والارتفاع وظروف التركيب إن عُرفت", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "traffic-guide-sign": [
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "الجهة/المشروع/المواصفة إن كانت معروفة", group: "الامتثال", required: true },
+    { key: "purpose", label: "الغرض", type: "text", placeholder: "وجهات ومسارات ومعلومات طريق", group: "الاستخدام", required: true },
+    { key: "reflective_class", label: "فئة الانعكاس", type: "select", options: ["تحدد من المواصفة — لا اختيار افتراضي", "ASTM Type I / RA1 عند سماح المواصفة", "ASTM Type III/IV أو RA2 عند سماح المواصفة", "ASTM Type IX/XI أو RA3 عند اشتراطها", "فئة أخرى منصوص عليها بالمشروع"], group: "الامتثال", helpText: "فئة الانعكاس يحددها الكود أو الجهة الحاكمة. لا تستبدل الفئات ببعضها تلقائيًا." },
+    { key: "standard_ref", label: "رقم المواصفة أو بند العقد", type: "text", placeholder: "إن وجد", group: "الامتثال" },
+    { key: "dimensions", label: "المقاس/الكود", type: "text", placeholder: "المقاس أو رمز اللوحة القياسي", group: "المقاس", required: true },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["معدن حسب المواصفة", "سطح قائم يحتاج إعادة تجهيز", "محدد بمستند المشروع", "تحدده رواج بعد المراجعة"], group: "الخامة" },
+    { key: "imaging", label: "نظام تنفيذ الجرافيك", type: "select", options: ["نظام متوافق مع الفيلم تحدده رواج", "Digital print ضمن نظام مصنع معتمد", "Screen print ضمن نظام مصنع معتمد", "Cut/overlay film متوافق", "Electronic cut حسب النظام"], group: "الطباعة", helpText: "الطابعة والحبر والفيلم والـoverlay تُعامل كنظام متوافق؛ لا تُفترض صلاحية أي توليفة." },
+    { key: "mounting", label: "التركيب", type: "select", options: ["عمود/أعمدة", "جدار/واجهة", "هيكل قائم", "توريد فقط", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع والارتفاع وظروف التركيب إن عُرفت", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "parking-reflective-sign": [
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "الجهة/المشروع/المواصفة إن كانت معروفة", group: "الامتثال", required: true },
+    { key: "purpose", label: "الغرض", type: "text", placeholder: "تنظيم وإرشاد المواقف", group: "الاستخدام", required: true },
+    { key: "reflective_class", label: "فئة الانعكاس", type: "select", options: ["تحدد من المواصفة — لا اختيار افتراضي", "ASTM Type I / RA1 عند سماح المواصفة", "ASTM Type III/IV أو RA2 عند سماح المواصفة", "ASTM Type IX/XI أو RA3 عند اشتراطها", "فئة أخرى منصوص عليها بالمشروع"], group: "الامتثال", helpText: "فئة الانعكاس يحددها الكود أو الجهة الحاكمة. لا تستبدل الفئات ببعضها تلقائيًا." },
+    { key: "standard_ref", label: "رقم المواصفة أو بند العقد", type: "text", placeholder: "إن وجد", group: "الامتثال" },
+    { key: "dimensions", label: "المقاس/الكود", type: "text", placeholder: "المقاس أو رمز اللوحة القياسي", group: "المقاس", required: true },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["معدن حسب المواصفة", "سطح قائم يحتاج إعادة تجهيز", "محدد بمستند المشروع", "تحدده رواج بعد المراجعة"], group: "الخامة" },
+    { key: "imaging", label: "نظام تنفيذ الجرافيك", type: "select", options: ["نظام متوافق مع الفيلم تحدده رواج", "Digital print ضمن نظام مصنع معتمد", "Screen print ضمن نظام مصنع معتمد", "Cut/overlay film متوافق", "Electronic cut حسب النظام"], group: "الطباعة", helpText: "الطابعة والحبر والفيلم والـoverlay تُعامل كنظام متوافق؛ لا تُفترض صلاحية أي توليفة." },
+    { key: "mounting", label: "التركيب", type: "select", options: ["عمود/أعمدة", "جدار/واجهة", "هيكل قائم", "توريد فقط", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع والارتفاع وظروف التركيب إن عُرفت", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "work-zone-reflective-sign": [
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "الجهة/المشروع/المواصفة إن كانت معروفة", group: "الامتثال", required: true },
+    { key: "purpose", label: "الغرض", type: "text", placeholder: "تحذير وتوجيه مؤقت لمناطق العمل", group: "الاستخدام", required: true },
+    { key: "reflective_class", label: "فئة الانعكاس", type: "select", options: ["تحدد من المواصفة — لا اختيار افتراضي", "ASTM Type I / RA1 عند سماح المواصفة", "ASTM Type III/IV أو RA2 عند سماح المواصفة", "ASTM Type IX/XI أو RA3 عند اشتراطها", "فئة أخرى منصوص عليها بالمشروع"], group: "الامتثال", helpText: "فئة الانعكاس يحددها الكود أو الجهة الحاكمة. لا تستبدل الفئات ببعضها تلقائيًا." },
+    { key: "standard_ref", label: "رقم المواصفة أو بند العقد", type: "text", placeholder: "إن وجد", group: "الامتثال" },
+    { key: "dimensions", label: "المقاس/الكود", type: "text", placeholder: "المقاس أو رمز اللوحة القياسي", group: "المقاس", required: true },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["معدن حسب المواصفة", "سطح قائم يحتاج إعادة تجهيز", "محدد بمستند المشروع", "تحدده رواج بعد المراجعة"], group: "الخامة" },
+    { key: "imaging", label: "نظام تنفيذ الجرافيك", type: "select", options: ["نظام متوافق مع الفيلم تحدده رواج", "Digital print ضمن نظام مصنع معتمد", "Screen print ضمن نظام مصنع معتمد", "Cut/overlay film متوافق", "Electronic cut حسب النظام"], group: "الطباعة", helpText: "الطابعة والحبر والفيلم والـoverlay تُعامل كنظام متوافق؛ لا تُفترض صلاحية أي توليفة." },
+    { key: "mounting", label: "التركيب", type: "select", options: ["عمود/أعمدة", "جدار/واجهة", "هيكل قائم", "توريد فقط", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع والارتفاع وظروف التركيب إن عُرفت", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "street-name-reflective-sign": [
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "الجهة/المشروع/المواصفة إن كانت معروفة", group: "الامتثال", required: true },
+    { key: "purpose", label: "الغرض", type: "text", placeholder: "تعريف الشوارع والمواقع", group: "الاستخدام", required: true },
+    { key: "reflective_class", label: "فئة الانعكاس", type: "select", options: ["تحدد من المواصفة — لا اختيار افتراضي", "ASTM Type I / RA1 عند سماح المواصفة", "ASTM Type III/IV أو RA2 عند سماح المواصفة", "ASTM Type IX/XI أو RA3 عند اشتراطها", "فئة أخرى منصوص عليها بالمشروع"], group: "الامتثال", helpText: "فئة الانعكاس يحددها الكود أو الجهة الحاكمة. لا تستبدل الفئات ببعضها تلقائيًا." },
+    { key: "standard_ref", label: "رقم المواصفة أو بند العقد", type: "text", placeholder: "إن وجد", group: "الامتثال" },
+    { key: "dimensions", label: "المقاس/الكود", type: "text", placeholder: "المقاس أو رمز اللوحة القياسي", group: "المقاس", required: true },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["معدن حسب المواصفة", "سطح قائم يحتاج إعادة تجهيز", "محدد بمستند المشروع", "تحدده رواج بعد المراجعة"], group: "الخامة" },
+    { key: "imaging", label: "نظام تنفيذ الجرافيك", type: "select", options: ["نظام متوافق مع الفيلم تحدده رواج", "Digital print ضمن نظام مصنع معتمد", "Screen print ضمن نظام مصنع معتمد", "Cut/overlay film متوافق", "Electronic cut حسب النظام"], group: "الطباعة", helpText: "الطابعة والحبر والفيلم والـoverlay تُعامل كنظام متوافق؛ لا تُفترض صلاحية أي توليفة." },
+    { key: "mounting", label: "التركيب", type: "select", options: ["عمود/أعمدة", "جدار/واجهة", "هيكل قائم", "توريد فقط", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع والارتفاع وظروف التركيب إن عُرفت", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "facility-safety-reflective-sign": [
+    { key: "authority", label: "الجهة أو المواصفة الحاكمة", type: "text", placeholder: "الجهة/المشروع/المواصفة إن كانت معروفة", group: "الامتثال", required: true },
+    { key: "purpose", label: "الغرض", type: "text", placeholder: "سلامة وتحذير وإرشاد داخل المواقع والمنشآت", group: "الاستخدام", required: true },
+    { key: "reflective_class", label: "فئة الانعكاس", type: "select", options: ["تحدد من المواصفة — لا اختيار افتراضي", "ASTM Type I / RA1 عند سماح المواصفة", "ASTM Type III/IV أو RA2 عند سماح المواصفة", "ASTM Type IX/XI أو RA3 عند اشتراطها", "فئة أخرى منصوص عليها بالمشروع"], group: "الامتثال", helpText: "فئة الانعكاس يحددها الكود أو الجهة الحاكمة. لا تستبدل الفئات ببعضها تلقائيًا." },
+    { key: "standard_ref", label: "رقم المواصفة أو بند العقد", type: "text", placeholder: "إن وجد", group: "الامتثال" },
+    { key: "dimensions", label: "المقاس/الكود", type: "text", placeholder: "المقاس أو رمز اللوحة القياسي", group: "المقاس", required: true },
+    { key: "substrate", label: "سطح اللوحة", type: "select", options: ["معدن حسب المواصفة", "سطح قائم يحتاج إعادة تجهيز", "محدد بمستند المشروع", "تحدده رواج بعد المراجعة"], group: "الخامة" },
+    { key: "imaging", label: "نظام تنفيذ الجرافيك", type: "select", options: ["نظام متوافق مع الفيلم تحدده رواج", "Digital print ضمن نظام مصنع معتمد", "Screen print ضمن نظام مصنع معتمد", "Cut/overlay film متوافق", "Electronic cut حسب النظام"], group: "الطباعة", helpText: "الطابعة والحبر والفيلم والـoverlay تُعامل كنظام متوافق؛ لا تُفترض صلاحية أي توليفة." },
+    { key: "mounting", label: "التركيب", type: "select", options: ["عمود/أعمدة", "جدار/واجهة", "هيكل قائم", "توريد فقط", "تحتاج معاينة موقع"], group: "التركيب" },
+    { key: "site", label: "بيانات الموقع", type: "text", placeholder: "الموقع والارتفاع وظروف التركيب إن عُرفت", group: "التركيب" },
+    quoteQty("لوحة")
+  ],
+
+  "logo-design": [
+    { key:"business", label:"نوع النشاط", type:"text", placeholder:"مثال: مطعم، مصنع، متجر، شركة تقنية", group:"النشاط" },
+    { key:"brand_status", label:"حالة العلامة", type:"select", options:["مشروع جديد","لدي علامة وأحتاج شعارًا جديدًا","تطوير شعار قائم","إعادة تسمية / Rebrand"], group:"النطاق" },
+    { key:"brand_name", label:"هل اسم العلامة معتمد؟", type:"select", options:["نعم — الاسم نهائي","لدي خيارات أسماء","أحتاج مساعدة قبل التصميم"], group:"العلامة" },
+    { key:"languages", label:"لغة الشعار", type:"select", options:["عربي","إنجليزي","عربي + إنجليزي","لغة أخرى"], group:"العلامة" },
+    { key:"logo_type", label:"اتجاه الشعار المطلوب", type:"select", options:["أحتاج توصية رواج","Wordmark / اسم كتابي","Lettermark","Symbol + Wordmark","Emblem / Badge","لا أريد تقييد الاتجاه مسبقًا"], group:"النطاق" },
+    { key:"applications", label:"أهم استخدامات الشعار", type:"text", placeholder:"مثال: واجهة محل، تغليف، سوشيال، سيارات، مطبوعات", group:"الاستخدام" },
+    { key:"existing_assets", label:"مواد متوفرة", type:"select", options:["لا يوجد","لدي شعار/مسودة قديمة","لدي ألوان أو خط محدد","لدي Moodboard / مراجع","لدي هوية قائمة يجب مراعاتها"], group:"الملفات" },
+    { key:"deliverables", label:"المخرجات المطلوبة", type:"select", options:["الشعار ونسخه الأساسية","شعار + أيقونة/رمز","شعار + تطبيقات أولية","يحدد بعد الـBrief"], group:"المخرجات" },
+    { key:"deadline", label:"موعد مستهدف", type:"text", placeholder:"إن وجد", group:"الجدول" }
+  ],
+
   identity: [
-    { key: "business", label: "نوع النشاط", type: "text", placeholder: "مثال: مطعم، شركة، متجر..." },
-    { key: "scope", label: "النطاق", type: "select", options: ["شعار فقط", "هوية أساسية", "هوية متكاملة"] },
-    { key: "status", label: "حالة العلامة", type: "select", options: ["مشروع جديد", "تطوير هوية قائمة", "إعادة تسمية"] },
-    { key: "deadline", label: "موعد مستهدف", type: "text", placeholder: "إن وجد" }
+    { key:"business", label:"نوع النشاط", type:"text", placeholder:"مجال الشركة أو المنتج", group:"النشاط" },
+    { key:"brand_status", label:"حالة العلامة", type:"select", options:["مشروع جديد","لدي شعار معتمد وأحتاج بناء الهوية","تطوير هوية قائمة","Rebrand كامل"], group:"النطاق" },
+    { key:"scope", label:"نطاق الهوية", type:"select", options:["هوية أساسية","هوية متكاملة","تحديث نظام بصري قائم","أحتاج تحديد النطاق مع رواج"], group:"النطاق" },
+    { key:"brand_elements", label:"العناصر المطلوبة", type:"select", options:["Logo + Colors + Typography","إضافة Image/Photography style","إضافة Icon/Illustration style","نظام موسع للتطبيقات","أحتاج توصية رواج"], group:"المخرجات" },
+    { key:"priority_apps", label:"التطبيقات ذات الأولوية", type:"text", placeholder:"قرطاسية، تغليف، واجهة، مركبات، سوشيال، زي...", group:"الاستخدام" },
+    { key:"languages", label:"اللغات", type:"select", options:["عربي","إنجليزي","عربي + إنجليزي","متعدد اللغات"], group:"العلامة" },
+    { key:"existing_assets", label:"المواد الحالية", type:"select", options:["لا يوجد","شعار Vector موجود","Brand Guide موجود","ملفات متفرقة تحتاج تنظيم","هوية كاملة تحتاج تطوير"], group:"الملفات" },
+    { key:"guide", label:"دليل استخدام الهوية", type:"select", options:["مختصر","Brand Guidelines مفصلة","خدمة مستقلة لاحقًا","يحدد حسب النطاق"], group:"المخرجات" },
+    { key:"deadline", label:"موعد مستهدف", type:"text", placeholder:"إن وجد", group:"الجدول" }
   ],
+
+  "brand-guidelines": [
+    { key:"identity_status", label:"حالة الهوية", type:"select", options:["شعار وهوية معتمدان","هوية جزئية تحتاج تنظيم","هوية قديمة تحتاج تحديث القواعد","أحتاج بناء الهوية أولًا"], group:"النطاق" },
+    { key:"logo_rules", label:"نطاق قواعد الشعار", type:"select", options:["الاستخدامات الأساسية","نسخ الشعار + Clear Space + Minimum size + أخطاء الاستخدام","نظام موسع متعدد القنوات"], group:"المخرجات" },
+    { key:"visual_system", label:"عناصر النظام البصري", type:"select", options:["ألوان + Typography","ألوان + Typography + Imagery","نظام كامل يشمل Icons/Illustration/Layout","يحدد حسب الهوية"], group:"المخرجات" },
+    { key:"voice", label:"إرشادات النبرة والرسائل", type:"select", options:["غير مطلوبة","مبادئ مختصرة","Voice & Messaging موسعة"], group:"المحتوى" },
+    { key:"applications", label:"أمثلة التطبيقات داخل الدليل", type:"text", placeholder:"مثال: سوشيال، مطبوعات، تغليف، واجهات", group:"الاستخدام" },
+    { key:"languages", label:"لغة الدليل", type:"select", options:["عربي","إنجليزي","عربي + إنجليزي"], group:"المخرجات" },
+    { key:"delivery", label:"صيغة التسليم", type:"select", options:["PDF Guide","PDF + ملفات عناصر الهوية","ملفات منظمة للتسليم للفريق والموردين"], group:"الملفات" }
+  ],
+
+  "packaging-design": [
+    { key:"product", label:"نوع المنتج", type:"text", placeholder:"ما المنتج الذي سيتم تغليفه؟", group:"المنتج" },
+    { key:"package_type", label:"نوع العبوة", type:"select", options:["Folding Carton","Corrugated Box","Label","Pouch / Flexible Packaging","Paper Bag","Cup / Foodservice","عبوة أخرى","لم يُحسم بعد"], group:"البنية" },
+    { key:"dieline", label:"حالة الـDieline / القالب الفني", type:"select", options:["موجود من المورد ومعتمد","موجود ويحتاج مراجعة","لدي عينة فقط","غير موجود — نحتاج أولًا تطوير البنية مع المورد"], group:"الملفات", helpText:"التصميم الجرافيكي النهائي يجب أن يُبنى على Dieline معتمد من الجهة التي ستنتج العبوة." },
+    { key:"dimensions", label:"الأبعاد", type:"text", placeholder:"الأبعاد النهائية أو أبعاد المنتج إن لم يوجد Dieline", group:"المقاس" },
+    { key:"sku_count", label:"عدد المنتجات / SKUs", type:"number", placeholder:"مثال: 4", unit:"SKU", group:"الكمية" },
+    { key:"mandatory_content", label:"المحتوى الإلزامي", type:"select", options:["مكتمل وسأرفقه","جزئي ويحتاج تنظيم","Barcode/QR موجود","متطلبات تنظيمية سأوفرها","أحتاج قائمة ما يجب أن أجهزه"], group:"المحتوى" },
+    { key:"brand_status", label:"حالة الهوية", type:"select", options:["هوية كاملة","شعار وألوان فقط","هوية قيد التطوير","أحتاج تصميم الهوية أيضًا"], group:"العلامة" },
+    { key:"print_process", label:"طريقة الطباعة/المورد", type:"select", options:["محدد من المورد","Offset","Flexo","Digital","Gravure","غير معروف — يراجع بعد تحديد العبوة"], group:"الطباعة" },
+    { key:"finishes", label:"تشطيبات مخطط لها", type:"select", options:["بدون تشطيب خاص","Foil","Spot UV","Emboss/Deboss","Window / Special die-cut","عدة تشطيبات — تحتاج مراجعة توافق"], group:"التشطيب" },
+    { key:"mockup", label:"العرض البصري", type:"select", options:["2D Artwork فقط","3D Mockup","Mockup + عدة زوايا للعرض","يحدد حسب المشروع"], group:"المخرجات" },
+    { key:"delivery", label:"التسليم", type:"select", options:["Print-ready artwork على Dieline","Native/Source files + Print PDF","ملفات متعددة لكل SKU","حسب متطلبات المورد"], group:"الملفات" }
+  ],
+
+  "print-layout-design": [
+    { key:"product", label:"نوع المطبوع", type:"select", options:["بروشور/مطوية","كتالوج","Company Profile","كتاب/كتيب","منيو","Flyer/Poster","تقرير/Annual Report","مطبوع آخر"], group:"المنتج" },
+    { key:"size", label:"المقاس النهائي", type:"text", placeholder:"مثال: A4 أو المقاس المخصص", group:"المقاس" },
+    { key:"pages", label:"عدد الصفحات/الأوجه", type:"number", placeholder:"مثال: 24", unit:"صفحة", group:"المحتوى" },
+    { key:"content_status", label:"حالة النصوص", type:"select", options:["نهائية وجاهزة","جاهزة جزئيًا","تحتاج تحريرًا/تنسيقًا","أحتاج كتابة المحتوى أيضًا"], group:"المحتوى" },
+    { key:"images", label:"الصور والرسومات", type:"select", options:["سأوفرها","متوفرة جزئيًا","تحتاج معالجة/Retouch","أحتاج توفير/إنتاج Visuals"], group:"الملفات" },
+    { key:"brand", label:"الهوية", type:"select", options:["Brand Guide موجود","شعار وألوان فقط","لا توجد هوية مكتملة","تصميم مستقل للمشروع"], group:"العلامة" },
+    { key:"binding", label:"طريقة التجليد — إن كان منشورًا", type:"select", options:["غير مطبق","Saddle Stitch","Perfect Bound","Wire-O / Spiral","Hardcover","لم تُحدد — تحتاج تنسيقًا مع الإنتاج"], group:"التجليد" },
+    { key:"delivery", label:"المخرجات", type:"select", options:["Print-ready PDF","PDF + Source package","نسخة للطباعة + نسخة رقمية","حسب مواصفة المطبعة"], group:"الملفات" }
+  ],
+
+  "print-artwork-prepress": [
+    { key:"job", label:"نوع العمل", type:"select", options:["فحص ملف قبل الطباعة","تصحيح Bleed/Trim","مراجعة ألوان وColor space","حل Fonts/Links","تجهيز PDF/X أو مواصفة المطبعة","تحويل Artwork إلى Print-ready","Package/Collect ملفات المصدر","مراجعة شاملة Preflight"], group:"المعالجة" },
+    { key:"source_file", label:"نوع الملف الحالي", type:"select", options:["AI","INDD","PDF","PSD","CorelDRAW/ملف آخر","JPG/PNG فقط","عدة ملفات مرتبطة"], group:"الملفات" },
+    { key:"product", label:"المنتج النهائي", type:"text", placeholder:"مثال: كتالوج، علبة، بنر، كرت شخصي", group:"المنتج" },
+    { key:"final_size", label:"المقاس النهائي", type:"text", placeholder:"Trim size / Finished size", group:"المقاس" },
+    { key:"printer_spec", label:"هل لديك مواصفة من المطبعة/المورد؟", type:"select", options:["نعم — Joboptions / PDF spec","نعم — تعليمات مكتوبة","لا — ستحدد رواج المتطلبات مع جهة الإنتاج","الإنتاج لدى رواج"], group:"الطباعة" },
+    { key:"bleed", label:"Bleed", type:"select", options:["موجود وفق المواصفة","غير موجود","غير متأكد","سيحدد وفق جهة الإنتاج"], group:"التجهيز" },
+    { key:"color", label:"حالة الألوان", type:"select", options:["CMYK/Spot مضبوط","RGB ويحتاج مراجعة للتحويل","ألوان Spot موجودة","غير متأكد"], group:"الألوان" },
+    { key:"links_fonts", label:"الخطوط والروابط", type:"select", options:["كلها متوفرة","روابط مفقودة","خطوط مفقودة/غير مرخصة للتسليم","غير متأكد"], group:"الملفات" },
+    { key:"output", label:"التسليم المطلوب", type:"select", options:["Print-ready PDF فقط","PDF/X حسب مواصفة جهة الإنتاج","Source package + PDF","تقرير بالمشكلات فقط"], group:"المخرجات" }
+  ],
+
+  "vehicle-wrap-design": [
+    { key:"vehicle", label:"المركبة", type:"text", placeholder:"الشركة / الموديل / السنة / الفئة", group:"المنتج" },
+    { key:"fleet", label:"نطاق المركبات", type:"select", options:["مركبة واحدة","عدة مركبات من نفس الموديل","أسطول بموديلات متعددة"], group:"النطاق" },
+    { key:"coverage", label:"نطاق التصميم", type:"select", options:["Lettering / شعارات فقط","Partial Wrap","Full Wrap","Fleet system"], group:"النطاق" },
+    { key:"template", label:"قالب المركبة/القياسات", type:"select", options:["قالب Vector معتمد متوفر","لدي قياسات وصور","أحتاج من رواج تجهيز القياسات/القالب","غير متأكد"], group:"الملفات" },
+    { key:"brand", label:"مواد الهوية", type:"select", options:["Brand Guide + Vector assets","شعار Vector فقط","ملفات ناقصة تحتاج تجهيز","أحتاج تصميم الهوية/الجرافيك من الصفر"], group:"العلامة" },
+    { key:"message", label:"المحتوى المطلوب على المركبة", type:"text", placeholder:"الخدمات، الهاتف، QR، الرسالة الرئيسية...", group:"المحتوى" },
+    { key:"windows", label:"هل يشمل الزجاج؟", type:"select", options:["لا","نعم — مناطق زجاج محددة","يحدد بعد مراجعة المركبة والاشتراطات"], group:"النوافذ" },
+    { key:"production", label:"جهة التنفيذ", type:"select", options:["رواج ستطبع وتركب","مورد/مركب آخر وسأوفر مواصفاته","تصميم فقط الآن"], group:"التركيب" },
+    { key:"delivery", label:"المخرجات", type:"select", options:["Production artwork","Artwork + visual mockups","ملفات لكل جانب/مركبة","حسب قالب جهة التنفيذ"], group:"المخرجات" }
+  ],
+
+  "signage-design": [
+    { key:"sign_type", label:"نوع اللوحة", type:"select", options:["Channel Letters","Lightbox","Dimensional Letters","Wayfinding","Totem / Pylon","Acrylic/Rigid Sign","نظام لوحات متعدد"], group:"المنتج" },
+    { key:"site", label:"بيانات الموقع", type:"select", options:["صور + أبعاد متوفرة","مخططات معمارية متوفرة","تحتاج معاينة وقياس من رواج","Concept فقط دون موقع نهائي"], group:"الملفات" },
+    { key:"dimensions", label:"الأبعاد التقريبية", type:"text", placeholder:"إن كانت معروفة", group:"المقاس" },
+    { key:"brand", label:"الهوية", type:"select", options:["Brand Guide موجود","شعار Vector موجود","ملفات تحتاج تجهيز","أحتاج تصميم الهوية أيضًا"], group:"العلامة" },
+    { key:"lighting", label:"الإضاءة", type:"select", options:["بدون","Face-lit","Halo-lit","Backlit","Edge-lit","أحتاج توصية"], group:"الإضاءة" },
+    { key:"scope", label:"مستوى التصميم", type:"select", options:["Concept Visual","Design + dimensions","Production-ready artwork","Design + technical coordination مع التصنيع"], group:"النطاق" },
+    { key:"delivery", label:"المخرجات", type:"select", options:["2D artwork","2D + Mockup","Drawings/visual package للتصنيع","حسب المشروع"], group:"المخرجات" }
+  ],
+
+  "facade-3d-design": [
+    { key:"project", label:"نوع المشروع", type:"select", options:["واجهة متجر","واجهة شركة/مؤسسة","مطعم/كافيه","مبنى تجاري","واجهة داخل مول","مشروع آخر"], group:"المنتج" },
+    { key:"site_data", label:"بيانات الموقع", type:"select", options:["رفع معماري/CAD موجود","صور وقياسات موجودة","تحتاج معاينة ورفع موقعي","Concept قبل اختيار الموقع"], group:"الملفات" },
+    { key:"dimensions", label:"أبعاد الواجهة", type:"text", placeholder:"العرض × الارتفاع أو أرفق المخطط", group:"المقاس" },
+    { key:"scope", label:"النطاق", type:"select", options:["Concept فقط","3D Visual","3D + Elevations","تصميم + تنسيق مخططات تنفيذية","مشروع متكامل مع اللوحات"], group:"النطاق" },
+    { key:"materials", label:"الخامات المتوقعة", type:"select", options:["ACP / ACM","Acrylic/Metal signage","Wood-look / decorative panels","مزيج خامات","لم تُحدد — أحتاج اقتراح"], group:"الخامة" },
+    { key:"signage", label:"اللوحات/الحروف", type:"select", options:["بدون","Channel Letters","Dimensional Letters","Lightbox","مزيج لوحات وهوية"], group:"اللوحات" },
+    { key:"brand", label:"الهوية", type:"select", options:["جاهزة","تحتاج تطوير","أحتاج هوية جديدة ضمن المشروع"], group:"العلامة" },
+    { key:"execution", label:"التنفيذ", type:"select", options:["التصميم فقط","أريد عرض تنفيذ من رواج أيضًا","سيتم التنفيذ بواسطة جهة أخرى"], group:"التركيب" }
+  ],
+
   "social-content": [
-    { key: "platforms", label: "المنصات", type: "text", placeholder: "إنستغرام، فيسبوك، تيك توك..." },
-    { key: "qty", label: "عدد التصاميم", type: "number", placeholder: "مثال: 12", unit: "تصميم" },
-    { key: "copy", label: "كتابة المحتوى", type: "select", options: ["تصميم فقط", "تصميم + كتابة محتوى"] },
-    { key: "period", label: "الفترة", type: "select", options: ["حملة", "أسبوع", "شهر", "مخصص"] }
+    { key:"platforms", label:"المنصات", type:"select", options:["Instagram","Facebook","TikTok","LinkedIn","X / Twitter","عدة منصات","منصة أخرى"], group:"النطاق" },
+    { key:"formats", label:"أنواع المحتوى", type:"select", options:["Static Posts","Carousels","Stories","Reel/Video covers","Ads","Mix حسب الخطة"], group:"المخرجات" },
+    { key:"qty", label:"عدد القطع", type:"number", placeholder:"مثال: 12", unit:"قطعة", group:"الكمية" },
+    { key:"copy", label:"النصوص", type:"select", options:["النصوص جاهزة من العميل","تصميم + كتابة Captions/Copy","النصوص تحتاج تحرير فقط","أحتاج صناعة المحتوى بالكامل"], group:"المحتوى" },
+    { key:"assets", label:"الصور والفيديو", type:"select", options:["العميل يوفرها","Brand assets + صور منتجات موجودة","تحتاج معالجة صور","تحتاج إنتاج/توفير Visuals"], group:"الملفات" },
+    { key:"brand", label:"الهوية", type:"select", options:["Brand Guide موجود","قوالب سابقة موجودة","شعار وألوان فقط","أحتاج بناء نظام بصري للسوشيال"], group:"العلامة" },
+    { key:"languages", label:"اللغة", type:"select", options:["عربي","إنجليزي","عربي + إنجليزي"], group:"المحتوى" },
+    { key:"period", label:"الفترة", type:"select", options:["حملة قصيرة","أسبوع","شهر","ربع سنة","مخصص"], group:"الجدول" },
+    { key:"editable", label:"قوالب قابلة لإعادة الاستخدام", type:"select", options:["غير مطلوبة","مطلوبة — يحدد البرنامج/الصيغة","بعض القطع فقط"], group:"الملفات" }
   ],
+
+  "content-creation": [
+    { key:"goal", label:"هدف المحتوى", type:"select", options:["تعريف بالعلامة","بيع/تحويل","تثقيف","إطلاق منتج","حملة/مناسبة","تواصل مؤسسي","هدف آخر"], group:"النطاق" },
+    { key:"channels", label:"القنوات", type:"select", options:["Social Media","Website","Print materials","Advertising campaign","Email/CRM","عدة قنوات"], group:"النطاق" },
+    { key:"content_types", label:"نوع المحتوى", type:"select", options:["Captions / Social Copy","Product/Service Copy","Scripts","Articles/Guides","Campaign Messaging","Mixed content"], group:"المحتوى" },
+    { key:"qty", label:"عدد القطع/المخرجات", type:"number", placeholder:"مثال: 20", unit:"قطعة", group:"الكمية" },
+    { key:"language", label:"اللغة", type:"select", options:["عربي","إنجليزي","عربي + إنجليزي"], group:"المحتوى" },
+    { key:"source_material", label:"المعلومات المتوفرة", type:"select", options:["Brief كامل","مواد سابقة","معلومات منتجات/خدمات","مقابلة/جلسة جمع معلومات مطلوبة","المواد محدودة"], group:"الملفات" },
+    { key:"tone", label:"النبرة", type:"select", options:["حسب Brand Guide","مهنية","ودودة","فاخرة","تقنية","أحتاج تطوير Tone of Voice"], group:"العلامة" },
+    { key:"visuals", label:"هل يشمل التصميم المرئي؟", type:"select", options:["كتابة فقط","كتابة + تصميم","كتابة + Brief للتصميم","حملة متكاملة"], group:"المخرجات" }
+  ],
+
+  "campaign-creative": [
+    { key:"objective", label:"هدف الحملة", type:"select", options:["Awareness","Launch","Lead generation","Sales/Promotion","Event","Recruitment","Corporate message","هدف آخر"], group:"النطاق" },
+    { key:"channels", label:"القنوات", type:"select", options:["Digital only","Print only","Outdoor","Social + Digital","Integrated print + digital + outdoor"], group:"النطاق" },
+    { key:"duration", label:"مدة الحملة", type:"text", placeholder:"مثال: أسبوعان / شهر / فترة إطلاق", group:"الجدول" },
+    { key:"deliverables", label:"المخرجات", type:"text", placeholder:"مثال: Key Visual + Social + Billboard + POS + Flyers", group:"المخرجات" },
+    { key:"message", label:"الرسالة/العرض", type:"select", options:["جاهز من العميل","يحتاج تطوير Creative Message","يوجد Brief أولي","أحتاج Concept كامل"], group:"المحتوى" },
+    { key:"brand", label:"حالة الهوية", type:"select", options:["Brand Guide موجود","هوية أساسية فقط","تحتاج تطوير قبل الحملة","حملة مستقلة ضمن هوية موجودة"], group:"العلامة" },
+    { key:"assets", label:"الأصول", type:"select", options:["صور/فيديو جاهزة","منتجات تحتاج تصوير/Visuals","Stock/Illustration مناسب","تحتاج خطة إنتاج محتوى"], group:"الملفات" },
+    { key:"production", label:"هل تشمل الحملة إنتاجًا ماديًا؟", type:"select", options:["Creative فقط","Creative + مطبوعات","Creative + Outdoor/Signage","Creative + تنفيذ متكامل عبر رواج"], group:"التركيب" }
+  ],
+
   laser: [
-    { key: "material", label: "الخامة", type: "select", options: ["أكريليك", "MDF", "خشب", "خامة أخرى"] },
-    { key: "thickness", label: "السماكة", type: "text", placeholder: "إن كانت معروفة" },
-    { key: "size", label: "المقاس", type: "text", placeholder: "العرض × الارتفاع" },
-    { key: "operation", label: "العملية", type: "select", options: ["قص", "حفر", "قص + حفر"] },
-    { key: "qty", label: "الكمية", type: "number", placeholder: "العدد" }
+    { key: "service", label: "نوع الخدمة", type: "select", options: ["قص ليزر", "حفر/نقش ليزر", "قص + حفر", "وسم Metal/Fiber", "أحتاج تحديد التقنية"], group: "المعالجة" },
+    { key: "material", label: "الخامة", type: "select", options: ["Acrylic / PMMA", "MDF/Wood", "Plywood", "Paper/Cardboard", "Leather", "Anodized Aluminum", "Coated Metal", "Stainless Steel — حسب التقنية", "Laserable plastic", "خامة أخرى"], group: "الخامة" },
+    { key: "thickness", label: "السماكة", type: "text", placeholder: "إن كانت معروفة", group: "الخامة" },
+    { key: "size", label: "المقاس", type: "text", placeholder: "العرض × الارتفاع", group: "المقاس" },
+    { key: "file", label: "الملف", type: "select", options: ["Vector جاهز", "ملف يحتاج تجهيز", "أحتاج التصميم من رواج"], group: "التصميم" },
+    quoteQty("قطعة")
   ],
   awards: [
-    { key: "type", label: "النوع", type: "select", options: ["درع", "هدية أكريليك", "ستاند", "قطعة مخصصة"] },
-    { key: "material", label: "الخامة", type: "select", options: ["أكريليك", "خشب", "مزيج خامات"] },
-    { key: "size", label: "المقاس", type: "text", placeholder: "إن كان محددًا" },
-    { key: "qty", label: "الكمية", type: "number", placeholder: "العدد" },
-    { key: "personalization", label: "تخصيص أسماء/شعارات", type: "select", options: ["نعم", "لا", "يحدد لاحقًا"] }
-  ]
-};
+    { key: "type", label: "نوع المنتج", type: "select", options: ["درع تكريم", "Plaque", "Trophy component", "هدية مكتبية", "Acrylic award", "Wood/Metal award", "قطعة مخصصة"], group: "المنتج" },
+    { key: "material", label: "الخامات", type: "select", options: ["Acrylic", "Wood/MDF", "Metal", "Acrylic + Wood", "Acrylic + Metal", "مزيج خامات", "يحدد حسب التصميم"], group: "الخامة" },
+    { key: "decoration", label: "طريقة التخصيص", type: "select", options: ["Laser Engraving", "UV Direct Print", "Vinyl/Printed insert", "Metal plate + engraving", "مزيج تقنيات"], group: "الطباعة" },
+    { key: "size", label: "المقاس التقريبي", type: "text", placeholder: "إن كان محددًا", group: "المقاس" },
+    { key: "personalization", label: "الأسماء والبيانات", type: "select", options: ["نفس التصميم للجميع", "أسماء متغيرة", "أسماء + مسميات", "أسماء + أرقام/تواريخ", "بيانات من ملف"], group: "التخصيص" },
+    { key: "packaging", label: "تغليف كل قطعة", type: "select", options: ["بدون", "علبة/تغليف فردي", "تغليف فاخر", "يحدد حسب المنتج"], group: "التجهيز" },
+    quoteQty("قطعة")
+  ]};

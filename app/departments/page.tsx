@@ -4,6 +4,9 @@ import SiteFooter from "@/components/SiteFooter";
 import InnerHero from "@/components/InnerHero";
 import { IMAGES } from "@/lib/content";
 import { getDepartments } from "@/lib/cms";
+import type { Metadata } from "next";
+
+export const metadata:Metadata={title:"أقسام رواج",description:"استكشف أقسام رواج للطباعة والإعلان والديكور والخدمات المتخصصة.",alternates:{canonical:"/departments"}};
 
 export default async function DepartmentsPage() {
   const departments = await getDepartments();

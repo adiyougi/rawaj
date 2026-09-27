@@ -4,84 +4,94 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import AddToCartButton from "@/components/AddToCartButton";
 import ServiceConfigurator from "@/components/ServiceConfigurator";
+import ServiceCard from "@/components/ServiceCard";
 import { getServices } from "@/lib/cms";
 import { serviceSpecifications } from "@/lib/service-specs";
+import type { Metadata } from "next";
 
-export default async function ServiceDetail({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const services = await getServices();
-  const service = services.find((item) => item.id === slug);
-  if (!service) notFound();
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{
+  const {slug}=await params;
+  const service=(await getServices()).find(item=>item.id===slug);
+  if(!service) return {title:"الخدمة غير موجودة | رواج"};
+  return {title:service.title+" | رواج",description:service.desc,alternates:{canonical:"/services/"+service.id},openGraph:{title:service.title,description:service.desc,images:service.image?[service.image]:[]}};
+}
 
-  const specs = serviceSpecifications[service.id] || [];
-  const related = services.filter((item) => item.id !== service.id && item.category === service.category).slice(0, 3);
+export default async function ServiceDetail({params}:{params:Promise<{slug:string}>}){
+  const {slug}=await params;
+  const services=await getServices();
+  const service=services.find(item=>item.id===slug);
+  if(!service) notFound();
+  const dynamicSpecs=("specifications" in service && Array.isArray(service.specifications) && service.specifications.length)
+    ? service.specifications
+    : (serviceSpecifications[service.id] || []);
+  const related=services.filter(item=>item.id!==service.id && item.category===service.category).slice(0,4);
+  const description=("description" in service && typeof service.description==="string") ? service.description : "";
+  const gallery=("gallery" in service && Array.isArray(service.gallery)) ? service.gallery.filter((item):item is string=>typeof item==="string" && item.length>0) : [];
+  const highlights=("highlights" in service && Array.isArray(service.highlights)) ? service.highlights.filter((item):item is string=>typeof item==="string" && item.length>0) : [];
+  const faq=("faq" in service && Array.isArray(service.faq))
+    ? service.faq
+        .map((item:any)=>({question:String(item?.question || item?.q || ""),answer:String(item?.answer || item?.a || "")}))
+        .filter(item=>item.question && item.answer)
+    : [];
 
   return (
-    <main>
-      <SiteHeader />
+    <main className="app-storefront">
+      <SiteHeader/>
+      <div className="product-page-shell">
+        <div className="product-breadcrumb"><Link href="/services">الخدمات</Link><span>/</span><span>{service.category}</span></div>
 
-      <section
-        className="product-hero"
-        style={{ backgroundImage: "linear-gradient(90deg,rgba(7,7,9,.20),rgba(7,7,9,.88)),url(" + service.image + ")" }}
-      >
-        <div className="shell product-hero-copy">
-          <span className="eyebrow">{service.category}</span>
-          <h1>{service.title}</h1>
-          <p>{service.desc} افتح المواصفات بالأسفل وحدد ما تعرفه فقط، أو أضف الخدمة مباشرة وتابع التفاصيل مع فريق رواج.</p>
-          <div className="product-hero-actions">
-            <AddToCartButton id={service.id} title={service.title} />
-            <Link className="btn btn-ghost" href={"/quote?service=" + service.id}>اطلب عرض سعر مباشرة</Link>
+        <section className="product-app-layout">
+          <div className="product-app-media" style={{backgroundImage:"url("+service.image+")"}}>
+            {service.badge && <span>{service.badge}</span>}
           </div>
-        </div>
-      </section>
-
-      <section className="section shell product-intro">
-        <div>
-          <span className="eyebrow">صفحة خدمة حقيقية</span>
-          <h2>مواصفات واضحة دون تعقيد.</h2>
-        </div>
-        <p>كل خدمة في رواج تُعامل كمنتج مستقل: وصف، خيارات، مواصفات، خدمات مرتبطة، ثم تُجمع في سلة طلب واحدة بدل إرسال رسائل مبعثرة.</p>
-      </section>
-
-      {!!specs.length && (
-        <section className="section configurator-section">
-          <div className="shell">
-            <ServiceConfigurator id={service.id} title={service.title} specs={specs} />
+          <div className="product-app-info">
+            <small>{service.category}</small>
+            <h1>{service.title}</h1>
+            <p>{service.desc}</p>
+            <div className="product-info-meta"><div><span>طريقة الطلب</span><strong>عرض سعر</strong></div><div><span>المواصفات</span><strong>اختيارية</strong></div></div>
+            <AddToCartButton id={service.id} title={service.title}/>
+            <Link className="text-action" href={"/quote?service="+service.id}>أو اطلب عرض سعر مباشرة ←</Link>
           </div>
         </section>
-      )}
 
-      {!!related.length && (
-        <section className="section related-services">
-          <div className="shell">
-            <div className="section-heading split-heading">
-              <div><span className="eyebrow">قد تحتاج أيضًا</span><h2>خدمات من نفس المسار.</h2></div>
-              <Link className="text-link" href="/services">العودة إلى الكتالوج ←</Link>
+        {(description || highlights.length>0) && <section className="product-rich-section">
+          <article className="product-story-card">
+            <small>عن الخدمة</small>
+            <h2>{service.title}</h2>
+            {description ? <p>{description}</p> : <p>{service.desc}</p>}
+          </article>
+
+          {!!highlights.length && <aside className="product-highlights-card">
+            <small>نقاط مهمة</small>
+            <h3>ما الذي يشمله الطلب؟</h3>
+            <div className="product-highlights-list">
+              {highlights.map((item,index)=><div key={item+index}><span>{String(index+1).padStart(2,"0")}</span><p>{item}</p></div>)}
             </div>
-            <div className="service-grid">
-              {related.map((item) => (
-                <article className="service-card" key={item.id}>
-                  <Link href={"/services/" + item.id} className="service-media" style={{ backgroundImage: "url(" + item.image + ")" }}><span>{item.badge}</span></Link>
-                  <div className="service-body">
-                    <small>{item.category}</small>
-                    <Link href={"/services/" + item.id}><h3>{item.title}</h3></Link>
-                    <p>{item.desc}</p>
-                    <AddToCartButton id={item.id} title={item.title} compact />
-                  </div>
-                </article>
-              ))}
-            </div>
+          </aside>}
+        </section>}
+
+        {!!gallery.length && <section className="product-gallery-section">
+          <div className="store-section-head"><div><small>التفاصيل البصرية</small><h2>صور الخدمة</h2></div><span>{gallery.length} صورة</span></div>
+          <div className="product-gallery-strip">
+            {gallery.map((image,index)=><figure key={image+index} style={{backgroundImage:"url("+image+")"}}><span>{String(index+1).padStart(2,"0")}</span></figure>)}
           </div>
-        </section>
-      )}
+        </section>}
 
-      <section className="section shell product-cta">
-        <span className="eyebrow">مشروعك التالي</span>
-        <h2>أضف أكثر من خدمة، ثم أرسل طلبًا واحدًا مرتبًا إلى رواج.</h2>
-        <Link className="btn btn-primary" href="/services">أكمل اختيار الخدمات</Link>
-      </section>
+        {!!dynamicSpecs.length && <section className="product-config-section"><ServiceConfigurator id={service.id} title={service.title} specs={dynamicSpecs}/></section>}
 
-      <SiteFooter />
+        {!!faq.length && <section className="product-faq-section">
+          <div className="store-section-head"><div><small>قبل إرسال الطلب</small><h2>أسئلة شائعة</h2></div></div>
+          <div className="product-faq-list">
+            {faq.map((item,index)=><details key={item.question+index}><summary><span>{String(index+1).padStart(2,"0")}</span><strong>{item.question}</strong><b>+</b></summary><p>{item.answer}</p></details>)}
+          </div>
+        </section>}
+
+        {!!related.length && <section className="store-section related-app-section">
+          <div className="store-section-head"><div><small>قد تحتاج أيضًا</small><h2>خدمات مشابهة</h2></div><Link href="/services">عرض الكل</Link></div>
+          <div className="store-product-grid">{related.map(item=><ServiceCard key={item.id} item={item}/>)}</div>
+        </section>}
+      </div>
+      <SiteFooter/>
     </main>
   );
 }

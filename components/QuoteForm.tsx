@@ -1,0 +1,41 @@
+"use client";
+
+import { FormEvent,useEffect,useState } from "react";
+import { useCart } from "@/components/CartProvider";
+import { CONTACT } from "@/lib/content";
+
+
+type Option={id:string;title:string};
+export default function QuoteForm({services,packages}:{services:Option[];packages:Option[]}){
+ const {items,clear}=useCart();
+ const [name,setName]=useState(""),[company,setCompany]=useState(""),[phone,setPhone]=useState(""),[email,setEmail]=useState(""),[city,setCity]=useState(""),[deadline,setDeadline]=useState(""),[service,setService]=useState(""),[packageId,setPackageId]=useState(""),[details,setDetails]=useState(""),[sending,setSending]=useState(false),[message,setMessage]=useState("");
+ useEffect(()=>{const p=new URLSearchParams(location.search);setService(p.get("service")||"");setPackageId(p.get("package")||"");},[]);
+ async function submit(e:FormEvent){e.preventDefault();setSending(true);setMessage("");
+  try{
+   const chosen=service?services.find(x=>x.id===service):packageId?packages.find(x=>x.id===packageId):null;
+   const payload=items.length?items.map(x=>({title:x.title,quantity:x.qty,specifications:x.specs?{summary:x.specs}:{}})):chosen?[{title:chosen.title,quantity:1,specifications:{}}]:[];
+   const response=await fetch("/api/quotes",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({customer_name:name.trim(),company_name:company.trim()||null,phone:phone.trim(),whatsapp:phone.trim(),email:email.trim()||null,city:city.trim()||null,deadline:deadline||null,notes:details.trim()||null,items:payload})});
+   const result=await response.json();
+   if(!response.ok) throw new Error(result?.error||"تعذر حفظ الطلب");
+   if(!result?.id) throw new Error("تعذر تأكيد رقم الطلب");
+   const req={id:String(result.id)};
+   const lines=payload.map((x,i)=>`${i+1}. ${x.title} × ${x.quantity}`).join("\n");
+   const wa="طلب عرض سعر جديد من منصة رواج\nرقم الطلب: "+req.id+"\nالاسم: "+name+"\nرقم التواصل: "+phone+(lines?"\n\n"+lines:"")+(details?"\n\nالتفاصيل: "+details:"");
+   clear();setMessage("تم حفظ طلبك بنجاح. رقم الطلب: "+req.id);window.open("https://wa.me/"+CONTACT.whatsapp+"?text="+encodeURIComponent(wa),"_blank","noopener,noreferrer");
+  }catch(err:any){setMessage(err?.message||"تعذر حفظ الطلب. حاول مرة أخرى.");}finally{setSending(false);}
+ }
+ return <form className="quote-form" onSubmit={submit}>
+  <label>الاسم<input required maxLength={120} value={name} onChange={e=>setName(e.target.value)} placeholder="اسم الشخص المسؤول"/></label>
+  <label>المؤسسة <small>اختياري</small><input maxLength={160} value={company} onChange={e=>setCompany(e.target.value)} placeholder="اسم الشركة أو المنشأة"/></label>
+  <label>رقم الجوال / واتساب<input required maxLength={40} value={phone} onChange={e=>setPhone(e.target.value)} placeholder="مثال: 77xxxxxxx" inputMode="tel"/></label>
+  <label>البريد <small>اختياري</small><input type="email" maxLength={180} value={email} onChange={e=>setEmail(e.target.value)} placeholder="name@company.com"/></label>
+  <label>المدينة <small>اختياري</small><input maxLength={120} value={city} onChange={e=>setCity(e.target.value)} placeholder="مثال: صنعاء"/></label>
+  <label>موعد مطلوب <small>اختياري</small><input type="date" value={deadline} onChange={e=>setDeadline(e.target.value)}/></label>
+  {!items.length&&<><label>الخدمة<select value={service} onChange={e=>{setService(e.target.value);if(e.target.value)setPackageId("");}}><option value="">اختر خدمة</option>{services.map(x=><option value={x.id} key={x.id}>{x.title}</option>)}</select></label>
+  <label>أو الباقة<select value={packageId} onChange={e=>{setPackageId(e.target.value);if(e.target.value)setService("");}}><option value="">اختر باقة</option>{packages.map(x=><option value={x.id} key={x.id}>{x.title}</option>)}</select></label></>}
+  {!!items.length&&<div className="quote-cart-preview"><strong>الخدمات المختارة ({items.length})</strong>{items.map(x=><p key={x.key}>{x.title} × {x.qty}{x.specs?<small>{x.specs}</small>:null}</p>)}</div>}
+  <label>تفاصيل الطلب<textarea maxLength={3000} value={details} onChange={e=>setDetails(e.target.value)} placeholder="المقاسات، الكمية، الخامة، الموعد، أو أي تفاصيل تعرفها..."/></label>
+  <button className="btn btn-primary full" disabled={sending} type="submit">{sending?"جارٍ حفظ الطلب…":"إرسال طلب عرض السعر"}</button>
+  {message&&<div className="quote-submit-message" role="status">{message}</div>}<small>يُحفظ الطلب أولًا في رواج ثم يفتح واتساب لمتابعة التفاصيل. لا يوجد دفع أو تسعير تلقائي.</small>
+ </form>;
+}
