@@ -316,6 +316,11 @@ export default function ServiceManager(){
     legacy:rows.filter(row=>!row.template_key).length
   }),[rows]);
 
+  const missingTemplateCount=useMemo(()=>{
+    const existing=new Set(rows.map(row=>String(row.template_key||"")).filter(Boolean));
+    return serviceTemplates.filter(template=>template.verification==="verified"&&!existing.has(template.key)).length;
+  },[rows]);
+
   const templateFamilies=useMemo(()=>["الكل",...Array.from(new Set(serviceTemplates.map(t=>t.family)))],[]);
   const visibleTemplates=useMemo(
     ()=>serviceTemplates.filter(t=>templateFamily==="الكل" || t.family===templateFamily),
@@ -447,8 +452,8 @@ export default function ServiceManager(){
           <p>كل خدمة تُدار كنموذج طلب عرض سعر مستقل بخاماتها ومواصفاتها وتشطيباتها الصحيحة.</p>
         </div>
         <div className="catalog-head-actions">
-          <button className="admin-secondary catalog-sync-button" onClick={()=>void syncMissingTemplates()} disabled={syncingCatalog}>
-            {syncingCatalog ? "جارٍ مزامنة الكتالوج…" : "↻ مزامنة القوالب الناقصة"}
+          <button className="admin-secondary catalog-sync-button" onClick={()=>void syncMissingTemplates()} disabled={syncingCatalog||missingTemplateCount===0}>
+            {syncingCatalog ? "جارٍ مزامنة الكتالوج…" : missingTemplateCount ? "↻ مزامنة "+missingTemplateCount+" قالبًا ناقصًا" : "✓ Master Catalog متزامن"}
           </button>
           <button className="admin-primary" onClick={openNew}>+ إضافة خدمة</button>
         </div>
