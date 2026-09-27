@@ -993,18 +993,144 @@ export const serviceSpecifications: Record<string, ServiceSpec[]> = {
     quoteQty("لوحة")
   ],
 
+  "logo-design": [
+    { key:"business", label:"نوع النشاط", type:"text", placeholder:"مثال: مطعم، مصنع، متجر، شركة تقنية", group:"النشاط" },
+    { key:"brand_status", label:"حالة العلامة", type:"select", options:["مشروع جديد","لدي علامة وأحتاج شعارًا جديدًا","تطوير شعار قائم","إعادة تسمية / Rebrand"], group:"النطاق" },
+    { key:"brand_name", label:"هل اسم العلامة معتمد؟", type:"select", options:["نعم — الاسم نهائي","لدي خيارات أسماء","أحتاج مساعدة قبل التصميم"], group:"العلامة" },
+    { key:"languages", label:"لغة الشعار", type:"select", options:["عربي","إنجليزي","عربي + إنجليزي","لغة أخرى"], group:"العلامة" },
+    { key:"logo_type", label:"اتجاه الشعار المطلوب", type:"select", options:["أحتاج توصية رواج","Wordmark / اسم كتابي","Lettermark","Symbol + Wordmark","Emblem / Badge","لا أريد تقييد الاتجاه مسبقًا"], group:"النطاق" },
+    { key:"applications", label:"أهم استخدامات الشعار", type:"text", placeholder:"مثال: واجهة محل، تغليف، سوشيال، سيارات، مطبوعات", group:"الاستخدام" },
+    { key:"existing_assets", label:"مواد متوفرة", type:"select", options:["لا يوجد","لدي شعار/مسودة قديمة","لدي ألوان أو خط محدد","لدي Moodboard / مراجع","لدي هوية قائمة يجب مراعاتها"], group:"الملفات" },
+    { key:"deliverables", label:"المخرجات المطلوبة", type:"select", options:["الشعار ونسخه الأساسية","شعار + أيقونة/رمز","شعار + تطبيقات أولية","يحدد بعد الـBrief"], group:"المخرجات" },
+    { key:"deadline", label:"موعد مستهدف", type:"text", placeholder:"إن وجد", group:"الجدول" }
+  ],
+
   identity: [
-    { key: "business", label: "نوع النشاط", type: "text", placeholder: "مثال: مطعم، شركة، متجر...", group: "النشاط" },
-    { key: "scope", label: "النطاق", type: "select", options: ["شعار فقط", "هوية أساسية", "هوية متكاملة"], group: "النطاق" },
-    { key: "status", label: "حالة العلامة", type: "select", options: ["مشروع جديد", "تطوير هوية قائمة", "إعادة تسمية"], group: "النطاق" },
-    { key: "deadline", label: "موعد مستهدف", type: "text", placeholder: "إن وجد", group: "الجدول" }
+    { key:"business", label:"نوع النشاط", type:"text", placeholder:"مجال الشركة أو المنتج", group:"النشاط" },
+    { key:"brand_status", label:"حالة العلامة", type:"select", options:["مشروع جديد","لدي شعار معتمد وأحتاج بناء الهوية","تطوير هوية قائمة","Rebrand كامل"], group:"النطاق" },
+    { key:"scope", label:"نطاق الهوية", type:"select", options:["هوية أساسية","هوية متكاملة","تحديث نظام بصري قائم","أحتاج تحديد النطاق مع رواج"], group:"النطاق" },
+    { key:"brand_elements", label:"العناصر المطلوبة", type:"select", options:["Logo + Colors + Typography","إضافة Image/Photography style","إضافة Icon/Illustration style","نظام موسع للتطبيقات","أحتاج توصية رواج"], group:"المخرجات" },
+    { key:"priority_apps", label:"التطبيقات ذات الأولوية", type:"text", placeholder:"قرطاسية، تغليف، واجهة، مركبات، سوشيال، زي...", group:"الاستخدام" },
+    { key:"languages", label:"اللغات", type:"select", options:["عربي","إنجليزي","عربي + إنجليزي","متعدد اللغات"], group:"العلامة" },
+    { key:"existing_assets", label:"المواد الحالية", type:"select", options:["لا يوجد","شعار Vector موجود","Brand Guide موجود","ملفات متفرقة تحتاج تنظيم","هوية كاملة تحتاج تطوير"], group:"الملفات" },
+    { key:"guide", label:"دليل استخدام الهوية", type:"select", options:["مختصر","Brand Guidelines مفصلة","خدمة مستقلة لاحقًا","يحدد حسب النطاق"], group:"المخرجات" },
+    { key:"deadline", label:"موعد مستهدف", type:"text", placeholder:"إن وجد", group:"الجدول" }
   ],
+
+  "brand-guidelines": [
+    { key:"identity_status", label:"حالة الهوية", type:"select", options:["شعار وهوية معتمدان","هوية جزئية تحتاج تنظيم","هوية قديمة تحتاج تحديث القواعد","أحتاج بناء الهوية أولًا"], group:"النطاق" },
+    { key:"logo_rules", label:"نطاق قواعد الشعار", type:"select", options:["الاستخدامات الأساسية","نسخ الشعار + Clear Space + Minimum size + أخطاء الاستخدام","نظام موسع متعدد القنوات"], group:"المخرجات" },
+    { key:"visual_system", label:"عناصر النظام البصري", type:"select", options:["ألوان + Typography","ألوان + Typography + Imagery","نظام كامل يشمل Icons/Illustration/Layout","يحدد حسب الهوية"], group:"المخرجات" },
+    { key:"voice", label:"إرشادات النبرة والرسائل", type:"select", options:["غير مطلوبة","مبادئ مختصرة","Voice & Messaging موسعة"], group:"المحتوى" },
+    { key:"applications", label:"أمثلة التطبيقات داخل الدليل", type:"text", placeholder:"مثال: سوشيال، مطبوعات، تغليف، واجهات", group:"الاستخدام" },
+    { key:"languages", label:"لغة الدليل", type:"select", options:["عربي","إنجليزي","عربي + إنجليزي"], group:"المخرجات" },
+    { key:"delivery", label:"صيغة التسليم", type:"select", options:["PDF Guide","PDF + ملفات عناصر الهوية","ملفات منظمة للتسليم للفريق والموردين"], group:"الملفات" }
+  ],
+
+  "packaging-design": [
+    { key:"product", label:"نوع المنتج", type:"text", placeholder:"ما المنتج الذي سيتم تغليفه؟", group:"المنتج" },
+    { key:"package_type", label:"نوع العبوة", type:"select", options:["Folding Carton","Corrugated Box","Label","Pouch / Flexible Packaging","Paper Bag","Cup / Foodservice","عبوة أخرى","لم يُحسم بعد"], group:"البنية" },
+    { key:"dieline", label:"حالة الـDieline / القالب الفني", type:"select", options:["موجود من المورد ومعتمد","موجود ويحتاج مراجعة","لدي عينة فقط","غير موجود — نحتاج أولًا تطوير البنية مع المورد"], group:"الملفات", helpText:"التصميم الجرافيكي النهائي يجب أن يُبنى على Dieline معتمد من الجهة التي ستنتج العبوة." },
+    { key:"dimensions", label:"الأبعاد", type:"text", placeholder:"الأبعاد النهائية أو أبعاد المنتج إن لم يوجد Dieline", group:"المقاس" },
+    { key:"sku_count", label:"عدد المنتجات / SKUs", type:"number", placeholder:"مثال: 4", unit:"SKU", group:"الكمية" },
+    { key:"mandatory_content", label:"المحتوى الإلزامي", type:"select", options:["مكتمل وسأرفقه","جزئي ويحتاج تنظيم","Barcode/QR موجود","متطلبات تنظيمية سأوفرها","أحتاج قائمة ما يجب أن أجهزه"], group:"المحتوى" },
+    { key:"brand_status", label:"حالة الهوية", type:"select", options:["هوية كاملة","شعار وألوان فقط","هوية قيد التطوير","أحتاج تصميم الهوية أيضًا"], group:"العلامة" },
+    { key:"print_process", label:"طريقة الطباعة/المورد", type:"select", options:["محدد من المورد","Offset","Flexo","Digital","Gravure","غير معروف — يراجع بعد تحديد العبوة"], group:"الطباعة" },
+    { key:"finishes", label:"تشطيبات مخطط لها", type:"select", options:["بدون تشطيب خاص","Foil","Spot UV","Emboss/Deboss","Window / Special die-cut","عدة تشطيبات — تحتاج مراجعة توافق"], group:"التشطيب" },
+    { key:"mockup", label:"العرض البصري", type:"select", options:["2D Artwork فقط","3D Mockup","Mockup + عدة زوايا للعرض","يحدد حسب المشروع"], group:"المخرجات" },
+    { key:"delivery", label:"التسليم", type:"select", options:["Print-ready artwork على Dieline","Native/Source files + Print PDF","ملفات متعددة لكل SKU","حسب متطلبات المورد"], group:"الملفات" }
+  ],
+
+  "print-layout-design": [
+    { key:"product", label:"نوع المطبوع", type:"select", options:["بروشور/مطوية","كتالوج","Company Profile","كتاب/كتيب","منيو","Flyer/Poster","تقرير/Annual Report","مطبوع آخر"], group:"المنتج" },
+    { key:"size", label:"المقاس النهائي", type:"text", placeholder:"مثال: A4 أو المقاس المخصص", group:"المقاس" },
+    { key:"pages", label:"عدد الصفحات/الأوجه", type:"number", placeholder:"مثال: 24", unit:"صفحة", group:"المحتوى" },
+    { key:"content_status", label:"حالة النصوص", type:"select", options:["نهائية وجاهزة","جاهزة جزئيًا","تحتاج تحريرًا/تنسيقًا","أحتاج كتابة المحتوى أيضًا"], group:"المحتوى" },
+    { key:"images", label:"الصور والرسومات", type:"select", options:["سأوفرها","متوفرة جزئيًا","تحتاج معالجة/Retouch","أحتاج توفير/إنتاج Visuals"], group:"الملفات" },
+    { key:"brand", label:"الهوية", type:"select", options:["Brand Guide موجود","شعار وألوان فقط","لا توجد هوية مكتملة","تصميم مستقل للمشروع"], group:"العلامة" },
+    { key:"binding", label:"طريقة التجليد — إن كان منشورًا", type:"select", options:["غير مطبق","Saddle Stitch","Perfect Bound","Wire-O / Spiral","Hardcover","لم تُحدد — تحتاج تنسيقًا مع الإنتاج"], group:"التجليد" },
+    { key:"delivery", label:"المخرجات", type:"select", options:["Print-ready PDF","PDF + Source package","نسخة للطباعة + نسخة رقمية","حسب مواصفة المطبعة"], group:"الملفات" }
+  ],
+
+  "print-artwork-prepress": [
+    { key:"job", label:"نوع العمل", type:"select", options:["فحص ملف قبل الطباعة","تصحيح Bleed/Trim","مراجعة ألوان وColor space","حل Fonts/Links","تجهيز PDF/X أو مواصفة المطبعة","تحويل Artwork إلى Print-ready","Package/Collect ملفات المصدر","مراجعة شاملة Preflight"], group:"المعالجة" },
+    { key:"source_file", label:"نوع الملف الحالي", type:"select", options:["AI","INDD","PDF","PSD","CorelDRAW/ملف آخر","JPG/PNG فقط","عدة ملفات مرتبطة"], group:"الملفات" },
+    { key:"product", label:"المنتج النهائي", type:"text", placeholder:"مثال: كتالوج، علبة، بنر، كرت شخصي", group:"المنتج" },
+    { key:"final_size", label:"المقاس النهائي", type:"text", placeholder:"Trim size / Finished size", group:"المقاس" },
+    { key:"printer_spec", label:"هل لديك مواصفة من المطبعة/المورد؟", type:"select", options:["نعم — Joboptions / PDF spec","نعم — تعليمات مكتوبة","لا — ستحدد رواج المتطلبات مع جهة الإنتاج","الإنتاج لدى رواج"], group:"الطباعة" },
+    { key:"bleed", label:"Bleed", type:"select", options:["موجود وفق المواصفة","غير موجود","غير متأكد","سيحدد وفق جهة الإنتاج"], group:"التجهيز" },
+    { key:"color", label:"حالة الألوان", type:"select", options:["CMYK/Spot مضبوط","RGB ويحتاج مراجعة للتحويل","ألوان Spot موجودة","غير متأكد"], group:"الألوان" },
+    { key:"links_fonts", label:"الخطوط والروابط", type:"select", options:["كلها متوفرة","روابط مفقودة","خطوط مفقودة/غير مرخصة للتسليم","غير متأكد"], group:"الملفات" },
+    { key:"output", label:"التسليم المطلوب", type:"select", options:["Print-ready PDF فقط","PDF/X حسب مواصفة جهة الإنتاج","Source package + PDF","تقرير بالمشكلات فقط"], group:"المخرجات" }
+  ],
+
+  "vehicle-wrap-design": [
+    { key:"vehicle", label:"المركبة", type:"text", placeholder:"الشركة / الموديل / السنة / الفئة", group:"المنتج" },
+    { key:"fleet", label:"نطاق المركبات", type:"select", options:["مركبة واحدة","عدة مركبات من نفس الموديل","أسطول بموديلات متعددة"], group:"النطاق" },
+    { key:"coverage", label:"نطاق التصميم", type:"select", options:["Lettering / شعارات فقط","Partial Wrap","Full Wrap","Fleet system"], group:"النطاق" },
+    { key:"template", label:"قالب المركبة/القياسات", type:"select", options:["قالب Vector معتمد متوفر","لدي قياسات وصور","أحتاج من رواج تجهيز القياسات/القالب","غير متأكد"], group:"الملفات" },
+    { key:"brand", label:"مواد الهوية", type:"select", options:["Brand Guide + Vector assets","شعار Vector فقط","ملفات ناقصة تحتاج تجهيز","أحتاج تصميم الهوية/الجرافيك من الصفر"], group:"العلامة" },
+    { key:"message", label:"المحتوى المطلوب على المركبة", type:"text", placeholder:"الخدمات، الهاتف، QR، الرسالة الرئيسية...", group:"المحتوى" },
+    { key:"windows", label:"هل يشمل الزجاج؟", type:"select", options:["لا","نعم — مناطق زجاج محددة","يحدد بعد مراجعة المركبة والاشتراطات"], group:"النوافذ" },
+    { key:"production", label:"جهة التنفيذ", type:"select", options:["رواج ستطبع وتركب","مورد/مركب آخر وسأوفر مواصفاته","تصميم فقط الآن"], group:"التركيب" },
+    { key:"delivery", label:"المخرجات", type:"select", options:["Production artwork","Artwork + visual mockups","ملفات لكل جانب/مركبة","حسب قالب جهة التنفيذ"], group:"المخرجات" }
+  ],
+
+  "signage-design": [
+    { key:"sign_type", label:"نوع اللوحة", type:"select", options:["Channel Letters","Lightbox","Dimensional Letters","Wayfinding","Totem / Pylon","Acrylic/Rigid Sign","نظام لوحات متعدد"], group:"المنتج" },
+    { key:"site", label:"بيانات الموقع", type:"select", options:["صور + أبعاد متوفرة","مخططات معمارية متوفرة","تحتاج معاينة وقياس من رواج","Concept فقط دون موقع نهائي"], group:"الملفات" },
+    { key:"dimensions", label:"الأبعاد التقريبية", type:"text", placeholder:"إن كانت معروفة", group:"المقاس" },
+    { key:"brand", label:"الهوية", type:"select", options:["Brand Guide موجود","شعار Vector موجود","ملفات تحتاج تجهيز","أحتاج تصميم الهوية أيضًا"], group:"العلامة" },
+    { key:"lighting", label:"الإضاءة", type:"select", options:["بدون","Face-lit","Halo-lit","Backlit","Edge-lit","أحتاج توصية"], group:"الإضاءة" },
+    { key:"scope", label:"مستوى التصميم", type:"select", options:["Concept Visual","Design + dimensions","Production-ready artwork","Design + technical coordination مع التصنيع"], group:"النطاق" },
+    { key:"delivery", label:"المخرجات", type:"select", options:["2D artwork","2D + Mockup","Drawings/visual package للتصنيع","حسب المشروع"], group:"المخرجات" }
+  ],
+
+  "facade-3d-design": [
+    { key:"project", label:"نوع المشروع", type:"select", options:["واجهة متجر","واجهة شركة/مؤسسة","مطعم/كافيه","مبنى تجاري","واجهة داخل مول","مشروع آخر"], group:"المنتج" },
+    { key:"site_data", label:"بيانات الموقع", type:"select", options:["رفع معماري/CAD موجود","صور وقياسات موجودة","تحتاج معاينة ورفع موقعي","Concept قبل اختيار الموقع"], group:"الملفات" },
+    { key:"dimensions", label:"أبعاد الواجهة", type:"text", placeholder:"العرض × الارتفاع أو أرفق المخطط", group:"المقاس" },
+    { key:"scope", label:"النطاق", type:"select", options:["Concept فقط","3D Visual","3D + Elevations","تصميم + تنسيق مخططات تنفيذية","مشروع متكامل مع اللوحات"], group:"النطاق" },
+    { key:"materials", label:"الخامات المتوقعة", type:"select", options:["ACP / ACM","Acrylic/Metal signage","Wood-look / decorative panels","مزيج خامات","لم تُحدد — أحتاج اقتراح"], group:"الخامة" },
+    { key:"signage", label:"اللوحات/الحروف", type:"select", options:["بدون","Channel Letters","Dimensional Letters","Lightbox","مزيج لوحات وهوية"], group:"اللوحات" },
+    { key:"brand", label:"الهوية", type:"select", options:["جاهزة","تحتاج تطوير","أحتاج هوية جديدة ضمن المشروع"], group:"العلامة" },
+    { key:"execution", label:"التنفيذ", type:"select", options:["التصميم فقط","أريد عرض تنفيذ من رواج أيضًا","سيتم التنفيذ بواسطة جهة أخرى"], group:"التركيب" }
+  ],
+
   "social-content": [
-    { key: "platforms", label: "المنصات", type: "text", placeholder: "إنستغرام، فيسبوك، تيك توك...", group: "النطاق" },
-    { key: "qty", label: "عدد التصاميم", type: "number", placeholder: "مثال: 12", unit: "تصميم", group: "الكمية" },
-    { key: "copy", label: "كتابة المحتوى", type: "select", options: ["تصميم فقط", "تصميم + كتابة محتوى"], group: "النطاق" },
-    { key: "period", label: "الفترة", type: "select", options: ["حملة", "أسبوع", "شهر", "مخصص"], group: "الجدول" }
+    { key:"platforms", label:"المنصات", type:"select", options:["Instagram","Facebook","TikTok","LinkedIn","X / Twitter","عدة منصات","منصة أخرى"], group:"النطاق" },
+    { key:"formats", label:"أنواع المحتوى", type:"select", options:["Static Posts","Carousels","Stories","Reel/Video covers","Ads","Mix حسب الخطة"], group:"المخرجات" },
+    { key:"qty", label:"عدد القطع", type:"number", placeholder:"مثال: 12", unit:"قطعة", group:"الكمية" },
+    { key:"copy", label:"النصوص", type:"select", options:["النصوص جاهزة من العميل","تصميم + كتابة Captions/Copy","النصوص تحتاج تحرير فقط","أحتاج صناعة المحتوى بالكامل"], group:"المحتوى" },
+    { key:"assets", label:"الصور والفيديو", type:"select", options:["العميل يوفرها","Brand assets + صور منتجات موجودة","تحتاج معالجة صور","تحتاج إنتاج/توفير Visuals"], group:"الملفات" },
+    { key:"brand", label:"الهوية", type:"select", options:["Brand Guide موجود","قوالب سابقة موجودة","شعار وألوان فقط","أحتاج بناء نظام بصري للسوشيال"], group:"العلامة" },
+    { key:"languages", label:"اللغة", type:"select", options:["عربي","إنجليزي","عربي + إنجليزي"], group:"المحتوى" },
+    { key:"period", label:"الفترة", type:"select", options:["حملة قصيرة","أسبوع","شهر","ربع سنة","مخصص"], group:"الجدول" },
+    { key:"editable", label:"قوالب قابلة لإعادة الاستخدام", type:"select", options:["غير مطلوبة","مطلوبة — يحدد البرنامج/الصيغة","بعض القطع فقط"], group:"الملفات" }
   ],
+
+  "content-creation": [
+    { key:"goal", label:"هدف المحتوى", type:"select", options:["تعريف بالعلامة","بيع/تحويل","تثقيف","إطلاق منتج","حملة/مناسبة","تواصل مؤسسي","هدف آخر"], group:"النطاق" },
+    { key:"channels", label:"القنوات", type:"select", options:["Social Media","Website","Print materials","Advertising campaign","Email/CRM","عدة قنوات"], group:"النطاق" },
+    { key:"content_types", label:"نوع المحتوى", type:"select", options:["Captions / Social Copy","Product/Service Copy","Scripts","Articles/Guides","Campaign Messaging","Mixed content"], group:"المحتوى" },
+    { key:"qty", label:"عدد القطع/المخرجات", type:"number", placeholder:"مثال: 20", unit:"قطعة", group:"الكمية" },
+    { key:"language", label:"اللغة", type:"select", options:["عربي","إنجليزي","عربي + إنجليزي"], group:"المحتوى" },
+    { key:"source_material", label:"المعلومات المتوفرة", type:"select", options:["Brief كامل","مواد سابقة","معلومات منتجات/خدمات","مقابلة/جلسة جمع معلومات مطلوبة","المواد محدودة"], group:"الملفات" },
+    { key:"tone", label:"النبرة", type:"select", options:["حسب Brand Guide","مهنية","ودودة","فاخرة","تقنية","أحتاج تطوير Tone of Voice"], group:"العلامة" },
+    { key:"visuals", label:"هل يشمل التصميم المرئي؟", type:"select", options:["كتابة فقط","كتابة + تصميم","كتابة + Brief للتصميم","حملة متكاملة"], group:"المخرجات" }
+  ],
+
+  "campaign-creative": [
+    { key:"objective", label:"هدف الحملة", type:"select", options:["Awareness","Launch","Lead generation","Sales/Promotion","Event","Recruitment","Corporate message","هدف آخر"], group:"النطاق" },
+    { key:"channels", label:"القنوات", type:"select", options:["Digital only","Print only","Outdoor","Social + Digital","Integrated print + digital + outdoor"], group:"النطاق" },
+    { key:"duration", label:"مدة الحملة", type:"text", placeholder:"مثال: أسبوعان / شهر / فترة إطلاق", group:"الجدول" },
+    { key:"deliverables", label:"المخرجات", type:"text", placeholder:"مثال: Key Visual + Social + Billboard + POS + Flyers", group:"المخرجات" },
+    { key:"message", label:"الرسالة/العرض", type:"select", options:["جاهز من العميل","يحتاج تطوير Creative Message","يوجد Brief أولي","أحتاج Concept كامل"], group:"المحتوى" },
+    { key:"brand", label:"حالة الهوية", type:"select", options:["Brand Guide موجود","هوية أساسية فقط","تحتاج تطوير قبل الحملة","حملة مستقلة ضمن هوية موجودة"], group:"العلامة" },
+    { key:"assets", label:"الأصول", type:"select", options:["صور/فيديو جاهزة","منتجات تحتاج تصوير/Visuals","Stock/Illustration مناسب","تحتاج خطة إنتاج محتوى"], group:"الملفات" },
+    { key:"production", label:"هل تشمل الحملة إنتاجًا ماديًا؟", type:"select", options:["Creative فقط","Creative + مطبوعات","Creative + Outdoor/Signage","Creative + تنفيذ متكامل عبر رواج"], group:"التركيب" }
+  ],
+
   laser: [
     { key: "service", label: "نوع الخدمة", type: "select", options: ["قص ليزر", "حفر/نقش ليزر", "قص + حفر", "وسم Metal/Fiber", "أحتاج تحديد التقنية"], group: "المعالجة" },
     { key: "material", label: "الخامة", type: "select", options: ["Acrylic / PMMA", "MDF/Wood", "Plywood", "Paper/Cardboard", "Leather", "Anodized Aluminum", "Coated Metal", "Stainless Steel — حسب التقنية", "Laserable plastic", "خامة أخرى"], group: "الخامة" },

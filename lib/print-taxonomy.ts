@@ -100,5 +100,17 @@ export const printTaxonomy:PrintTaxonomyFamily[]=[
       {key:"awards",label:"الدروع والهدايا",templates:["awards"],status:"verified"},
       {key:"promotional-products",label:"الهدايا والمنتجات الدعائية",templates:["promotional-pen","promotional-drinkware","promotional-lanyard","promotional-keychain","promotional-notebook","corporate-gift-set"],status:"verified"}
     ]
+  },
+  {
+    key:"design-content",
+    label:"التصميم الفني وصناعة المحتوى",
+    description:"هوية، تصميم إنتاجي، تغليف، Prepress، تصميم بيئي ومحتوى وحملات.",
+    subcategories:[
+      {key:"branding",label:"الشعار والهوية",templates:["logo-design","identity","brand-guidelines"],status:"verified"},
+      {key:"packaging-design",label:"تصميم التغليف",templates:["packaging-design"],status:"verified"},
+      {key:"print-prepress",label:"التصميم للمطبوعات وPrepress",templates:["print-layout-design","print-artwork-prepress"],status:"verified"},
+      {key:"environmental-design",label:"تصميم المركبات واللوحات والواجهات",templates:["vehicle-wrap-design","signage-design","facade-3d-design"],status:"verified"},
+      {key:"content-campaigns",label:"المحتوى والحملات",templates:["social-content","content-creation","campaign-creative"],status:"verified"}
+    ]
   }
 ];

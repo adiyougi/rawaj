@@ -14,6 +14,7 @@ const specialty="docs/print-catalog/textile-specialty-sources.md";
 const promotional="docs/print-catalog/promotional-products-sources.md";
 const reflective="docs/print-catalog/large-format-signage-sources.md";
 const exhibitions="docs/print-catalog/exhibition-display-sources.md";
+const creative="docs/print-catalog/design-prepress-sources.md";
 
 export const catalogRouting:Record<string,CatalogRoute>={
   cards:{departmentSlug:"paper-printing",categorySlug:"paper-business-stationery",provenanceDoc:paper},
@@ -111,6 +112,16 @@ export const catalogRouting:Record<string,CatalogRoute>={
   "promotional-notebook":{departmentSlug:"textile-promotional",categorySlug:"specialty-promotional-products",provenanceDoc:promotional},
   "corporate-gift-set":{departmentSlug:"textile-promotional",categorySlug:"specialty-promotional-products",provenanceDoc:promotional},
 
-  identity:{departmentSlug:"design-content",categorySlug:"design-identity",provenanceDoc:""},
-  "social-content":{departmentSlug:"design-content",categorySlug:"design-content",provenanceDoc:""}
+  "logo-design":{departmentSlug:"design-content",categorySlug:"design-identity",provenanceDoc:creative},
+  identity:{departmentSlug:"design-content",categorySlug:"design-identity",provenanceDoc:creative},
+  "brand-guidelines":{departmentSlug:"design-content",categorySlug:"design-identity",provenanceDoc:creative},
+  "packaging-design":{departmentSlug:"design-content",categorySlug:"design-packaging",provenanceDoc:creative},
+  "print-layout-design":{departmentSlug:"design-content",categorySlug:"design-print-prepress",provenanceDoc:creative},
+  "print-artwork-prepress":{departmentSlug:"design-content",categorySlug:"design-print-prepress",provenanceDoc:creative},
+  "vehicle-wrap-design":{departmentSlug:"design-content",categorySlug:"design-environmental",provenanceDoc:creative},
+  "signage-design":{departmentSlug:"design-content",categorySlug:"design-environmental",provenanceDoc:creative},
+  "facade-3d-design":{departmentSlug:"design-content",categorySlug:"design-environmental",provenanceDoc:creative},
+  "social-content":{departmentSlug:"design-content",categorySlug:"design-campaigns",provenanceDoc:creative},
+  "content-creation":{departmentSlug:"design-content",categorySlug:"design-campaigns",provenanceDoc:creative},
+  "campaign-creative":{departmentSlug:"design-content",categorySlug:"design-campaigns",provenanceDoc:creative}
 };
