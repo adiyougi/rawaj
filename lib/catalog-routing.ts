@@ -73,6 +73,13 @@ export const catalogRouting:Record<string,CatalogRoute>={
   "dimensional-letters":{departmentSlug:"signage",categorySlug:"signage-dimensional",provenanceDoc:large},
   "acrylic-sign":{departmentSlug:"signage",categorySlug:"signage-rigid",provenanceDoc:large},
   "reflective-sign":{departmentSlug:"signage",categorySlug:"signage-reflective-safety",provenanceDoc:reflective},
+  "traffic-regulatory-sign":{departmentSlug:"signage",categorySlug:"signage-reflective-safety",provenanceDoc:reflective},
+  "traffic-warning-sign":{departmentSlug:"signage",categorySlug:"signage-reflective-safety",provenanceDoc:reflective},
+  "traffic-guide-sign":{departmentSlug:"signage",categorySlug:"signage-reflective-safety",provenanceDoc:reflective},
+  "parking-reflective-sign":{departmentSlug:"signage",categorySlug:"signage-reflective-safety",provenanceDoc:reflective},
+  "work-zone-reflective-sign":{departmentSlug:"signage",categorySlug:"signage-reflective-safety",provenanceDoc:reflective},
+  "street-name-reflective-sign":{departmentSlug:"signage",categorySlug:"signage-reflective-safety",provenanceDoc:reflective},
+  "facility-safety-reflective-sign":{departmentSlug:"signage",categorySlug:"signage-reflective-safety",provenanceDoc:reflective},
   facade:{departmentSlug:"facades",categorySlug:"facades-acp",provenanceDoc:large},
 
   "textile-sublimation":{departmentSlug:"textile-promotional",categorySlug:"specialty-sublimation",provenanceDoc:specialty},
