@@ -456,6 +456,62 @@ export const serviceSpecifications: Record<string, ServiceSpec[]> = {
     { key: "access", label: "الوصول لموقع العمل", type: "select", options: ["أرضي/سهل", "ارتفاع متوسط", "ارتفاع كبير أو يحتاج معدات رفع", "يحدد بالمعاينة"], group: "التركيب" },
     { key: "location", label: "موقع المشروع", type: "text", placeholder: "المدينة / المنطقة / وصف الموقع", group: "التركيب" }
   ],
+
+  "paper-shopping-bag": [
+    { key: "use", label: "الاستخدام", type: "select", options: ["متجر/ريتيل", "بوتيك/هدايا", "بقالة/سوبرماركت", "مطاعم/تيك أواي — يحتاج مراجعة ملاءمة المادة", "استخدام آخر"], group: "الاستخدام" },
+    { key: "width", label: "العرض", type: "number", placeholder: "مثال: 30", unit: "سم", group: "المقاس" },
+    { key: "gusset", label: "الجنب/القاعدة Gusset", type: "number", placeholder: "مثال: 12", unit: "سم", group: "المقاس" },
+    { key: "height", label: "الارتفاع", type: "number", placeholder: "مثال: 35", unit: "سم", group: "المقاس" },
+    { key: "paper", label: "نوع ورق الكيس", type: "select", options: ["Kraft bag paper", "Machine Finished (MF) — مظهر مطفي", "Machine Glazed (MG) — سطح أنعم/ألمع", "Premium bag paper", "أحتاج توصية رواج"], group: "الخامة", helpText: "اختيار الدرجة والوزن النهائي مرتبط بالحجم والحمولة وطريقة التصنيع والمورد." },
+    { key: "paper_color", label: "لون الورق", type: "select", options: ["بني Kraft", "أبيض", "لون/درجة خاصة حسب المورد", "أحتاج عينة"], group: "الخامة" },
+    { key: "handle", label: "المقبض", type: "select", options: ["بدون مقبض", "Flat Paper Handle", "Twisted Paper Handle", "نوع خاص — يحتاج مراجعة المورد"], group: "البنية" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["Flexographic", "Offset", "Digital", "تحددها رواج حسب الكمية والبنية"], group: "الطباعة" },
+    { key: "food_contact", label: "هل سيلامس غذاء مباشرة؟", type: "select", options: ["لا", "نعم — يجب طلب Declaration/Compliance من المورد", "غير متأكد"], group: "الامتثال", helpText: "لا تعتبر أي خامة مناسبة للملامسة الغذائية تلقائيًا؛ يلزم توثيق المنتج/المورد المحدد." },
+    quoteQty("كيس")
+  ],
+
+  "industrial-paper-sack": [
+    { key: "product", label: "المادة المعبأة", type: "select", options: ["مواد بناء/مساحيق", "حبيبات/Pellets", "أغذية أو مكونات غذائية — مراجعة امتثال", "أعلاف/بذور", "مواد كيميائية — مراجعة فنية", "منتج آخر"], group: "المنتج" },
+    { key: "bag_style", label: "نمط الكيس", type: "select", options: ["Open Mouth Bag", "Pasted Valve Bag", "Pinch Bottom Bag", "SOS / Self-Opening Sack", "Window Bag", "يحدد حسب ماكينة التعبئة"], group: "البنية" },
+    { key: "fill_weight", label: "وزن التعبئة المستهدف", type: "number", placeholder: "مثال: 25", unit: "كجم", group: "الكمية" },
+    { key: "dimensions", label: "الأبعاد المطلوبة", type: "text", placeholder: "العرض × القاعدة/الجنب × الطول إن كانت معروفة", group: "المقاس" },
+    { key: "paper_system", label: "بنية الورق", type: "select", options: ["Sack Kraft أحادي الطبقة", "Multi-ply Sack Kraft", "White/Bleached Sack Kraft", "Unbleached/Brown Sack Kraft", "تحدد هندسيًا حسب المنتج والتعبئة"], group: "الخامة" },
+    { key: "closure", label: "طريقة الإغلاق", type: "select", options: ["Sewn / خياطة", "Glued / لصق", "Valve self-close", "Valve heat/ultrasonic seal — حسب النظام", "يحدد حسب خط التعبئة"], group: "الإغلاق" },
+    { key: "barrier", label: "متطلبات الحاجز", type: "select", options: ["لا متطلبات خاصة", "رطوبة", "غبار", "نكهة/رائحة", "حاجز خاص — يحتاج تصميم مورد"], group: "الحاجز", helpText: "الحاجز خاص ببنية الكيس والمورد ولا يُضمن من اسم الورق وحده." },
+    { key: "easy_open", label: "فتح سهل", type: "select", options: ["غير مطلوب", "Tear-open strip", "Effusion / controlled opening", "يحدد حسب نمط الكيس"], group: "التجهيز" },
+    { key: "printing", label: "متطلبات الطباعة", type: "select", options: ["علامة/نص بسيط", "عدة ألوان", "تغطية رسومية كبيرة", "تحدد التقنية بعد اعتماد بنية الكيس"], group: "الطباعة" },
+    { key: "filling_line", label: "خط التعبئة", type: "text", placeholder: "اسم/نوع ماكينة التعبئة إن كان معروفًا", group: "خط التعبئة" },
+    quoteQty("كيس")
+  ],
+
+  "premade-flexible-pouch": [
+    { key: "product", label: "نوع المنتج داخل العبوة", type: "select", options: ["مسحوق/بودرة", "حبوب/سناك", "منتج جاف", "سائل/صلصة", "منتج غير غذائي", "منتج آخر — يحتاج مراجعة"], group: "المنتج" },
+    { key: "format", label: "شكل العبوة", type: "select", options: ["Stand-up Pouch", "Flat Pouch", "Side-gusseted Pouch", "Shaped Pouch", "Inverted Pouch", "شكل مخصص"], group: "البنية" },
+    { key: "dimensions", label: "الأبعاد", type: "text", placeholder: "العرض × الارتفاع × الجنب/القاعدة", group: "المقاس" },
+    { key: "fill_weight", label: "وزن/حجم التعبئة", type: "text", placeholder: "مثال: 250 جم أو 500 مل", group: "الكمية" },
+    { key: "appearance", label: "مظهر البنية", type: "select", options: ["شفاف/نافذة", "Opaque غير شفاف", "Metalized / حاجب للضوء", "Foil-containing structure", "تحددها رواج حسب متطلبات الحماية"], group: "الخامة" },
+    { key: "barrier", label: "متطلبات الحماية", type: "select", options: ["لا أعرف — أحتاج توصية", "رطوبة", "أكسجين", "ضوء", "رائحة/نكهة", "متطلبات متعددة", "متطلبات خاصة/اختبارات"], group: "الحاجز", helpText: "هذا حقل متطلبات أداء؛ البنية الفعلية والمواد تُحدد مع المورد ولا تُفترض تلقائيًا." },
+    { key: "closure", label: "الإغلاق/إعادة الإغلاق", type: "select", options: ["بدون Reclose", "Press-to-close Zipper", "Pour Spout / Fitment", "Closure خاص — مراجعة مورد"], group: "الإغلاق" },
+    { key: "easy_open", label: "سهولة الفتح", type: "select", options: ["بدون", "Tear Notch", "Laser Score / Tear-off", "يحدد حسب البنية"], group: "التجهيز" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["Full-color branded print", "ألوان محدودة", "متطلبات خاصة/أبيض/تأثيرات — مراجعة المورد"], group: "الطباعة" },
+    { key: "compliance", label: "متطلبات تنظيمية/ملامسة غذاء", type: "select", options: ["غير مطلوبة", "ملامسة غذاء — يلزم مستندات المورد", "منتج حساس/منظم — مراجعة خاصة", "غير متأكد"], group: "الامتثال" },
+    quoteQty("عبوة")
+  ],
+
+  "flexible-rollstock": [
+    { key: "product", label: "المنتج", type: "select", options: ["مسحوق", "سناك/منتج جاف", "حبوب", "سائل", "منتج غير غذائي", "آخر"], group: "المنتج" },
+    { key: "machine", label: "نوع ماكينة التعبئة", type: "select", options: ["VFFS", "HFFS", "Sachet machine", "Stick-pack machine", "Flow-wrap", "غير معروف — أحتاج مطابقة مع خط التعبئة"], group: "خط التعبئة" },
+    { key: "web_width", label: "عرض الرول/Web", type: "number", placeholder: "إن كان معروفًا", unit: "مم", group: "المقاس" },
+    { key: "repeat", label: "Repeat Length / خطوة الطباعة", type: "number", placeholder: "إن كانت معروفة", unit: "مم", group: "المقاس" },
+    { key: "appearance", label: "مظهر البنية", type: "select", options: ["Clear", "Opaque", "Metalized", "Foil-containing", "تحدد بعد متطلبات المنتج"], group: "الخامة" },
+    { key: "barrier", label: "متطلبات الحاجز", type: "select", options: ["لا أعرف", "رطوبة", "أكسجين", "ضوء", "رائحة/نكهة", "متطلبات متعددة/خاصة"], group: "الحاجز" },
+    { key: "seal", label: "متطلبات اللحام/Sealing", type: "select", options: ["قياسي — يراجع مع الماكينة", "سرعة تعبئة عالية", "منتج يحتاج Seal خاص", "غير معروف"], group: "الإغلاق" },
+    { key: "feature", label: "ميزة تحويل إضافية", type: "select", options: ["بدون", "Pre-applied zipper", "Perforation/Scoring", "Easy-open", "ميزة خاصة — مراجعة المورد"], group: "التجهيز" },
+    { key: "printing", label: "الطباعة", type: "select", options: ["Full-color branded print", "ألوان محدودة", "Variable/SKU family — مراجعة", "تحدد التقنية حسب الكمية والبنية"], group: "الطباعة" },
+    { key: "compliance", label: "الامتثال", type: "select", options: ["غير مطلوب", "Food-contact documentation required", "متطلبات منتج منظم", "غير متأكد"], group: "الامتثال" },
+    quoteQty("رول")
+  ],
+
   "textile-sublimation": [
     { key: "product", label: "نوع المنتج", type: "select", options: ["قماش رول", "راية / علم", "Sportswear / Jersey", "تيشيرت بوليستر", "Soft Signage", "قطعة مخيطة جاهزة", "منتج نسيجي آخر"], group: "المنتج" },
     { key: "fabric", label: "تركيب القماش", type: "select", options: ["100% Polyester", "خليط عالي البوليستر", "Polyester pretreated للطباعة المباشرة", "غير معروف — أحتاج تقييم رواج"], group: "الخامة", helpText: "السوبليميشن التقليدي يثبت الصبغة داخل ألياف البوليستر، لذلك نسبة البوليستر وتجهيز القماش عاملان أساسيان." },

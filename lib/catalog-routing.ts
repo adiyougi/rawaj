@@ -7,6 +7,7 @@ export type CatalogRoute = {
 const paper="docs/print-catalog/paper-printing-sources.md";
 const paperExpanded="docs/print-catalog/paper-products-expansion-sources.md";
 const packaging="docs/print-catalog/labels-packaging-sources.md";
+const flexiblePackaging="docs/print-catalog/flexible-packaging-bags-sources.md";
 const large="docs/print-catalog/large-format-signage-sources.md";
 const specialty="docs/print-catalog/textile-specialty-sources.md";
 const reflective="docs/print-catalog/large-format-signage-sources.md";
@@ -41,6 +42,10 @@ export const catalogRouting:Record<string,CatalogRoute>={
   "sheet-labels":{departmentSlug:"packaging-labels",categorySlug:"packaging-product-labels",provenanceDoc:packaging},
   "folding-carton":{departmentSlug:"packaging-labels",categorySlug:"packaging-folding-cartons",provenanceDoc:packaging},
   "corrugated-box":{departmentSlug:"packaging-labels",categorySlug:"packaging-corrugated",provenanceDoc:packaging},
+  "paper-shopping-bag":{departmentSlug:"packaging-labels",categorySlug:"packaging-main",provenanceDoc:flexiblePackaging},
+  "industrial-paper-sack":{departmentSlug:"packaging-labels",categorySlug:"packaging-main",provenanceDoc:flexiblePackaging},
+  "premade-flexible-pouch":{departmentSlug:"packaging-labels",categorySlug:"packaging-main",provenanceDoc:flexiblePackaging},
+  "flexible-rollstock":{departmentSlug:"packaging-labels",categorySlug:"packaging-main",provenanceDoc:flexiblePackaging},
 
   "rigid-uv-print":{departmentSlug:"digital-printing",categorySlug:"large-rigid",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},
   "pvc-foam-board":{departmentSlug:"digital-printing",categorySlug:"large-rigid",provenanceDoc:"docs/print-catalog/rigid-display-sources.md"},

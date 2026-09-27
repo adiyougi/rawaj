@@ -35,7 +35,10 @@ export const printTaxonomy:PrintTaxonomyFamily[]=[
       {key:"stickers",label:"الاستيكرات",templates:["stickers"],status:"verified"},
       {key:"product-labels",label:"ليبل المنتجات",templates:["roll-labels","sheet-labels"],status:"verified"},
       {key:"folding-cartons",label:"العلب الورقية",templates:["folding-carton"],status:"verified"},
-      {key:"corrugated",label:"التغليف المموج",templates:["corrugated-box"],status:"verified"}
+      {key:"corrugated",label:"التغليف المموج",templates:["corrugated-box"],status:"verified"},
+      {key:"paper-bags",label:"الأكياس الورقية",templates:["paper-shopping-bag"],status:"verified"},
+      {key:"industrial-sacks",label:"الأكياس الصناعية",templates:["industrial-paper-sack"],status:"verified"},
+      {key:"flexible-packaging",label:"التغليف المرن",templates:["premade-flexible-pouch","flexible-rollstock"],status:"verified"}
     ]
   },
   {
