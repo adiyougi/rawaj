@@ -20,6 +20,9 @@ export default function MediaLibrary() {
 
   async function upload(file: File | null) {
     if (!file) return;
+    const allowed=["image/jpeg","image/png","image/webp","image/avif","image/gif","video/mp4","video/webm","application/pdf"];
+    if(!allowed.includes(file.type)){setMessage("نوع الملف غير مدعوم.");return;}
+    if(file.size>25*1024*1024){setMessage("حجم الملف أكبر من 25MB.");return;}
     setUploading(true);
     setMessage("");
     const clean = file.name.replace(/[^a-zA-Z0-9._-]+/g,"-");
@@ -71,7 +74,7 @@ export default function MediaLibrary() {
           const isImage = /\.(jpg|jpeg|png|webp|avif|gif)$/i.test(item.name);
           return (
             <article key={item.name} className="media-admin-card">
-              {isImage ? <img src={url} alt="" /> : <div className="media-file-icon">FILE</div>}
+              {isImage ? <img src={url} alt={item.name} loading="lazy" /> : <div className="media-file-icon">FILE</div>}
               <div><strong>{item.name}</strong><small>{item.metadata?.size ? Math.round(item.metadata.size/1024) + " KB" : ""}</small></div>
               <div className="admin-row-actions"><button onClick={()=>copy(item.name)}>نسخ الرابط</button><button className="danger" onClick={()=>remove(item.name)}>حذف</button></div>
             </article>
