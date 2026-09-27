@@ -114,3 +114,12 @@
 .catalog-sync-button:hover:not(:disabled){border-color:#b9b1a6;background:#faf8f4}
 .catalog-sync-button:disabled{opacity:.55;cursor:wait}
 @media(max-width:720px){.catalog-head-actions{width:100%}.catalog-head-actions>button{flex:1;min-width:145px}}
+
+
+/* RFQ sales pipeline */
+.quote-admin-side{display:grid;gap:10px;min-width:190px}
+.quote-customer-title{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.quote-customer-title>span{font-size:8px;font-weight:800;background:#f0ede7;border-radius:999px;padding:4px 7px;color:var(--admin-muted)}
+.quote-contact-grid{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:7px;font-size:9px;color:var(--admin-muted)}
+.quote-contact-grid b{color:var(--admin-ink)}
+@media(max-width:720px){.quote-admin-side{min-width:0;width:100%;grid-template-columns:1fr 1fr}}

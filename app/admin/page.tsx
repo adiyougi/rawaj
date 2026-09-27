@@ -14,7 +14,7 @@ const cards = [
   ["الطلبات","quote_requests","/admin/quotes"]
 ] as const;
 type RecentQuote={id:string;customer_name:string|null;phone:string|null;status:string;created_at:string};
-const quoteStatus:Record<string,string>={new:"جديد",contacted:"تم التواصل",quoted:"تم إرسال العرض",won:"مقبول",closed:"مغلق"};
+const quoteStatus:Record<string,string>={new:"جديد",reviewing:"قيد المراجعة",need_more_info:"نحتاج معلومات",pricing:"قيد التسعير",sent:"تم إرسال العرض",negotiation:"تفاوض",won:"تم الاتفاق",lost:"لم يتم الاتفاق",archived:"مؤرشف"};
 
 export default function AdminDashboard() {
   const [counts,setCounts] = useState<Record<string,number>>({});
