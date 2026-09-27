@@ -58,7 +58,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
         </div>
 
         <nav>
-          {adminNav.map(([label,href]) => (
+          {adminNav.filter(([,href])=>href!=="/admin/users"||role==="owner").map(([label,href]) => (
             <Link key={href} href={href} className={pathname === href ? "active" : ""} onClick={() => setMenu(false)}>
               {label}
             </Link>
