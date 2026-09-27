@@ -92,6 +92,7 @@ export default function ServiceConfigurator({
         <label className="configurator-notes">
           <span>ملاحظات إضافية</span>
           <textarea
+            maxLength={3000}
             value={notes}
             onChange={(event) => setNotes(event.target.value)}
             placeholder="موعد التسليم، موقع الاستخدام، لدي ملف جاهز، أحتاج التصميم، أو أي تفاصيل أخرى."
