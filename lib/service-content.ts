@@ -1,3 +1,4 @@
+import { exhibitionContent } from "@/lib/service-content-exhibitions";
 export type ServiceRichContent={
   description:string;
   highlights:string[];
@@ -644,5 +645,6 @@ export const serviceContent:Record<string,ServiceRichContent>={
   ...paper,
   ...packaging,
   ...largeSignage,
-  ...reflectiveSafety
+  ...reflectiveSafety,
+  ...exhibitionContent
 };
