@@ -326,3 +326,7 @@
   .product-faq-list summary strong{font-size:11px}
   .product-faq-list details>p{font-size:10px;margin:-2px 30px 15px 26px}
 }
+
+
+/* RFQ workflow */
+.quote-cart-preview{border:1px solid var(--line);background:var(--bg);border-radius:16px;padding:14px;display:grid;gap:7px}.quote-cart-preview>strong{font-size:12px}.quote-cart-preview p{margin:0;padding-top:7px;border-top:1px solid var(--line);font-size:11px;display:grid;gap:3px}.quote-cart-preview p:first-of-type{border-top:0}.quote-cart-preview small{font-size:9px;line-height:1.55;color:var(--muted);white-space:pre-line}.quote-submit-message{border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 12px;font-size:10px;line-height:1.6}.admin-quote-item{margin-top:7px;padding:8px 10px;border:1px solid var(--admin-line);border-radius:10px;background:#faf9f6;display:grid;gap:3px}.admin-quote-item b{font-size:10px}.admin-quote-item small{white-space:pre-line;line-height:1.5}
