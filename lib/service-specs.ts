@@ -628,6 +628,75 @@ export const serviceSpecifications: Record<string, ServiceSpec[]> = {
     quoteQty("قطعة")
   ],
 
+  "promotional-pen": [
+    { key: "pen_type", label: "نوع القلم", type: "select", options: ["قلم بلاستيكي", "قلم معدني", "قلم خشبي/بامبو", "قلم فاخر", "موديل خاص — أرسل صورة مرجعية"], group: "المنتج" },
+    { key: "body_material", label: "مادة جسم القلم", type: "select", options: ["Plastic", "Painted/Coated Metal", "Anodized Metal", "Stainless/Metal", "Wood/Bamboo", "غير معروف — يحدد من العينة"], group: "الخامة" },
+    { key: "branding", label: "طريقة وضع الشعار", type: "select", options: ["توصية رواج حسب الخامة", "Pad Printing", "UV Direct Print", "Laser Engraving / Marking للخامات المتوافقة", "تقنية أخرى من المورد"], group: "الطباعة", helpText: "ليست كل تقنيات التخصيص مناسبة لكل جسم قلم؛ تُثبت الطريقة بعد معرفة الخامة والسطح." },
+    { key: "branding_area", label: "موضع/مساحة الشعار", type: "text", placeholder: "مثال: جسم القلم — 45 × 7 مم، أو أرفق قالب المورد", group: "المقاس" },
+    { key: "colors", label: "ألوان الشعار", type: "select", options: ["لون واحد", "لونان", "Full Color", "حفر بدون لون", "حسب التقنية"], group: "الألوان" },
+    { key: "personalization", label: "تخصيص أسماء فردية", type: "select", options: ["لا", "نعم — أسماء", "أسماء + مسميات", "ترقيم/Serial"], group: "التخصيص" },
+    { key: "supply", label: "توفير المنتج", type: "select", options: ["رواج توفر الأقلام", "العميل يوفر الأقلام — يحتاج اختبار توافق", "أحتاج عرضًا للخيارين"], group: "التجهيز" },
+    { key: "packaging", label: "التغليف الفردي", type: "select", options: ["بدون", "كيس/غلاف بسيط", "علبة هدية", "حسب موديل القلم"], group: "الملحقات" },
+    quoteQty("قلم")
+  ],
+
+  "promotional-drinkware": [
+    { key: "product", label: "نوع المنتج", type: "select", options: ["Mug / كوب", "Tumbler", "Water Bottle", "Thermos / Flask", "Travel Mug", "Glassware", "Drinkware آخر"], group: "المنتج" },
+    { key: "material", label: "الخامة", type: "select", options: ["Ceramic", "Sublimation-coated Ceramic/Metal", "Stainless Steel", "Aluminum", "Plastic", "Glass", "خامة أخرى"], group: "الخامة" },
+    { key: "capacity", label: "السعة", type: "text", placeholder: "مثال: 350 مل / 500 مل / 20 oz", group: "المقاس" },
+    { key: "shape", label: "شكل السطح", type: "select", options: ["أسطواني مستقيم", "Tapered / مخروطي", "بمقبض", "سطح منحني خاص", "غير متأكد"], group: "البنية" },
+    { key: "branding", label: "تقنية التخصيص", type: "select", options: ["توصية رواج حسب المنتج", "Sublimation — فقط Blank/Coating متوافق", "Laser Engraving للخامة المتوافقة", "UV Direct / Rotary UV", "Pad / Screen Printing حسب السطح والمورد"], group: "الطباعة" },
+    { key: "print_scope", label: "نطاق التخصيص", type: "select", options: ["شعار موضعي", "وجه واحد", "وجهين", "Wrap حول الجسم", "موضع خاص"], group: "الموضع" },
+    { key: "personalization", label: "بيانات متغيرة", type: "select", options: ["لا", "أسماء", "أسماء + أرقام", "QR / Serial", "بيانات من ملف"], group: "التخصيص" },
+    { key: "supply", label: "توفير المنتج", type: "select", options: ["رواج توفر المنتج", "العميل يوفر المنتج — اختبار توافق مطلوب", "الخياران"], group: "التجهيز" },
+    { key: "packaging", label: "التغليف", type: "select", options: ["تغليف المصنع", "علبة فردية", "علبة هدية مخصصة", "Gift Set"], group: "الملحقات" },
+    quoteQty("قطعة")
+  ],
+
+  "promotional-lanyard": [
+    { key: "material", label: "الخامة", type: "select", options: ["Polyester — مناسب لسوبليميشن", "Polyester woven/supplier construction", "خامة أخرى حسب المورد"], group: "الخامة" },
+    { key: "width", label: "عرض الشريط", type: "select", options: ["10 مم", "15 مم", "20 مم", "25 مم", "مقاس مخصص"], group: "المقاس" },
+    { key: "length", label: "الطول", type: "select", options: ["مقاس رقبة قياسي حسب المورد", "طول مخصص", "غير متأكد"], group: "المقاس" },
+    { key: "branding", label: "طريقة التخصيص", type: "select", options: ["Dye Sublimation Full Color على Polyester", "Screen Print حسب البنية", "Woven/Jacquard — توريد متخصص", "أحتاج توصية"], group: "الطباعة", helpText: "السوبليميشن موثق على أشرطة Polyester؛ الخيارات الأخرى تعتمد على بناء الشريط والمورد." },
+    { key: "sides", label: "أوجه التصميم", type: "select", options: ["وجه واحد", "وجهين", "Loop كامل"], group: "الطباعة" },
+    { key: "attachment", label: "الملحق السفلي", type: "select", options: ["Metal hook", "Lobster clip", "Badge reel", "Keyring", "Card holder", "ملحق خاص"], group: "الملحقات" },
+    { key: "safety", label: "Safety Breakaway", type: "select", options: ["غير مطلوب", "مطلوب", "يحدد حسب الاستخدام"], group: "الملحقات" },
+    quoteQty("حبل")
+  ],
+
+  "promotional-keychain": [
+    { key: "style", label: "نوع الـKeychain", type: "select", options: ["Metal", "Acrylic", "Wood", "Leather / Synthetic Leather", "Plastic/Rubber", "Bottle opener / Functional", "تصميم خاص"], group: "المنتج" },
+    { key: "material", label: "الخامة", type: "select", options: ["Metal", "Anodized/Coated Metal", "Acrylic", "Wood", "Leather", "Plastic", "Mixed materials"], group: "الخامة" },
+    { key: "size", label: "المقاس", type: "text", placeholder: "الأبعاد التقريبية أو موديل المنتج", group: "المقاس" },
+    { key: "branding", label: "التخصيص", type: "select", options: ["Laser Engraving / Marking", "UV Direct Print", "Pad Printing", "Printed insert", "توصية رواج حسب الخامة"], group: "الطباعة" },
+    { key: "personalization", label: "أسماء/أرقام متغيرة", type: "select", options: ["لا", "أسماء", "أرقام", "QR/Serial", "بيانات متعددة"], group: "التخصيص" },
+    { key: "packaging", label: "التغليف", type: "select", options: ["Bulk", "كيس فردي", "علبة صغيرة", "Gift packaging"], group: "الملحقات" },
+    quoteQty("قطعة")
+  ],
+
+  "promotional-notebook": [
+    { key: "format", label: "نوع الدفتر", type: "select", options: ["Hardcover notebook", "Softcover notebook", "PU/Leather-look notebook", "Wire-O promotional notebook", "Eco/Kraft style", "موديل مورد خاص"], group: "المنتج" },
+    { key: "size", label: "المقاس", type: "select", options: ["A5", "A6", "A4", "Pocket", "مقاس مورد خاص"], group: "المقاس" },
+    { key: "cover_material", label: "خامة الغلاف", type: "select", options: ["Paper/Card cover", "PU / Synthetic leather", "Fabric", "Wood/Bamboo detail", "Mixed material", "غير معروف"], group: "الخامة" },
+    { key: "inside", label: "المحتوى الداخلي", type: "select", options: ["دفتر جاهز بخطوط", "Dot grid", "Blank", "طباعة داخلية مخصصة", "Planner/Diary structure"], group: "المحتوى" },
+    { key: "branding", label: "تخصيص الغلاف", type: "select", options: ["UV Direct Print", "Screen/Pad Print حسب الغلاف", "Laser Engraving للخامة المتوافقة", "Foil/Deboss إذا وفره مورد الدفتر", "Printed cover كامل", "توصية رواج"], group: "الطباعة" },
+    { key: "personalization", label: "تخصيص فردي", type: "select", options: ["بدون", "اسم على الغلاف", "اسم + مسمى", "بيانات متغيرة"], group: "التخصيص" },
+    { key: "accessories", label: "ملحقات", type: "select", options: ["بدون", "Elastic band", "Pen loop", "Ribbon marker", "Gift box", "حسب موديل المورد"], group: "الملحقات" },
+    quoteQty("دفتر")
+  ],
+
+  "corporate-gift-set": [
+    { key: "occasion", label: "الغرض من الهدية", type: "select", options: ["موظفون", "عملاء VIP", "فعالية/مؤتمر", "افتتاح/إطلاق", "موسم/مناسبة", "هدية ترحيبية", "غرض آخر"], group: "الاستخدام" },
+    { key: "items", label: "محتويات المجموعة", type: "text", placeholder: "مثال: Notebook + Pen + Tumbler + بطاقة شكر", group: "المحتوى" },
+    { key: "items_source", label: "توفير المنتجات", type: "select", options: ["رواج تقترح وتوفر كل المنتجات", "لدي منتجات محددة", "مزيج بين منتجاتي وتوريد رواج"], group: "التجهيز" },
+    { key: "branding", label: "التخصيص", type: "select", options: ["نفس الهوية على جميع القطع", "تقنيات مختلفة حسب خامة كل قطعة", "أسماء شخصية على بعض القطع", "أحتاج اقتراح كامل من رواج"], group: "التخصيص" },
+    { key: "packaging", label: "تغليف المجموعة", type: "select", options: ["Box قياسي", "Gift Box مخصص", "Mailer/Packaging branded", "Bag + insert", "أحتاج تصميم تغليف كامل"], group: "الملحقات" },
+    { key: "insert", label: "بطاقة/Insert داخل المجموعة", type: "select", options: ["بدون", "بطاقة شكر", "رسالة شخصية", "كتيب/تعريف", "QR / Voucher"], group: "الملحقات" },
+    { key: "personalization", label: "تخصيص كل مجموعة باسم المستلم", type: "select", options: ["لا", "نعم — اسم", "اسم + مسمى/شركة", "بيانات متغيرة من ملف"], group: "التخصيص" },
+    { key: "delivery", label: "التسليم", type: "select", options: ["كل الكمية لموقع واحد", "مجموعات منفصلة جاهزة للتوزيع", "توزيع متعدد المواقع — يحتاج دراسة"], group: "التجهيز" },
+    quoteQty("مجموعة")
+  ],
+
   "laser-cutting": [
     { key: "material", label: "الخامة", type: "select", options: ["Acrylic / PMMA", "MDF", "Plywood / Wood", "Paper / Cardboard", "Leather", "Textile", "Laserable plastic", "Metal — يحتاج تحديد نوع الليزر والسماكة", "خامة أخرى"], group: "الخامة" },
     { key: "thickness", label: "السماكة", type: "text", placeholder: "مثال: 3 مم", group: "الخامة" },

@@ -97,7 +97,8 @@ export const printTaxonomy:PrintTaxonomyFamily[]=[
       {key:"heat-transfer",label:"Heat Transfer",templates:["heat-transfer-vinyl"],status:"verified"},
       {key:"uv-object",label:"UV وتخصيص المنتجات",templates:["uv-direct-object","uv-dtf"],status:"verified"},
       {key:"laser",label:"الليزر",templates:["laser-cutting","laser-engraving"],status:"verified"},
-      {key:"awards",label:"الدروع والهدايا",templates:["awards"],status:"verified"}
+      {key:"awards",label:"الدروع والهدايا",templates:["awards"],status:"verified"},
+      {key:"promotional-products",label:"الهدايا والمنتجات الدعائية",templates:["promotional-pen","promotional-drinkware","promotional-lanyard","promotional-keychain","promotional-notebook","corporate-gift-set"],status:"verified"}
     ]
   }
 ];

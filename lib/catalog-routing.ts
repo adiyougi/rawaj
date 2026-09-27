@@ -11,6 +11,7 @@ const flexiblePackaging="docs/print-catalog/flexible-packaging-bags-sources.md";
 const paperCups="docs/print-catalog/paper-cups-research.md";
 const large="docs/print-catalog/large-format-signage-sources.md";
 const specialty="docs/print-catalog/textile-specialty-sources.md";
+const promotional="docs/print-catalog/promotional-products-sources.md";
 const reflective="docs/print-catalog/large-format-signage-sources.md";
 const exhibitions="docs/print-catalog/exhibition-display-sources.md";
 
@@ -103,6 +104,12 @@ export const catalogRouting:Record<string,CatalogRoute>={
   "laser-cutting":{departmentSlug:"laser-acrylic",categorySlug:"laser-cutting",provenanceDoc:specialty},
   "laser-engraving":{departmentSlug:"laser-acrylic",categorySlug:"laser-engraving",provenanceDoc:specialty},
   awards:{departmentSlug:"laser-acrylic",categorySlug:"laser-awards",provenanceDoc:specialty},
+  "promotional-pen":{departmentSlug:"textile-promotional",categorySlug:"specialty-promotional-products",provenanceDoc:promotional},
+  "promotional-drinkware":{departmentSlug:"textile-promotional",categorySlug:"specialty-promotional-products",provenanceDoc:promotional},
+  "promotional-lanyard":{departmentSlug:"textile-promotional",categorySlug:"specialty-promotional-products",provenanceDoc:promotional},
+  "promotional-keychain":{departmentSlug:"textile-promotional",categorySlug:"specialty-promotional-products",provenanceDoc:promotional},
+  "promotional-notebook":{departmentSlug:"textile-promotional",categorySlug:"specialty-promotional-products",provenanceDoc:promotional},
+  "corporate-gift-set":{departmentSlug:"textile-promotional",categorySlug:"specialty-promotional-products",provenanceDoc:promotional},
 
   identity:{departmentSlug:"design-content",categorySlug:"design-identity",provenanceDoc:""},
   "social-content":{departmentSlug:"design-content",categorySlug:"design-content",provenanceDoc:""}
