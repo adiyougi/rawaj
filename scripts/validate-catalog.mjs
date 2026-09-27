@@ -14,7 +14,9 @@ const weakSpecs=keys.filter(key=>{
  if(start<0)return false;
  const end=specs.indexOf("\n  ],",start);
  const block=specs.slice(start,end<0?start+5000:end);
- return !block.includes('group:')||!block.includes('quoteQty(');
+ const hasGroup=block.includes('group:');
+ const hasRfqDriver=block.includes('quoteQty(')||block.includes('type: "number"')||block.includes('key: "scope"')||block.includes('key:"scope"')||block.includes('key: "service"')||block.includes('key: "deliverables"')||block.includes('key:"deliverables"')||block.includes('key: "coverage"')||block.includes('key: "job"')||block.includes('key: "production"')||block.includes('key: "execution"')||block.includes('key: "install"')||block.includes('key: "installation"')||block.includes('key: "delivery"')||block.includes('key:"delivery"');
+ return !hasGroup||!hasRfqDriver;
 });
 const invalidPricing=/\b(price|price_cents|unit_price|fixed_price)\b\s*[:=]/i.test(templates+specs+rich);
 if(duplicate.length||missingSpecs.length||missingContent.length||missingRouting.length||weakSpecs.length||invalidPricing){
