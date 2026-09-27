@@ -1,4 +1,4 @@
-import type { ServiceRichContent } from "@/lib/service-content";
+type ServiceRichContent={description:string;highlights:string[];faq:Array<{question:string;answer:string}>};
 const q=(name:string)=>({question:"كيف يتم إعداد عرض السعر؟",answer:"يُحدد عرض "+name+" بعد تثبيت نظام الهاردوير والمقاس والجرافيك والملحقات والكمية."});
 export const exhibitionContent:Record<string,ServiceRichContent>={
  "retractable-banner-stand":{description:"ستاند Roll-up محمول بآلية سحب داخل القاعدة. المقاس المرئي ومادة الجرافيك والارتفاع وعدد الأوجه تتبع موديل الهاردوير، لذلك يُثبت النظام أو القالب قبل الطباعة.",highlights:["المقاس المرئي يتبع موديل الستاند.","أحادي الوجه وثنائي الوجه نظامان مختلفان.","بعض الأنظمة ثابتة الارتفاع وأخرى تلسكوبية.","الحقيبة والإضاءة والملحقات تعتمد على الهاردوير."],faq:[{question:"أحتاج تغيير الجرافيك فقط، ماذا أرسل؟",answer:"أرسل موديل الستاند أو قالب الجرافيك والأبعاد الدقيقة لأن أنظمة التثبيت تختلف."},q("Roll-up")]},
