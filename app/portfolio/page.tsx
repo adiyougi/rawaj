@@ -4,6 +4,9 @@ import SiteFooter from "@/components/SiteFooter";
 import InnerHero from "@/components/InnerHero";
 import { IMAGES } from "@/lib/content";
 import { getPortfolio } from "@/lib/cms";
+import type { Metadata } from "next";
+
+export const metadata:Metadata={title:"معرض أعمال رواج",description:"نماذج من أعمال رواج في الطباعة والإعلان واللوحات والواجهات والتجهيز.",alternates:{canonical:"/portfolio"}};
 
 export default async function PortfolioPage() {
   const portfolio = await getPortfolio();
