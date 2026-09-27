@@ -63,7 +63,8 @@ export async function getServices() {
     "services?select=slug,name,short_description,description,hero_url,gallery,badge,specifications,highlights,faq,featured,service_categories(name)&is_published=eq.true&verification_status=eq.approved&order=sort_order.asc"
   );
 
-  if (!rows?.length) return fallbackServices;
+  if (rows === null) return fallbackServices;
+  if (!rows.length) return [];
 
   return rows.map((row) => ({
     id: row.slug,
