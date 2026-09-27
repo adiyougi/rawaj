@@ -330,3 +330,16 @@
 
 /* RFQ workflow */
 .quote-cart-preview{border:1px solid var(--line);background:var(--bg);border-radius:16px;padding:14px;display:grid;gap:7px}.quote-cart-preview>strong{font-size:12px}.quote-cart-preview p{margin:0;padding-top:7px;border-top:1px solid var(--line);font-size:11px;display:grid;gap:3px}.quote-cart-preview p:first-of-type{border-top:0}.quote-cart-preview small{font-size:9px;line-height:1.55;color:var(--muted);white-space:pre-line}.quote-submit-message{border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 12px;font-size:10px;line-height:1.6}.admin-quote-item{margin-top:7px;padding:8px 10px;border:1px solid var(--admin-line);border-radius:10px;background:#faf9f6;display:grid;gap:3px}.admin-quote-item b{font-size:10px}.admin-quote-item small{white-space:pre-line;line-height:1.5}
+
+
+/* RFQ submission receipt */
+.quote-receipt{align-content:start;justify-items:start}
+.quote-receipt-mark{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;background:var(--red);color:#fff;font-size:25px;font-weight:900;box-shadow:0 14px 35px rgba(227,19,45,.22)}
+.quote-receipt h2{font-size:clamp(34px,4vw,54px);line-height:1.05;letter-spacing:-.04em;margin:2px 0 0}
+.quote-receipt>p{color:#65676d;line-height:1.85;margin:0;max-width:620px}
+.quote-reference{width:100%;border:1px solid #dedfe3;background:#f8f8f9;border-radius:18px;padding:18px;display:grid;gap:4px}
+.quote-reference span{font-size:10px;font-weight:800;color:#7c7e85}.quote-reference strong{font-size:30px;letter-spacing:.08em}.quote-reference small{font-size:9px;overflow-wrap:anywhere;color:#989aa0}
+.quote-receipt-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;width:100%}.quote-receipt-actions .btn{min-height:48px;display:grid;place-items:center;text-align:center}
+.quote-receipt-secondary{border:1px solid #dedfe3;background:#fff;color:#111217}
+.quote-new-request{border:0;background:transparent;color:#6e7077;text-decoration:underline;font:inherit;font-size:11px;cursor:pointer;padding:4px 0}
+@media(max-width:560px){.quote-receipt-actions{grid-template-columns:1fr}.quote-reference strong{font-size:25px}}
