@@ -60,7 +60,7 @@ export async function getServices() {
     featured: boolean;
     service_categories: { name: string } | null;
   }>(
-    "services?select=slug,name,short_description,description,hero_url,gallery,badge,specifications,highlights,faq,featured,service_categories(name)&is_published=eq.true&order=sort_order.asc"
+    "services?select=slug,name,short_description,description,hero_url,gallery,badge,specifications,highlights,faq,featured,service_categories(name)&is_published=eq.true&verification_status=eq.approved&order=sort_order.asc"
   );
 
   if (!rows?.length) return fallbackServices;
