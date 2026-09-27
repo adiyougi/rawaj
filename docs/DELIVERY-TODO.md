@@ -6,7 +6,7 @@ Only business decisions and production-environment inputs remain here. Engineeri
 
 - Confirm fulfillment mode for each Master Catalog service: in-house, local partner, international supplier, or flexible.
 - Commercially approve the verified Master Catalog services that Rawaj actually wants to sell. Verified records remain unpublished until approval.
-- The production catalog currently contains 76 technically verified production-service records. The two creative templates (visual identity and social content) remain legacy review items rather than being falsely marked as technically verified production services.
+- The Master Catalog service count is enforced by CI rather than maintained as a hard-coded TODO number. All catalog templates currently require dedicated RFQ specifications and reviewed rich content; new services remain commercially unpublished until Rawaj approves fulfillment and sale.
 - Confirm package composition and commercial naming. Packages remain RFQ-only.
 - Provide approved portfolio media and factual project information before publishing case studies as real completed work.
 
@@ -20,4 +20,4 @@ Only business decisions and production-environment inputs remain here. Engineeri
 - Legacy service records are not published.
 - Public service reads require approved verification status.
 - No service prices are stored in the active catalog.
-- Master Catalog templates are validated in CI for RFQ specifications and rich content coverage.
+- Master Catalog templates are validated in CI for RFQ specifications and rich content coverage.\n- Paper cups and Hardcover / Case-bound books now have documented technical provenance and dedicated RFQ models; commercial publication still requires an approved fulfillment route.
