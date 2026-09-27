@@ -5,7 +5,7 @@ Business decisions only. Development continues without waiting for these items.
 - Confirm fulfillment mode for each service: in-house, local partner, international supplier, or flexible.
 - Provide approved company contact, address, and legal copy if current content is placeholder.
 - Provide approved portfolio media and project facts before publishing case studies as real work.
-- Select which researched Master Catalog services receive final commercial approval. Verified services remain unpublished until approved.
+- Select which researched Master Catalog services receive final commercial approval. Verified services remain unpublished until approved.\n- Review the 16 legacy services currently marked published in the database. The storefront now excludes them because they are not approved Master Catalog records; do not re-expose them without review.
 - Confirm package composition and commercial naming. Packages remain quote-only.
 - Configure the server-only Supabase credential in the production environment. Never commit server secrets.
 
