@@ -1,3 +1,4 @@
+import { creativeContent } from "@/lib/service-content-creative";
 import { specialtyContent } from "@/lib/service-content-specialty";
 import { exhibitionContent } from "@/lib/service-content-exhibitions";
 export type ServiceRichContent={
@@ -648,5 +649,6 @@ export const serviceContent:Record<string,ServiceRichContent>={
   ...largeSignage,
   ...reflectiveSafety,
   ...exhibitionContent,
-  ...specialtyContent
+  ...specialtyContent,
+  ...creativeContent
 };
