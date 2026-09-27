@@ -64,6 +64,7 @@ export default function ServiceManager(){
   const [open,setOpen]=useState(false);
   const [loading,setLoading]=useState(true);
   const [saving,setSaving]=useState(false);
+  const [syncingCatalog,setSyncingCatalog]=useState(false);
   const [uploading,setUploading]=useState(false);
   const [message,setMessage]=useState("");
   const [search,setSearch]=useState("");
@@ -159,6 +160,99 @@ export default function ServiceManager(){
       highlights:current.highlights.length ? current.highlights : (rich?.highlights ? [...rich.highlights] : []),
       faq:current.faq.length ? current.faq : (rich?.faq ? rich.faq.map(item=>({...item})) : [])
     }));
+  }
+
+  async function syncMissingTemplates(){
+    if(syncingCatalog) return;
+    const verifiedTemplates=serviceTemplates.filter(template=>template.verification==="verified");
+    const existingKeys=new Set(rows.map(row=>String(row.template_key || "")).filter(Boolean));
+    const existingSlugs=new Set(rows.map(row=>String(row.slug || "")).filter(Boolean));
+    const missing=verifiedTemplates.filter(template=>!existingKeys.has(template.key));
+
+    if(!missing.length){
+      setMessage("Master Catalog متزامن بالكامل؛ لا توجد قوالب موثقة ناقصة.");
+      return;
+    }
+
+    setSyncingCatalog(true);
+    setMessage("");
+    try{
+      const now=new Date().toISOString();
+      const maxOrder=rows.reduce((max,row)=>Math.max(max,Number(row.sort_order)||0),0);
+      const unresolved:string[]=[];
+      const payloads:Record<string,any>[]=[];
+
+      for(const template of missing){
+        const department=departments.find(item=>item.slug===template.departmentSlug);
+        const category=categories.find(item=>item.slug===template.categorySlug);
+        const rich=serviceContent[template.key];
+        const slug="master-"+template.key;
+
+        if(!department || !category || !rich || !template.specs.length || !template.provenanceDoc || existingSlugs.has(slug)){
+          unresolved.push(template.label);
+          continue;
+        }
+
+        const cleanSpecs=cloneSpecs(template.specs).map((spec,index)=>({
+          key:spec.key || "spec-"+index,
+          label:spec.label.trim(),
+          type:spec.type,
+          placeholder:spec.placeholder?.trim() || undefined,
+          unit:spec.unit?.trim() || undefined,
+          group:spec.group?.trim() || "مواصفات الطلب",
+          helpText:spec.helpText?.trim() || undefined,
+          required:Boolean(spec.required),
+          options:spec.type==="select" ? (spec.options || []).map(x=>x.trim()).filter(Boolean):undefined
+        }));
+
+        payloads.push({
+          slug,
+          name:template.label,
+          department_id:department.id,
+          category_id:category.id,
+          short_description:template.description,
+          description:rich.description,
+          hero_url:null,
+          gallery:[],
+          badge:template.suggestedBadge || null,
+          starting_price:null,
+          price_label:null,
+          specifications:cleanSpecs,
+          highlights:[...rich.highlights],
+          faq:rich.faq.map(item=>({...item})),
+          featured:false,
+          sort_order:maxOrder+payloads.length+1,
+          is_published:false,
+          seo_title:template.label,
+          seo_description:template.description,
+          template_key:template.key,
+          review_status:"verified",
+          verification_status:"verified",
+          fulfillment_mode:"flexible",
+          source_refs:[template.provenanceDoc],
+          internal_notes:"تم إنشاء المسودة تلقائيًا من Rawaj Master Catalog. راجع الصورة والنطاق التجاري قبل الاعتماد والنشر.",
+          verification_notes:"موثّق في "+template.provenanceDoc,
+          verified_at:now,
+          approved_at:null
+        });
+      }
+
+      if(payloads.length){
+        const {error}=await getSupabaseBrowser().from("services").insert(payloads);
+        if(error) throw error;
+      }
+
+      await loadAll();
+      const parts=[
+        payloads.length ? "أضيفت "+payloads.length+" خدمة كمسودات موثقة." : "",
+        unresolved.length ? "تحتاج مراجعة ربط: "+unresolved.join("، ")+".":""
+      ].filter(Boolean);
+      setMessage(parts.join(" "));
+    }catch(error:any){
+      setMessage(error?.message || "تعذرت مزامنة Master Catalog.");
+    }finally{
+      setSyncingCatalog(false);
+    }
   }
 
   async function uploadFile(file:File,folder="services"){
@@ -352,7 +446,12 @@ export default function ServiceManager(){
           <h1>كتالوج الخدمات</h1>
           <p>كل خدمة تُدار كنموذج طلب عرض سعر مستقل بخاماتها ومواصفاتها وتشطيباتها الصحيحة.</p>
         </div>
-        <button className="admin-primary" onClick={openNew}>+ إضافة خدمة</button>
+        <div className="catalog-head-actions">
+          <button className="admin-secondary catalog-sync-button" onClick={()=>void syncMissingTemplates()} disabled={syncingCatalog}>
+            {syncingCatalog ? "جارٍ مزامنة الكتالوج…" : "↻ مزامنة القوالب الناقصة"}
+          </button>
+          <button className="admin-primary" onClick={openNew}>+ إضافة خدمة</button>
+        </div>
       </div>
 
       {message && <div className="admin-message">{message}</div>}
