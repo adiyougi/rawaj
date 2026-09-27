@@ -62,7 +62,7 @@ export const printTaxonomy:PrintTaxonomyFamily[]=[
       {key:"channel-letters",label:"الحروف المضيئة",templates:["letters"],status:"verified"},
       {key:"dimensional",label:"الحروف البارزة",templates:["dimensional-letters"],status:"verified"},
       {key:"rigid-signs",label:"اللوحات الصلبة",templates:["acrylic-sign"],status:"verified"},
-      {key:"reflective-safety",label:"اللوحات العاكسة والسلامة",templates:["reflective-sign"],status:"verified"},
+      {key:"reflective-safety",label:"اللوحات العاكسة والسلامة",templates:["reflective-sign","traffic-regulatory-sign","traffic-warning-sign","traffic-guide-sign","parking-reflective-sign","work-zone-reflective-sign","street-name-reflective-sign","facility-safety-reflective-sign"],status:"verified"},
       {key:"facades",label:"واجهات ACP",templates:["facade"],status:"verified"}
     ]
   },
