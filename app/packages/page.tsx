@@ -4,6 +4,9 @@ import SiteFooter from "@/components/SiteFooter";
 import InnerHero from "@/components/InnerHero";
 import { IMAGES } from "@/lib/content";
 import { getPackages } from "@/lib/cms";
+import type { Metadata } from "next";
+
+export const metadata:Metadata={title:"الباقات",description:"باقات رواج تجمع خدمات الطباعة والإعلان والتجهيز في طلب عرض سعر واحد قابل للتخصيص.",alternates:{canonical:"/packages"}};
 
 export default async function PackagesPage() {
   const packages = await getPackages();
