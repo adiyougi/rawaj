@@ -54,15 +54,13 @@ export async function getServices() {
     hero_url: string | null;
     gallery: string[];
     badge: string | null;
-    starting_price: number | null;
-    price_label: string | null;
     specifications: any[];
     highlights: any[];
     faq: any[];
     featured: boolean;
     service_categories: { name: string } | null;
   }>(
-    "services?select=slug,name,short_description,description,hero_url,gallery,badge,starting_price,price_label,specifications,highlights,faq,featured,service_categories(name)&is_published=eq.true&order=sort_order.asc"
+    "services?select=slug,name,short_description,description,hero_url,gallery,badge,specifications,highlights,faq,featured,service_categories(name)&is_published=eq.true&order=sort_order.asc"
   );
 
   if (!rows?.length) return fallbackServices;
@@ -76,8 +74,6 @@ export async function getServices() {
     badge: row.badge || "رواج",
     description: row.description || "",
     gallery: Array.isArray(row.gallery) ? row.gallery : [],
-    startingPrice: row.starting_price,
-    priceLabel: row.price_label || "",
     specifications: Array.isArray(row.specifications) ? row.specifications : [],
     highlights: Array.isArray(row.highlights) ? row.highlights : [],
     faq: Array.isArray(row.faq) ? row.faq : [],
