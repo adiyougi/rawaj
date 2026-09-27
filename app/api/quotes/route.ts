@@ -17,7 +17,7 @@ export async function POST(request:Request){
   const name=clean(body.customer_name,120),phone=clean(body.phone,40),notes=clean(body.notes,3000);
   const rawItems=Array.isArray(body.items)?body.items.slice(0,30):[];
   if(!rawItems.length) return NextResponse.json({error:"اختر خدمة أو أضف خدمة إلى السلة"},{status:400});
-  const items=rawItems.map((x:Item)=>({title:clean(x.title,180),quantity:Math.min(9999,Math.max(1,Number(x.quantity)||1)),specifications:typeof x.specifications==="object"&&x.specifications?JSON.parse(JSON.stringify(x.specifications).slice(0,6000)):{}})).filter((x:{title:string})=>x.title);
+  const items=rawItems.map((x:Item)=>({title:clean(x.title,180),quantity:Math.min(9999,Math.max(1,Number(x.quantity)||1)),specifications:typeof x.specifications==="object"&&x.specifications?x.specifications:{}})).filter((x:{title:string})=>x.title);
   if(name.length<2||phone.length<5) return NextResponse.json({error:"أدخل الاسم ورقم التواصل بشكل صحيح"},{status:400});
   const headers={apikey:SERVER_KEY,Authorization:"Bearer "+SERVER_KEY,"Content-Type":"application/json",Prefer:"return=representation"};
   const created=await fetch(SUPABASE_URL+"/rest/v1/quote_requests",{method:"POST",headers,body:JSON.stringify({customer_name:name,phone,notes:notes||null,source:"website",status:"new"}),cache:"no-store"});
