@@ -168,7 +168,7 @@ export const adminSections: Record<string, AdminSection> = {
 export const adminNav = [
   ["الرئيسية","/admin"],["السلايدر","/admin/hero"],["الشريط المتحرك","/admin/ticker"],
   ["الأقسام","/admin/departments"],["التصنيفات","/admin/categories"],["الخدمات","/admin/services"],
-  ["الباقات","/admin/packages"],["محتوى الباقات","/admin/package-services"],["الأعمال","/admin/portfolio"],
+  ["الباقات","/admin/packages"],["الأعمال","/admin/portfolio"],
   ["المميزات","/admin/features"],["العملاء","/admin/clients"],["الشهادات","/admin/testimonials"],
   ["المدونة","/admin/blog"],["الوسائط","/admin/media"],["طلبات السعر","/admin/quotes"],["المستخدمون","/admin/users"],["الإعدادات","/admin/settings"]
 ] as const;

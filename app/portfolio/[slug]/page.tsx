@@ -14,6 +14,7 @@ export default async function PortfolioDetail({ params }: { params: Promise<{ sl
   if (!project) notFound();
 
   const related = portfolio.filter((item) => item.slug !== project.slug).slice(0, 3);
+  const videoIsFile=/\.(mp4|webm)(\?.*)?$/i.test(project.videoUrl);
 
   return (
     <main>
@@ -23,25 +24,37 @@ export default async function PortfolioDetail({ params }: { params: Promise<{ sl
           <span className="eyebrow">{project.category}</span>
           <h1>{project.title}</h1>
           <p>{project.summary}</p>
-          <div className="case-meta"><span>{project.date}</span><span>{project.category}</span></div>
+          <div className="case-meta">{project.date&&<span>{project.date}</span>}{project.clientName&&<span>{project.clientName}</span>}<span>{project.category}</span></div>
         </div>
       </section>
 
       <section className="section shell case-study">
         <div>
           <span className="eyebrow">عن العمل</span>
-          <h2>التفاصيل التي تصنع الفرق.</h2>
-          <p>{project.summary}</p>
-          <p>ستستوعب هذه الصفحة الصور والفيديو، قبل/بعد، وصف التنفيذ، الخامات، ومراحل العمل فور إدخال مواد المشروع الحقيقية في معرض رواج.</p>
+          <h2>{project.description?"تفاصيل المشروع.":"عمل من معرض رواج."}</h2>
+          {project.description&&<div className="case-description">{project.description.split(/\n+/).filter(Boolean).map((paragraph,index)=><p key={index}>{paragraph}</p>)}</div>}
+          {!project.description&&project.summary&&<p>{project.summary}</p>}
         </div>
         <div className="case-services">
           <span>الخدمات المرتبطة</span>
-          {project.services.map((service) => <strong key={service}>{service}</strong>)}
+          {project.services.length?project.services.map((service) => <strong key={service}>{service}</strong>):<small>لم تُحدد الخدمات المرتبطة بهذا العمل بعد.</small>}
           <Link className="btn btn-primary" href="/quote">ابدأ مشروعًا مشابهًا</Link>
         </div>
       </section>
 
-      <section className="section related-services">
+      {!!project.gallery.length&&<section className="section case-gallery-section">
+        <div className="shell">
+          <div className="section-heading"><span className="eyebrow">صور المشروع</span><h2>تفاصيل من التنفيذ.</h2></div>
+          <div className="case-gallery">{project.gallery.map((image,index)=><figure key={image+"-"+index}><img src={image} alt={project.title+" — صورة "+(index+1)} loading="lazy"/></figure>)}</div>
+        </div>
+      </section>}
+
+      {project.videoUrl&&<section className="section shell case-video-section">
+        <div><span className="eyebrow">فيديو المشروع</span><h2>شاهد العمل.</h2></div>
+        {videoIsFile?<video controls preload="metadata" src={project.videoUrl}/>:<a className="btn btn-primary" href={project.videoUrl} target="_blank" rel="noreferrer">فتح فيديو المشروع ↗</a>}
+      </section>}
+
+      {!!related.length&&<section className="section related-services">
         <div className="shell">
           <div className="section-heading split-heading">
             <div><span className="eyebrow">أعمال أخرى</span><h2>استكشف المزيد.</h2></div>
@@ -60,7 +73,7 @@ export default async function PortfolioDetail({ params }: { params: Promise<{ sl
             ))}
           </div>
         </div>
-      </section>
+      </section>}
       <SiteFooter />
     </main>
   );
