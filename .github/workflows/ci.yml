@@ -23,12 +23,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Capture dependency lock
-        uses: actions/upload-artifact@v7
-        with:
-          path: package-lock.json
-          archive: false
-          retention-days: 1
 
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
