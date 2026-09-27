@@ -68,6 +68,7 @@ export default function AdminCollection({ config }: { config: AdminSection }) {
       const value = row[field.name];
       if (field.type === "json") next[field.name] = JSON.stringify(value ?? [],null,2);
       else if (field.type === "csv") next[field.name] = Array.isArray(value) ? value.join(", ") : "";
+      else if (field.type === "lines") next[field.name] = Array.isArray(value) ? value.join("\n") : "";
       else if (field.type === "datetime" && value) next[field.name] = String(value).slice(0,16);
       else next[field.name] = value ?? "";
     });
@@ -85,6 +86,7 @@ export default function AdminCollection({ config }: { config: AdminSection }) {
       return JSON.parse(value);
     }
     if (field.type === "csv") return String(value || "").split(",").map(v=>v.trim()).filter(Boolean);
+    if (field.type === "lines") return String(value || "").split(/\n+/).map(v=>v.trim()).filter(Boolean);
     if (field.relation && value === "") return null;
     if ((field.type === "date" || field.type === "datetime") && value === "") return null;
     return value === "" ? null : value;
@@ -196,7 +198,7 @@ export default function AdminCollection({ config }: { config: AdminSection }) {
 
             <div className="admin-form-grid">
               {config.fields.map(field => (
-                <label key={field.name} className={field.type === "textarea" || field.type === "json" ? "wide" : ""}>
+                <label key={field.name} className={field.type === "textarea" || field.type === "json" || field.type === "lines" ? "wide" : ""}>
                   <span>{field.label}{field.required ? " *" : ""}</span>
                   {field.type === "boolean" ? (
                     <input type="checkbox" checked={Boolean(form[field.name])} onChange={e => setForm({...form,[field.name]:e.target.checked})} />
@@ -207,8 +209,8 @@ export default function AdminCollection({ config }: { config: AdminSection }) {
                         <option key={option[field.relation!.value]} value={option[field.relation!.value]}>{option[field.relation!.label]}</option>
                       ))}
                     </select>
-                  ) : field.type === "textarea" || field.type === "json" ? (
-                    <textarea rows={field.type === "json" ? 8 : 5} value={form[field.name] ?? ""} onChange={e=>setForm({...form,[field.name]:e.target.value})} placeholder={field.placeholder} />
+                  ) : field.type === "textarea" || field.type === "json" || field.type === "lines" ? (
+                    <textarea rows={field.type === "json" || field.type === "lines" ? 8 : 5} value={form[field.name] ?? ""} onChange={e=>setForm({...form,[field.name]:e.target.value})} placeholder={field.placeholder} />
                   ) : field.name === "media_type" ? (
                     <select value={form[field.name] ?? "image"} onChange={e=>setForm({...form,[field.name]:e.target.value})}>
                       <option value="image">صورة</option><option value="video">فيديو</option>
