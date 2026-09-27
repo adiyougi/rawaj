@@ -6,6 +6,7 @@ export type CatalogRoute = {
 
 const paper="docs/print-catalog/paper-printing-sources.md";
 const paperExpanded="docs/print-catalog/paper-products-expansion-sources.md";
+const hardcover="docs/print-catalog/hardcover-book-sources.md";
 const packaging="docs/print-catalog/labels-packaging-sources.md";
 const flexiblePackaging="docs/print-catalog/flexible-packaging-bags-sources.md";
 const paperCups="docs/print-catalog/paper-cups-research.md";
@@ -36,6 +37,7 @@ export const catalogRouting:Record<string,CatalogRoute>={
   catalogs:{departmentSlug:"paper-printing",categorySlug:"paper-publications",provenanceDoc:paper},
   "booklet-saddle":{departmentSlug:"paper-printing",categorySlug:"paper-publications",provenanceDoc:paper},
   "book-perfect":{departmentSlug:"paper-printing",categorySlug:"paper-publications",provenanceDoc:paper},
+  "book-hardcover":{departmentSlug:"paper-printing",categorySlug:"paper-publications",provenanceDoc:hardcover},
   "book-wire-o":{departmentSlug:"paper-printing",categorySlug:"paper-publications",provenanceDoc:paper},
   "book-spiral":{departmentSlug:"paper-printing",categorySlug:"paper-publications",provenanceDoc:paper},
   notebooks:{departmentSlug:"paper-printing",categorySlug:"paper-publications",provenanceDoc:paperExpanded},
