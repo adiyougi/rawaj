@@ -3,7 +3,7 @@
 import { FormEvent,useEffect,useState } from "react";
 import { useCart } from "@/components/CartProvider";
 import { CONTACT } from "@/lib/content";
-import { getSupabaseBrowser } from "@/lib/supabase-browser";
+
 
 type Option={id:string;title:string};
 export default function QuoteForm({services,packages}:{services:Option[];packages:Option[]}){
@@ -12,12 +12,12 @@ export default function QuoteForm({services,packages}:{services:Option[];package
  useEffect(()=>{const p=new URLSearchParams(location.search);setService(p.get("service")||"");setPackageId(p.get("package")||"");},[]);
  async function submit(e:FormEvent){e.preventDefault();setSending(true);setMessage("");
   try{
-   const supabase=getSupabaseBrowser();
-   const {data:req,error}=await supabase.from("quote_requests").insert({customer_name:name.trim(),phone:phone.trim(),notes:details.trim()||null,source:"website",status:"new"}).select("id").single();
-   if(error) throw error;
    const chosen=service?services.find(x=>x.id===service):packageId?packages.find(x=>x.id===packageId):null;
-   const payload=items.length?items.map(x=>({quote_request_id:req.id,title:x.title,quantity:x.qty,specifications:x.specs?{summary:x.specs}:{}})):chosen?[{quote_request_id:req.id,title:chosen.title,quantity:1,specifications:{}}]:[];
-   if(payload.length){const {error:itemError}=await supabase.from("quote_request_items").insert(payload);if(itemError) throw itemError;}
+   const payload=items.length?items.map(x=>({title:x.title,quantity:x.qty,specifications:x.specs?{summary:x.specs}:{}})):chosen?[{title:chosen.title,quantity:1,specifications:{}}]:[];
+   const response=await fetch("/api/quotes",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({customer_name:name.trim(),phone:phone.trim(),notes:details.trim()||null,items:payload})});
+   const result=await response.json();
+   if(!response.ok) throw new Error(result?.error||"تعذر حفظ الطلب");
+   const req={id:String(result.id)};
    const lines=payload.map((x,i)=>`${i+1}. ${x.title} × ${x.quantity}`).join("\n");
    const wa="طلب عرض سعر جديد من منصة رواج\nرقم الطلب: "+req.id+"\nالاسم: "+name+"\nرقم التواصل: "+phone+(lines?"\n\n"+lines:"")+(details?"\n\nالتفاصيل: "+details:"");
    clear();setMessage("تم حفظ طلبك بنجاح. رقم الطلب: "+req.id);window.open("https://wa.me/"+CONTACT.whatsapp+"?text="+encodeURIComponent(wa),"_blank","noopener,noreferrer");
