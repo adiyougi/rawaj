@@ -20,9 +20,9 @@ export default function AddToCartButton({id,title,compact=false}:{id:string;titl
       </div>
 
       {open && (
-        <div className="modal-backdrop" onClick={()=>setOpen(false)}>
-          <div className="spec-modal" onClick={e=>e.stopPropagation()}>
-            <div className="spec-modal-head"><div><small>مواصفات اختيارية</small><h2>{title}</h2></div><button onClick={()=>setOpen(false)}>×</button></div>
+        <div className="modal-backdrop" role="presentation" onClick={()=>setOpen(false)}>
+          <div className="spec-modal" role="dialog" aria-modal="true" aria-label={"مواصفات "+title} onClick={e=>e.stopPropagation()}>
+            <div className="spec-modal-head"><div><small>مواصفات اختيارية</small><h2>{title}</h2></div><button onClick={()=>setOpen(false)} aria-label="إغلاق نافذة المواصفات">×</button></div>
             <p>اكتب فقط ما تعرفه الآن، ويمكن استكمال بقية التفاصيل مع فريق رواج.</p>
             <textarea value={specs} onChange={e=>setSpecs(e.target.value)} placeholder="المقاس، الكمية، الخامة، التشطيب، الموعد..."/>
             <button className="btn btn-primary full" onClick={()=>{addItem({id,title,specs:specs.trim()||undefined});setSpecs("");setOpen(false);}}>حفظ وإضافة للطلب</button>
