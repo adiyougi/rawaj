@@ -6,7 +6,7 @@ import { getSupabaseBrowser } from "@/lib/supabase-browser";
 
 type Row = Record<string, any>;
 
-function autoSlug(value:string){return value.trim().toLowerCase().replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي").replace(/[^a-z0-9\u0600-\u06ff]+/g,"-").replace(/^-+|-+$/g,"");}\n\nfunction fieldInitial(field: AdminField) {
+function autoSlug(value:string){const normalized=value.trim().toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");return normalized || "item";}\n\nfunction fieldInitial(field: AdminField) {
   if (field.type === "boolean") return true;
   if (field.type === "json") return "[]";
   return "";
