@@ -1,12 +1,23 @@
 # Rawaj delivery TODO
 
-Business decisions only. Development continues without waiting for these items.
+Only business decisions and production-environment inputs remain here. Engineering should not wait for them.
 
-- Confirm fulfillment mode for each service: in-house, local partner, international supplier, or flexible.
-- Provide approved company contact, address, and legal copy if current content is placeholder.
-- Provide approved portfolio media and project facts before publishing case studies as real work.
-- Select which researched Master Catalog services receive final commercial approval. Verified services remain unpublished until approved.\n- Review the 16 legacy services currently marked published in the database. The storefront now excludes them because they are not approved Master Catalog records; do not re-expose them without review.
-- Confirm package composition and commercial naming. Packages remain quote-only.
-- Configure the server-only Supabase credential in the production environment. Never commit server secrets.
+## Business approval
 
-Engineering, catalog research, RFQ forms, storefront, admin, security, accessibility, SEO, media management, and unpublished catalog preparation are not blocked by these decisions.
+- Confirm fulfillment mode for each Master Catalog service: in-house, local partner, international supplier, or flexible.
+- Commercially approve the verified Master Catalog services that Rawaj actually wants to sell. Verified records remain unpublished until approval.
+- The production catalog currently contains 76 technically verified production-service records. The two creative templates (visual identity and social content) remain legacy review items rather than being falsely marked as technically verified production services.
+- Confirm package composition and commercial naming. Packages remain RFQ-only.
+- Provide approved portfolio media and factual project information before publishing case studies as real completed work.
+
+## Production configuration
+
+- Confirm the public company contact/address/legal copy before launch.
+- Configure the server-only Supabase elevated credential in the production environment for the RFQ server endpoint. Never commit it to the repository.
+
+## Completed safeguards
+
+- Legacy service records are not published.
+- Public service reads require approved verification status.
+- No service prices are stored in the active catalog.
+- Master Catalog templates are validated in CI for RFQ specifications and rich content coverage.
