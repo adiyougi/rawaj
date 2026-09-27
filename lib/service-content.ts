@@ -280,6 +280,22 @@ const paper:Record<string,ServiceRichContent>={
       specsFaq,quoteFaq("كتب Perfect Bound")
     ]
   },
+  "book-hardcover":{
+    description:"كتب Hardcover / Case-bound بغلاف صلب مستقل عن الـBook Block، مع خيارات Printed Case Wrap أو Dust Jacket أو Cloth/PU وتجليد مخيط وEndsheets وفق نظام جهة الإنتاج. هذه خدمة مختلفة بنيويًا عن Perfect Bound ولا تُختزل في زيادة سماكة الغلاف.",
+    highlights:[
+      "Case Wrap يستخدم ألواح غلاف صلبة يلتف حولها غلاف مطبوع ومصفح، بينما Cloth/PU مسار غلاف مختلف.",
+      "Sewn signatures / Smyth sewing خيار موثق لبناء Book Block متين قبل عملية casing-in.",
+      "Endsheets عنصر بنيوي يربط كتلة الصفحات بالـCase وتُراجع خامته وبنيته مع المورد.",
+      "Foil وEmboss/Deboss وSpot UV وDust Jacket وRibbon وHead/Tail Bands خيارات تُعرض فقط عندما يدعمها المورد المحدد.",
+      "عرض الكعب والمقاسات الإنشائية النهائية تُحسب من الورق وعدد الصفحات ونظام التجليد الفعلي ولا تُخمن في الواجهة."
+    ],
+    faq:[
+      {question:"هل Hardcover هو Perfect Bound بغلاف أكثر سماكة؟",answer:"لا. Case binding يبني غلافًا صلبًا مستقلًا ثم يربط به Book Block عبر نظام casing-in وEndsheets، بينما Perfect Bound مسار تجليد مختلف."},
+      {question:"ما الفرق بين Printed Case وDust Jacket؟",answer:"Printed Case يحمل الغلاف المطبوع مباشرة على الـCase، أما Dust Jacket فهو غلاف ورقي مطبوع قابل للإزالة يلتف حول الكتاب ويمكن أن يتضمن Flaps."},
+      {question:"هل يمكن إضافة فويل أو قماش أو Ribbon؟",answer:"نعم عندما يدعم نظام المورد ذلك؛ تُثبت هذه الخيارات بعد اختيار بنية الغلاف وجهة الإنتاج."},
+      specsFaq,quoteFaq("كتب Hardcover")
+    ]
+  },
   "book-wire-o":{
     description:"منشورات ودفاتر بتجليد Wire-O مزدوج السلك، مناسب للمواد التي تحتاج فتحًا عمليًا وتقليبًا متكررًا مثل الكتيبات التدريبية والتقاويم والأدلة والدفاتر. يحدد موضع السلك حسب اتجاه المنتج.",
     highlights:[
