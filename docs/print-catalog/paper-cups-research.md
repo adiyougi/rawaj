@@ -30,3 +30,20 @@ Verified:
 6. Require supplier documentation for the exact cupstock/coating used in the destination market.
 7. Keep barrier chemistry, board grade and forming parameters under technical/supplier review.
 8. Service remains RFQ-only and unpublished until the template and local supply route are approved.
+
+
+## Huhtamaki — Beverage-to-go paper cups
+Source: https://www.huhtamaki.com/en/foodservice/categories/beverage-to-go/
+Source: https://www.huhtamaki.com/en/foodservice/products/paper-hot-cups-and-lids/
+Source: https://www.huhtamaki.com/en/highlights/sustainability/how-paper-cups-are-made/
+
+Verified:
+- Commercial paper beverage cups exist in single-wall, double-wall and other insulated/multi-wall constructions.
+- Hot and cold beverage cups are separate use cases even when both use paperboard cup systems.
+- Corresponding lids are supplier/system components and must match the actual cup format/rim.
+- Paperboard walls require a functional liquid barrier/lining; exact barrier construction is product-specific.
+- Double-wall construction is an insulation choice for hot-drink handling, not a decorative finish.
+
+## Activation decision
+
+The generic Rawaj service template `paper-cup` may be added as a verified RFQ model because the customer-facing requirements are now supported by multiple manufacturer sources. Commercial publication remains Draft by default until Rawaj confirms an actual supply route and supplier documentation for the requested market/application.

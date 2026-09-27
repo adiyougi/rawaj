@@ -37,6 +37,7 @@ export const printTaxonomy:PrintTaxonomyFamily[]=[
       {key:"folding-cartons",label:"العلب الورقية",templates:["folding-carton"],status:"verified"},
       {key:"corrugated",label:"التغليف المموج",templates:["corrugated-box"],status:"verified"},
       {key:"paper-bags",label:"الأكياس الورقية",templates:["paper-shopping-bag"],status:"verified"},
+      {key:"foodservice",label:"تغليف Foodservice",templates:["paper-cup"],status:"verified"},
       {key:"industrial-sacks",label:"الأكياس الصناعية",templates:["industrial-paper-sack"],status:"verified"},
       {key:"flexible-packaging",label:"التغليف المرن",templates:["premade-flexible-pouch","flexible-rollstock"],status:"verified"}
     ]

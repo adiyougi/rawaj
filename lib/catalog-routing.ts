@@ -8,6 +8,7 @@ const paper="docs/print-catalog/paper-printing-sources.md";
 const paperExpanded="docs/print-catalog/paper-products-expansion-sources.md";
 const packaging="docs/print-catalog/labels-packaging-sources.md";
 const flexiblePackaging="docs/print-catalog/flexible-packaging-bags-sources.md";
+const paperCups="docs/print-catalog/paper-cups-research.md";
 const large="docs/print-catalog/large-format-signage-sources.md";
 const specialty="docs/print-catalog/textile-specialty-sources.md";
 const reflective="docs/print-catalog/large-format-signage-sources.md";
@@ -43,6 +44,7 @@ export const catalogRouting:Record<string,CatalogRoute>={
   "folding-carton":{departmentSlug:"packaging-labels",categorySlug:"packaging-folding-cartons",provenanceDoc:packaging},
   "corrugated-box":{departmentSlug:"packaging-labels",categorySlug:"packaging-corrugated",provenanceDoc:packaging},
   "paper-shopping-bag":{departmentSlug:"packaging-labels",categorySlug:"packaging-main",provenanceDoc:flexiblePackaging},
+  "paper-cup":{departmentSlug:"packaging-labels",categorySlug:"packaging-main",provenanceDoc:paperCups},
   "industrial-paper-sack":{departmentSlug:"packaging-labels",categorySlug:"packaging-main",provenanceDoc:flexiblePackaging},
   "premade-flexible-pouch":{departmentSlug:"packaging-labels",categorySlug:"packaging-main",provenanceDoc:flexiblePackaging},
   "flexible-rollstock":{departmentSlug:"packaging-labels",categorySlug:"packaging-main",provenanceDoc:flexiblePackaging},

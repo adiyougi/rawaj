@@ -470,6 +470,20 @@ export const serviceSpecifications: Record<string, ServiceSpec[]> = {
     quoteQty("كيس")
   ],
 
+  "paper-cup": [
+    { key: "use", label: "استخدام الكوب", type: "select", options: ["مشروبات ساخنة", "مشروبات باردة", "استخدام ساخن وبارد ضمن نظام مورد معتمد", "آيس كريم/طعام — يراجع كمنتج Foodservice منفصل", "استخدام آخر — مراجعة فنية"], group: "الاستخدام" },
+    { key: "capacity", label: "السعة", type: "select", options: ["4 oz", "6 oz", "8 oz", "10 oz", "12 oz", "16 oz", "20 oz", "22 oz", "مقاس/سعة مخصصة حسب المورد"], group: "المقاس", helpText: "المقاسات الفعلية وقطر الفوهة تختلف بين أنظمة الموردين؛ السعة وحدها لا تكفي لمطابقة الغطاء." },
+    { key: "wall", label: "بنية الكوب", type: "select", options: ["Single Wall", "Double Wall / Insulated", "Multi-wall / نظام عازل خاص حسب المورد", "أحتاج توصية رواج"], group: "البنية", helpText: "الأكواب الساخنة قد تستخدم Single Wall أو أنظمة Multi/Double Wall للعزل حسب متطلبات الاستخدام والمورد." },
+    { key: "rim_diameter", label: "قطر فوهة الكوب", type: "number", placeholder: "إن كان محددًا لمطابقة الغطاء", unit: "مم", group: "المقاس" },
+    { key: "board_system", label: "خامة الكوب/نظام الحاجز", type: "select", options: ["Cupstock مخصص للأكواب + Barrier مناسب", "PE-coated cup board — حسب مورد معتمد", "Dispersion barrier cup board — حسب مورد معتمد", "Bio/renewable coating — فقط عند توثيق المورد", "أحتاج توصية رواج"], group: "الخامة", helpText: "لا يُعامل أي ورق عادي كخامة كوب. يلزم Cupstock ونظام حاجز قابل للتشكيل واللحام ومناسب للاستخدام المحدد." },
+    { key: "printing", label: "الطباعة الخارجية", type: "select", options: ["طباعة شعار/هوية", "Full-color artwork", "ألوان محدودة", "تحدد تقنية الطباعة حسب الكمية والمورد"], group: "الطباعة" },
+    { key: "lid", label: "الغطاء", type: "select", options: ["بدون غطاء", "غطاء مشروب ساخن", "غطاء مشروب بارد", "غطاء مخصص — يجب مطابقته لقطر/نظام الكوب"], group: "الملحقات", helpText: "يتم تثبيت الغطاء فقط بعد مطابقة قطر الفوهة ونظام المورد؛ لا تعتمد المطابقة على السعة الاسمية وحدها." },
+    { key: "sleeve", label: "Sleeve / غلاف حراري إضافي", type: "select", options: ["غير مطلوب", "مطلوب للكوب الساخن", "يحدد حسب بنية الكوب ودرجة العزل"], group: "الملحقات" },
+    { key: "food_contact", label: "توثيق ملامسة الغذاء", type: "select", options: ["مطلوب — مستندات المورد للخامة النهائية", "لدي مواصفة/اشتراط محدد وسأرفقه", "غير متأكد — تتولى رواج المراجعة"], group: "الامتثال", helpText: "لا تُنسب صلاحية ملامسة الغذاء أو قابلية التدوير/التحلل لأي كوب عام؛ يجب مراجعة الخامة والطلاء والمورد الفعلي." },
+    { key: "artwork", label: "حالة التصميم", type: "select", options: ["ملف جاهز على Dieline المورد", "لدي تصميم يحتاج تكييفًا على القالب", "أحتاج تصميم رواج"], group: "التصميم" },
+    quoteQty("كوب")
+  ],
+
   "industrial-paper-sack": [
     { key: "product", label: "المادة المعبأة", type: "select", options: ["مواد بناء/مساحيق", "حبيبات/Pellets", "أغذية أو مكونات غذائية — مراجعة امتثال", "أعلاف/بذور", "مواد كيميائية — مراجعة فنية", "منتج آخر"], group: "المنتج" },
     { key: "bag_style", label: "نمط الكيس", type: "select", options: ["Open Mouth Bag", "Pasted Valve Bag", "Pinch Bottom Bag", "SOS / Self-Opening Sack", "Window Bag", "يحدد حسب ماكينة التعبئة"], group: "البنية" },
