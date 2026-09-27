@@ -120,3 +120,32 @@ Verified:
 6. Channel-letter LED/electrical design is finalized by technical engineering.
 7. ACP structural and routing/folding details are finalized after site/design review.
 8. All services remain quote-only.
+
+
+## Reflective safety and traffic signage
+
+### ORAFOL — ORALITE reflective sheeting
+- https://www.orafol.com/en/europe/products/oralite-5500-engineer-grade
+- https://www.orafol.com/en/europe/products/oralite-5900-high-intensity-prismatic-grade
+- https://www.orafol.com/en/europe/products/oralite-6910-brilliant-grade
+
+Verified:
+- Reflective sign sheeting is not one generic vinyl class. ORALITE product families distinguish RA1 engineer-grade, RA2 high-intensity prismatic and RA3B high-performance prismatic systems.
+- ORALITE 5500 is intended for reflective warning and directional signs; ORALITE 5900 is intended for traffic signs, guidance systems and warning markings; ORALITE 6910 is intended for vertical traffic signs.
+- Higher-performance traffic-sign films have substrate, processing, printing and certification constraints; the RFQ must capture the governing standard/specification instead of letting a customer choose a material solely by marketing name.
+- Printing compatibility is product-system-specific. For example, ORALITE 6910 lists compatible screen-printing and UV digital-printing systems.
+
+### 3M — reflective traffic-sign sheeting
+- https://www.3m.com/3M/en_US/p/c/films-sheeting/reflective-sheeting/i/safety/road-safety/
+- https://www.3m.com/3M/en_US/p/d/v000059466/
+
+Verified:
+- 3M separates Engineer Grade (ASTM Type I), High Intensity Prismatic (ASTM Type III/IV) and Diamond Grade (ASTM Type IX/XI) traffic-sign sheeting.
+- Diamond Grade DG3 Series 4000 supports cut/copy, digital print, electronic cut and screen-print imaging depending on the product/system.
+- Reflective performance class and the governing road/authority specification are safety requirements, not decorative finish choices.
+
+Rawaj modeling decision:
+- Add a dedicated `reflective-sign` RFQ template under signage → reflective/safety signs.
+- Ask for sign purpose, governing authority/specification, required reflective class if known, substrate, dimensions, fabrication shape, mounting and installation context.
+- Never promise regulatory compliance from a dropdown selection. Final sheeting, ink/overlay system, substrate, mounting and sign construction require technical review against the applicable local authority specification.
+- Keep the service quote-only. A new catalog record must remain unpublished until the actual service record is reviewed and approved.
