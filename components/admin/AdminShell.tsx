@@ -12,6 +12,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
   const [ready,setReady] = useState(false);
   const [menu,setMenu] = useState(false);
   const [email,setEmail] = useState("");
+  const [role,setRole] = useState("");
 
   useEffect(() => {
     const supabase = getSupabaseBrowser();
@@ -34,6 +35,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
         return;
       }
 
+      setRole(profile.role || "admin");
       setReady(true);
     })();
   }, [router]);
@@ -64,7 +66,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
         </nav>
 
         <div className="admin-sidebar-foot">
-          <small>{email}</small>
+          <small>{email}</small><small>{role==="owner"?"المالك":role==="editor"?"محرر":"مدير"}</small>
           <button onClick={logout}>تسجيل الخروج</button>
         </div>
       </aside>
