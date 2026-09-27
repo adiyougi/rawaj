@@ -7,6 +7,14 @@ import ServiceConfigurator from "@/components/ServiceConfigurator";
 import ServiceCard from "@/components/ServiceCard";
 import { getServices } from "@/lib/cms";
 import { serviceSpecifications } from "@/lib/service-specs";
+import type { Metadata } from "next";
+
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{
+  const {slug}=await params;
+  const service=(await getServices()).find(item=>item.id===slug);
+  if(!service) return {title:"الخدمة غير موجودة | رواج"};
+  return {title:service.title+" | رواج",description:service.desc,alternates:{canonical:"/services/"+service.id},openGraph:{title:service.title,description:service.desc,images:service.image?[service.image]:[]}};
+}
 
 export default async function ServiceDetail({params}:{params:Promise<{slug:string}>}){
   const {slug}=await params;
