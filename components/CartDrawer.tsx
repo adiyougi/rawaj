@@ -9,10 +9,10 @@ export default function CartDrawer(){
 
   return (
     <div className="drawer-backdrop" onClick={()=>setOpen(false)}>
-      <aside className="cart-drawer" onClick={e=>e.stopPropagation()}>
+      <aside className="cart-drawer" role="dialog" aria-modal="true" aria-label="سلة طلبات عرض السعر" onClick={e=>e.stopPropagation()}>
         <div className="cart-drawer-head">
           <div><small>سلة الطلبات</small><h2>طلباتك</h2></div>
-          <button onClick={()=>setOpen(false)}>×</button>
+          <button onClick={()=>setOpen(false)} aria-label="إغلاق سلة الطلبات">×</button>
         </div>
 
         {!items.length ? (
@@ -35,7 +35,8 @@ export default function CartDrawer(){
               <p>راجع الخدمات ثم انتقل إلى نموذج عرض السعر لإضافة بيانات التواصل وإرسال الطلب.</p>
             </div>
             <div className="cart-drawer-actions">
-              <Link className="btn btn-primary full" href="/quote" onClick={()=>setOpen(false)}>متابعة طلب عرض السعر</Link>\n              <button className="clear-cart" onClick={sendToWhatsApp}>إرسال نسخة عبر واتساب</button>
+              <Link className="btn btn-primary full" href="/quote" onClick={()=>setOpen(false)}>متابعة طلب عرض السعر</Link>
+              <button className="clear-cart" onClick={sendToWhatsApp}>إرسال نسخة عبر واتساب</button>
               <button className="clear-cart" onClick={clear}>تفريغ السلة</button>
             </div>
           </>
