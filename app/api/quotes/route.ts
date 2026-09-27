@@ -5,7 +5,12 @@ const SUPABASE_URL=process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SERVER_KEY=process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 function clean(value:unknown,max:number){return typeof value==="string"?value.trim().slice(0,max):"";}
+const buckets=new Map<string,{count:number;reset:number}>();
+function limited(key:string){const now=Date.now(),old=buckets.get(key);if(!old||old.reset<now){buckets.set(key,{count:1,reset:now+60000});return false;}old.count++;return old.count>8;}
+
 export async function POST(request:Request){
+ const forwarded=request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()||"unknown";
+ if(limited(forwarded)) return NextResponse.json({error:"طلبات كثيرة خلال وقت قصير. حاول بعد دقيقة."},{status:429});
  if(!SUPABASE_URL||!SERVER_KEY) return NextResponse.json({error:"خدمة الطلبات غير مهيأة على الخادم"},{status:503});
  try{
   const body=await request.json();
