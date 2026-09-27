@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { getPortfolio } from "@/lib/cms";
+import type { Metadata } from "next";
+
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{const {slug}=await params;const project=(await getPortfolio()).find(x=>x.slug===slug);return project?{title:project.title,description:project.summary,alternates:{canonical:"/portfolio/"+slug},openGraph:{title:project.title,description:project.summary,images:project.image?[project.image]:[]}}:{title:"العمل غير موجود"};}
 
 export default async function PortfolioDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
