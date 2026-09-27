@@ -21,8 +21,8 @@ export default function ServiceCatalog({services,initialQuery=""}:{services:Cata
       <div className="catalog-search-card">
         <div className="catalog-search-input">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="ابحث عن خدمة..." />
-          {query && <button onClick={()=>setQuery("")}>×</button>}
+          <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="ابحث عن خدمة..." aria-label="البحث في خدمات رواج" />
+          {query && <button onClick={()=>setQuery("")} aria-label="مسح البحث">×</button>}
         </div>
         <div className="category-chips">
           {categories.map(cat=><button key={cat} className={category===cat ? "active":""} onClick={()=>setCategory(cat)}>{cat}</button>)}
