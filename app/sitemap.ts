@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getDepartments, getPosts, getPortfolio, getServices } from "@/lib/cms";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://rawaj.netlify.app";
   const [departments, services, posts, portfolio] = await Promise.all([getDepartments(), getServices(), getPosts(), getPortfolio()]);
 
   const staticPages = ["", "/about", "/services", "/packages", "/portfolio", "/blog", "/faq", "/contact", "/quote"];
