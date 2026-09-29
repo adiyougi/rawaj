@@ -172,5 +172,5 @@ export const adminNav = [
   ["الأقسام","/admin/departments"],["التصنيفات","/admin/categories"],["الخدمات","/admin/services"],
   ["الباقات","/admin/packages"],["الأعمال","/admin/portfolio"],
   ["المميزات","/admin/features"],["العملاء","/admin/clients"],["الشهادات","/admin/testimonials"],
-  ["المدونة","/admin/blog"],["العروض والإعلانات","/admin/ads"],["الأسئلة الشائعة","/admin/faqs"],["الوسائط","/admin/media"],["طلبات السعر","/admin/quotes"],["المستخدمون","/admin/users"],["الإعدادات","/admin/settings"]
+  ["المدونة","/admin/blog"],["العروض والإعلانات","/admin/ads"],["الأسئلة الشائعة","/admin/faqs"],["الوسائط","/admin/media"],["طلبات السعر","/admin/quotes"],["رسائل الموقع","/admin/messages"],["المستخدمون","/admin/users"],["الإعدادات","/admin/settings"]
 ] as const;
