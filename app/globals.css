@@ -285,3 +285,61 @@ main:not(.app-storefront) .feature-card:hover{background:var(--surface);transfor
  main:not(.app-storefront) .hero-controls{bottom:30px!important}
  .marquee{position:relative!important;z-index:1!important}
 }
+
+
+/* RAWAJ SERVICE COMMERCE — premium storefront direction */
+.commerce-home{--shop-radius:28px;--shop-gap:clamp(18px,3vw,34px);background:var(--bg);overflow:hidden}
+.commerce-home .hero{height:min(82svh,820px);min-height:620px;margin:0 16px;border-radius:0 0 34px 34px;overflow:hidden}
+.commerce-home .hero-content{max-width:1320px;padding-top:120px}
+.commerce-home .hero-content h1{max-width:850px;font-size:clamp(54px,7vw,104px);line-height:.91;letter-spacing:-.055em}
+.commerce-home .hero-content p{max-width:620px;font-size:15px;line-height:1.9}
+.commerce-search{position:relative;z-index:12;margin-top:-31px}
+.commerce-search-box{min-height:82px;border-radius:24px;background:var(--surface);border:1px solid var(--line);box-shadow:0 22px 70px rgba(20,20,24,.14);display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:14px;padding:0 24px;color:var(--text)}
+.commerce-search-box>span{width:46px;height:46px;border-radius:15px;background:color-mix(in srgb,var(--red) 10%,var(--surface));display:grid;place-items:center;color:var(--red);font-size:27px}
+.commerce-search-box strong{font-size:18px}.commerce-search-box small{color:var(--muted)}
+.commerce-home .marquee{margin-top:28px}
+.commerce-home .home-manifesto{min-height:auto;padding:90px 0 60px;margin-bottom:40px}
+.commerce-home .home-manifesto>strong{font-size:clamp(48px,7vw,96px)}
+.commerce-home .departments{padding-inline:16px}
+.commerce-home .department-rail{gap:14px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible}
+.commerce-home .department-card{height:520px;border-radius:var(--shop-radius);overflow:hidden}
+.commerce-home .services-section{padding-top:120px}
+.commerce-home .home-service-stage{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--shop-gap);border:0}
+.commerce-home .home-service-story{min-height:0;display:flex;flex-direction:column;gap:0;padding:0;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--surface)}
+.commerce-home .home-service-no{position:absolute;z-index:2;top:14px;right:14px;padding:7px 9px;border-radius:99px;background:rgba(0,0,0,.62);color:#fff}
+.commerce-home .home-service-image{width:100%;height:auto;aspect-ratio:1.15;border-radius:0}
+.commerce-home .home-service-copy{padding:20px}
+.commerce-home .home-service-copy h3{font-size:25px;letter-spacing:-.025em;margin:6px 0 8px}
+.commerce-home .home-service-copy p{font-size:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.commerce-home .home-service-copy b{color:var(--red)}
+.commerce-home .package-rail{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.commerce-home .package-card{border-radius:var(--shop-radius);min-height:540px}
+.commerce-home .portfolio-grid{gap:14px}.commerce-home .portfolio-card{border-radius:24px;overflow:hidden}
+.commerce-home .feature-card{border-radius:22px;background:var(--surface);border:1px solid var(--line)}
+.commerce-home .contact-panel{border-radius:32px;overflow:hidden}
+@media(max-width:900px){.commerce-home .department-rail{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}.commerce-home .department-card{min-width:min(78vw,420px);scroll-snap-align:center}.commerce-home .home-service-stage{grid-template-columns:repeat(2,1fr)}.commerce-home .package-rail{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}.commerce-home .package-card{min-width:min(82vw,460px);scroll-snap-align:center}}
+@media(max-width:720px){
+ .commerce-home .hero{margin:0 8px;height:76svh;min-height:590px;border-radius:0 0 28px 28px}
+ .commerce-home .hero-content{justify-content:center!important;padding:96px 18px 90px!important}
+ .commerce-home .hero-content h1{font-size:clamp(42px,12.5vw,60px)!important;line-height:.98!important;max-width:100%!important}
+ .commerce-home .hero-content p{font-size:12px!important;line-height:1.75!important}
+ .commerce-home .hero-actions{grid-template-columns:1fr!important}
+ .commerce-search{margin-top:-25px;padding-inline:18px}
+ .commerce-search-box{min-height:70px;border-radius:20px;grid-template-columns:42px 1fr;padding:0 14px}
+ .commerce-search-box>span{width:38px;height:38px;border-radius:12px;font-size:22px}.commerce-search-box strong{font-size:13px}.commerce-search-box small{display:none}
+ .commerce-home .marquee{margin-top:18px}
+ .commerce-home .home-manifesto{padding:58px 0 34px;margin-bottom:24px}
+ .commerce-home .home-manifesto>strong{font-size:clamp(42px,13vw,62px)}
+ .commerce-home .departments{padding-inline:0}.commerce-home .department-rail{padding-inline:18px}
+ .commerce-home .department-card{height:430px;min-width:82vw;border-radius:24px}
+ .commerce-home .services-section{padding-top:78px}
+ .commerce-home .home-service-stage{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .commerce-home .home-service-story{border-radius:18px}
+ .commerce-home .home-service-image{aspect-ratio:1/.92;min-height:0!important}
+ .commerce-home .home-service-copy{padding:12px}
+ .commerce-home .home-service-copy h3{font-size:16px!important;line-height:1.3;margin:4px 0 6px}
+ .commerce-home .home-service-copy p{font-size:10px;line-height:1.55}
+ .commerce-home .home-service-copy b{font-size:10px;margin-top:10px}
+ .commerce-home .package-rail{padding-inline:18px}.commerce-home .package-card{min-height:460px;border-radius:24px}
+ .commerce-home .portfolio-card{border-radius:18px}
+}
