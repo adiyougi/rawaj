@@ -9,7 +9,7 @@ import { CONTACT } from "@/lib/content";
 type Option={id:string;title:string};
 export default function QuoteForm({services,packages}:{services:Option[];packages:Option[]}){
  const {items,clear}=useCart();
- const [name,setName]=useState(""),[company,setCompany]=useState(""),[phone,setPhone]=useState(""),[email,setEmail]=useState(""),[city,setCity]=useState(""),[deadline,setDeadline]=useState(""),[service,setService]=useState(""),[packageId,setPackageId]=useState(""),[details,setDetails]=useState(""),[sending,setSending]=useState(false),[message,setMessage]=useState(""),[receipt,setReceipt]=useState<{id:string;whatsappUrl:string}|null>(null);
+ const [name,setName]=useState(""),[company,setCompany]=useState(""),[phone,setPhone]=useState(""),[email,setEmail]=useState(""),[city,setCity]=useState(""),[deadline,setDeadline]=useState(""),[service,setService]=useState(""),[packageId,setPackageId]=useState(""),[details,setDetails]=useState(""),[sending,setSending]=useState(false),[message,setMessage]=useState(""),[receipt,setReceipt]=useState<{id:string;requestNumber:string;whatsappUrl:string}|null>(null);
  useEffect(()=>{const p=new URLSearchParams(location.search);setService(p.get("service")||"");setPackageId(p.get("package")||"");},[]);
  async function submit(e:FormEvent){e.preventDefault();setSending(true);setMessage("");
   try{
@@ -25,11 +25,11 @@ export default function QuoteForm({services,packages}:{services:Option[];package
    const response=await fetch("/api/quotes",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({customer_name:name.trim(),company_name:company.trim()||null,phone:phone.trim(),whatsapp:phone.trim(),email:email.trim()||null,city:city.trim()||null,deadline:deadline||null,notes:details.trim()||null,items:payload})});
    const result=await response.json();
    if(!response.ok) throw new Error(result?.error||"تعذر حفظ الطلب");
-   if(!result?.id) throw new Error("تعذر تأكيد رقم الطلب");
-   const req={id:String(result.id)};
+   if(!result?.id||!result?.request_number) throw new Error("تعذر تأكيد رقم الطلب");
+   const req={id:String(result.id),requestNumber:String(result.request_number)};
    const lines=payload.map((x,i)=>`${i+1}. ${x.title} × ${x.quantity}`).join("\n");
-   const wa="طلب عرض سعر جديد من منصة رواج\nرقم الطلب: "+req.id+"\nالاسم: "+name+"\nرقم التواصل: "+phone+(lines?"\n\n"+lines:"")+(details?"\n\nالتفاصيل: "+details:"");
-   clear();setReceipt({id:req.id,whatsappUrl:"https://wa.me/"+CONTACT.whatsapp+"?text="+encodeURIComponent(wa)});
+   const wa="طلب عرض سعر جديد من منصة رواج\nرقم الطلب: "+req.requestNumber+"\nالاسم: "+name+"\nرقم التواصل: "+phone+(lines?"\n\n"+lines:"")+(details?"\n\nالتفاصيل: "+details:"");
+   clear();setReceipt({id:req.id,requestNumber:req.requestNumber,whatsappUrl:"https://wa.me/"+CONTACT.whatsapp+"?text="+encodeURIComponent(wa)});
   }catch(err:any){setMessage(err?.message||"تعذر حفظ الطلب. حاول مرة أخرى.");}finally{setSending(false);}
  }
  if(receipt){
@@ -38,7 +38,7 @@ export default function QuoteForm({services,packages}:{services:Option[];package
    <span className="eyebrow">تم استلام طلبك</span>
    <h2>طلبك محفوظ لدى رواج.</h2>
    <p>سيظهر الآن لفريق المبيعات مع الخدمات والمواصفات التي أرسلتها. احتفظ بالرقم المرجعي عند التواصل معنا.</p>
-   <div className="quote-reference"><span>رقم الطلب</span><strong>{receipt.id.slice(0,8).toUpperCase()}</strong><small>{receipt.id}</small></div>
+   <div className="quote-reference"><span>رقم الطلب</span><strong>{receipt.requestNumber}</strong><small>مرجع داخلي: {receipt.id.slice(0,8).toUpperCase()}</small></div>
    <div className="quote-receipt-actions">
     <a className="btn btn-primary" href={receipt.whatsappUrl} target="_blank" rel="noreferrer">متابعة عبر واتساب</a>
     <Link className="btn quote-receipt-secondary" href="/services">العودة إلى الخدمات</Link>

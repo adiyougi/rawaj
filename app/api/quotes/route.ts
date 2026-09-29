@@ -31,7 +31,7 @@ export async function POST(request:Request){
   if(name.length<2||phone.length<5) return NextResponse.json({error:"أدخل الاسم ورقم التواصل بشكل صحيح"},{status:400});
   const safeDeadline=/^\d{4}-\d{2}-\d{2}$/.test(deadline)?deadline:null;
   const supabase=createClient(SUPABASE_URL,PUBLIC_KEY,{auth:{persistSession:false,autoRefreshToken:false}});
-  const {data:id,error}=await supabase.rpc("create_quote_request",{
+  const {data:created,error}=await supabase.rpc("create_quote_request_v2",{
     p_customer_name:name,
     p_phone:phone,
     p_company_name:company||null,
@@ -42,7 +42,9 @@ export async function POST(request:Request){
     p_notes:notes||null,
     p_items:items
   });
-  if(error||!id) throw new Error(error?.message||"quote_request_failed");
-  return NextResponse.json({id},{status:201});
+  const id=created&&typeof created==="object" ? String((created as {id?:unknown}).id||"") : "";
+  const requestNumber=created&&typeof created==="object" ? String((created as {request_number?:unknown}).request_number||"") : "";
+  if(error||!id||!requestNumber) throw new Error(error?.message||"quote_request_failed");
+  return NextResponse.json({id,request_number:requestNumber},{status:201});
  }catch{return NextResponse.json({error:"تعذر حفظ الطلب حاليًا"},{status:500});}
 }

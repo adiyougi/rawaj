@@ -13,8 +13,8 @@ const cards = [
   ["العملاء","clients","/admin/clients"],
   ["الطلبات","quote_requests","/admin/quotes"]
 ] as const;
-type RecentQuote={id:string;customer_name:string|null;phone:string|null;status:string;created_at:string};
-const quoteStatus:Record<string,string>={new:"جديد",reviewing:"قيد المراجعة",need_more_info:"نحتاج معلومات",pricing:"قيد التسعير",sent:"تم إرسال العرض",negotiation:"تفاوض",won:"تم الاتفاق",lost:"لم يتم الاتفاق",archived:"مؤرشف"};
+type RecentQuote={id:string;request_number:string;customer_name:string|null;phone:string|null;status:string;created_at:string};
+const quoteStatus:Record<string,string>={new:"جديد",reviewing:"قيد المراجعة",need_more_info:"نحتاج معلومات",pricing:"قيد التسعير",quote_ready:"العرض جاهز",sent:"تم إرسال العرض",negotiation:"تفاوض",won:"تم الاتفاق",lost:"لم يتم الاتفاق",cancelled:"ملغي",archived:"مؤرشف"};
 
 export default function AdminDashboard() {
   const [counts,setCounts] = useState<Record<string,number>>({});
@@ -47,7 +47,7 @@ export default function AdminDashboard() {
       if(canQuotes){
         const [{count:newCount},{data:recent,error:recentError}]=await Promise.all([
           supabase.from("quote_requests").select("*",{count:"exact",head:true}).eq("status","new"),
-          supabase.from("quote_requests").select("id,customer_name,phone,status,created_at").order("created_at",{ascending:false}).limit(5)
+          supabase.from("quote_requests").select("id,request_number,customer_name,phone,status,created_at").order("created_at",{ascending:false}).limit(5)
         ]);
         setNewQuotes(newCount||0);
         if(recentError)setLoadError("تعذر تحميل أحدث طلبات عروض السعر.");else setRecentQuotes((recent||[]) as RecentQuote[]);
@@ -82,7 +82,7 @@ export default function AdminDashboard() {
             <span className="admin-kicker">RFQ INBOX</span>
             <h2>{newQuotes?newQuotes+" طلب جديد يحتاج متابعة":"لا توجد طلبات جديدة معلقة"}</h2>
             <p>آخر طلبات عروض السعر الواردة من الموقع، مرتبة من الأحدث.</p>
-            <div className="dashboard-recent-quotes">{recentQuotes.length?recentQuotes.map(row=><Link href="/admin/quotes" key={row.id}><span><strong>{row.customer_name||"عميل بدون اسم"}</strong><small>{row.phone||"بدون رقم تواصل"} · {new Date(row.created_at).toLocaleDateString("ar")}</small></span><em>{quoteStatus[row.status]||row.status}</em></Link>):<small>لا توجد طلبات مسجلة حتى الآن.</small>}</div>
+            <div className="dashboard-recent-quotes">{recentQuotes.length?recentQuotes.map(row=><Link href="/admin/quotes" key={row.id}><span><strong>{row.customer_name||"عميل بدون اسم"}</strong><small>{row.request_number} · {row.phone||"بدون رقم تواصل"} · {new Date(row.created_at).toLocaleDateString("ar")}</small></span><em>{quoteStatus[row.status]||row.status}</em></Link>):<small>لا توجد طلبات مسجلة حتى الآن.</small>}</div>
             <Link className="admin-primary" href="/admin/quotes">فتح صندوق الطلبات</Link>
           </article>)}
           <article><span className="admin-kicker">MASTER CATALOG</span><h2>حالة اعتماد الكتالوج</h2><p>موثقة وتنتظر الاعتماد: <strong>{catalog.verified}</strong> · منشورة ومعتمدة: <strong>{catalog.approved}</strong> · قديمة للمراجعة: <strong>{catalog.legacy}</strong></p><Link className="admin-primary" href="/admin/services">مراجعة الخدمات</Link></article>
