@@ -5,7 +5,6 @@ import { createClient } from "@supabase/supabase-js";
 type Item={title?:unknown;quantity?:unknown;specifications?:unknown;service_slug?:unknown;package_slug?:unknown};
 type QuoteItem={title:string;quantity:number;specifications:Record<string,unknown>;service_slug?:string;package_slug?:string};
 const SUPABASE_URL=process.env.NEXT_PUBLIC_SUPABASE_URL;
-const PUBLIC_KEY=process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 const SERVICE_KEY=process.env.SUPABASE_SERVICE_ROLE_KEY;
 const MAX_FILE_SIZE=20*1024*1024;
 const MAX_TOTAL_SIZE=50*1024*1024;
@@ -19,7 +18,7 @@ function limited(key:string){const now=Date.now(),old=buckets.get(key);if(!old||
 export async function POST(request:Request){
  const forwarded=request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()||"unknown";
  if(limited(forwarded)) return NextResponse.json({error:"طلبات كثيرة خلال وقت قصير. حاول بعد دقيقة."},{status:429});
- if(!SUPABASE_URL||!PUBLIC_KEY) return NextResponse.json({error:"خدمة الطلبات غير مهيأة على الخادم"},{status:503});
+ if(!SUPABASE_URL||!SERVICE_KEY) return NextResponse.json({error:"خدمة الطلبات غير مهيأة على الخادم"},{status:503});
  try{
   const contentType=request.headers.get("content-type")||"";
   let body:any;
@@ -53,7 +52,7 @@ export async function POST(request:Request){
   },[]);
   if(name.length<2||phone.length<5) return NextResponse.json({error:"أدخل الاسم ورقم التواصل بشكل صحيح"},{status:400});
   const safeDeadline=/^\d{4}-\d{2}-\d{2}$/.test(deadline)?deadline:null;
-  const supabase=createClient(SUPABASE_URL,PUBLIC_KEY,{auth:{persistSession:false,autoRefreshToken:false}});
+  const supabase=createClient(SUPABASE_URL,SERVICE_KEY,{auth:{persistSession:false,autoRefreshToken:false}});
   const {data:created,error}=await supabase.rpc("create_quote_request_v2",{
     p_customer_name:name,
     p_phone:phone,
