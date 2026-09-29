@@ -7,7 +7,9 @@ const routing=load("lib/catalog-routing.ts");
 const keys=Array.from(templates.matchAll(/\["([^"]+)","/g),m=>m[1]);
 const duplicate=keys.filter((key,index)=>keys.indexOf(key)!==index);
 const specBlock=(key)=>{
- const start=specs.indexOf(`"${key}": [`);
+ const quoted=specs.indexOf(`"${key}": [`);
+ const plain=specs.indexOf(`${key}: [`);
+ const start=quoted>=0?quoted:plain;
  if(start<0)return "";
  const end=specs.indexOf("\n  ],",start);
  return specs.slice(start,end<0?start+5000:end);
