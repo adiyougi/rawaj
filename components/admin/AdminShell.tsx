@@ -38,12 +38,13 @@ export default function AdminShell({ children }: { children: ReactNode }) {
       const currentRole=profile.role || "admin";
       const isQuotes=pathname==="/admin/quotes" || pathname.startsWith("/admin/quotes/");
       const isUsers=pathname==="/admin/users" || pathname.startsWith("/admin/users/");
+      const isMessages=pathname==="/admin/messages" || pathname.startsWith("/admin/messages/");
 
       if(currentRole==="sales" && !isQuotes){
         router.replace("/admin/quotes");
         return;
       }
-      if(currentRole==="editor" && (isQuotes || isUsers)){
+      if(currentRole==="editor" && (isQuotes || isUsers || isMessages)){
         router.replace("/admin");
         return;
       }
@@ -77,7 +78,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
         <nav>
           {adminNav.filter(([,href])=>{
             if(role==="sales") return href==="/admin/quotes";
-            if(role==="editor") return href!=="/admin/users" && href!=="/admin/quotes";
+            if(role==="editor") return href!=="/admin/users" && href!=="/admin/quotes" && href!=="/admin/messages";
             return href!=="/admin/users" || role==="owner";
           }).map(([label,href]) => (
             <Link key={href} href={href} className={pathname === href ? "active" : ""} onClick={() => setMenu(false)}>
