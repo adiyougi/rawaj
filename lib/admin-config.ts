@@ -6,6 +6,7 @@ export type AdminField = {
   type?: AdminFieldType;
   required?: boolean;
   placeholder?: string;
+  help?: string;
   options?: {value:string;label:string}[];
   media?: "image" | "file";
   relation?: { table: string; value: string; label: string };
@@ -28,7 +29,7 @@ export const adminSections: Record<string, AdminSection> = {
     table:"hero_slides", orderField:"sort_order", list:["title","kicker","is_published","sort_order"],
     fields:[
       {name:"title",label:"العنوان الرئيسي",required:true},{name:"kicker",label:"العنوان الصغير"},
-      {name:"subtitle",label:"الوصف",type:"textarea"},{name:"media_url",label:"صورة/فيديو الشريحة",media:"image"},
+      {name:"subtitle",label:"الوصف",type:"textarea"},{name:"media_url",label:"صورة/فيديو الشريحة",media:"image",help:"مقاس الصورة المفضل 1920×1080 بنسبة 16:9. استخدم WebP/JPEG محسّنًا للويب."},
       {name:"media_type",label:"نوع الوسائط",type:"select",options:[{value:"image",label:"صورة"},{value:"video",label:"فيديو"}]},{name:"cta_label",label:"نص الزر الرئيسي"},
       {name:"cta_href",label:"رابط الزر الرئيسي"},{name:"secondary_cta_label",label:"نص الزر الثانوي"},
       {name:"secondary_cta_href",label:"رابط الزر الثانوي"},{name:"sort_order",label:"الترتيب",type:"number"},
@@ -151,7 +152,7 @@ export const adminSections: Record<string, AdminSection> = {
       {name:"seo_title",label:"عنوان SEO"},{name:"seo_description",label:"وصف SEO",type:"textarea"}
     ]
   },
-  ads: {slug:"ads",title:"العروض والإعلانات",description:"إدارة مساحات العروض في الرئيسية.",table:"homepage_ads",orderField:"sort_order",list:["title","is_published","sort_order"],fields:[{name:"title",label:"العنوان",required:true},{name:"subtitle",label:"الوصف",type:"textarea"},{name:"media_url",label:"الصورة",media:"image"},{name:"href",label:"الرابط"},{name:"sort_order",label:"الترتيب",type:"number"},{name:"is_published",label:"منشور",type:"boolean"}]},
+  ads: {slug:"ads",title:"العروض والإعلانات",description:"إدارة مساحات العروض في الرئيسية.",table:"homepage_ads",orderField:"sort_order",list:["title","is_published","sort_order"],fields:[{name:"title",label:"العنوان",required:true},{name:"subtitle",label:"الوصف",type:"textarea"},{name:"media_url",label:"الصورة",media:"image",help:"مقاس مقترح 1600×900 أو أكبر بنسبة 16:9."},{name:"href",label:"الرابط"},{name:"sort_order",label:"الترتيب",type:"number"},{name:"is_published",label:"منشور",type:"boolean"}]},
   faqs: {slug:"faqs",title:"الأسئلة الشائعة",description:"إدارة أسئلة وأجوبة الرئيسية.",table:"faqs",orderField:"sort_order",list:["question","category","is_published"],fields:[{name:"question",label:"السؤال",required:true},{name:"answer",label:"الإجابة",type:"textarea",required:true},{name:"category",label:"التصنيف"},{name:"sort_order",label:"الترتيب",type:"number"},{name:"is_published",label:"منشور",type:"boolean"}]},
   settings: {
     slug:"settings", title:"إعدادات الهوية والتواصل", description:"إعدادات الموقع العامة. الحقول التقنية المتقدمة تُدار برمجيًا ولا تظهر للمحرر.",
