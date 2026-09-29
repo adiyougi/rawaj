@@ -277,7 +277,7 @@ export async function getHomepageModules(){const rows=await readTable<any>("home
 export async function getClients(){const rows=await readTable<any>("clients?select=id,name,logo_url,website_url,label,rating,description&is_published=eq.true&order=sort_order.asc");return rows||[]}
 export async function getTestimonials(){const rows=await readTable<any>("testimonials?select=id,person_name,person_title,rating,quote,avatar_url&is_published=eq.true&submission_status=eq.approved&order=sort_order.asc");return rows||[]}
 export async function getHomepageAds(){const rows=await readTable<any>("homepage_ads?select=id,title,subtitle,media_url,href&is_published=eq.true&order=sort_order.asc");return rows||[]}
-export async function getHomeSettings(){const rows=await readTable<any>("site_settings?select=key,value&key=in.(brand,homepage_about,homepage_footer)");return Object.fromEntries((rows||[]).map((x:any)=>[x.key,x.value]))}
+export async function getHomeSettings(){const rows=await readTable<any>("site_settings?select=key,value&key=in.(brand,homepage_about,homepage_header,homepage_contact,homepage_footer)");return Object.fromEntries((rows||[]).map((x:any)=>[x.key,x.value]))}
 export async function getFaqs(){const rows=await readTable<any>("faqs?select=id,question,answer,category&is_published=eq.true&order=sort_order.asc");return rows||[]}
 
 export async function getDepartmentDetail(slug: string) {
