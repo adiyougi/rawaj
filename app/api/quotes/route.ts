@@ -9,6 +9,17 @@ const SERVICE_KEY=process.env.SUPABASE_SERVICE_ROLE_KEY;
 const MAX_FILE_SIZE=4*1024*1024;
 const MAX_TOTAL_SIZE=4*1024*1024;
 const ALLOWED_MIME=new Set(["image/jpeg","image/png","image/webp","application/pdf","application/postscript","image/vnd.adobe.photoshop","application/zip","application/x-zip-compressed"]);
+const ALLOWED_EXTENSIONS_BY_MIME:Record<string,Set<string>>={
+ "image/jpeg":new Set(["jpg","jpeg"]),
+ "image/png":new Set(["png"]),
+ "image/webp":new Set(["webp"]),
+ "application/pdf":new Set(["pdf"]),
+ "application/postscript":new Set(["ai","eps","ps"]),
+ "image/vnd.adobe.photoshop":new Set(["psd"]),
+ "application/zip":new Set(["zip"]),
+ "application/x-zip-compressed":new Set(["zip"])
+};
+function fileExtension(name:string){const normalized=name.normalize("NFKC").toLowerCase();const dot=normalized.lastIndexOf(".");return dot>0&&dot<normalized.length-1?normalized.slice(dot+1):"";}
 function safeFileName(name:string){return name.normalize("NFKC").replace(/[^a-zA-Z0-9._-]+/g,"-").replace(/^-+|-+$/g,"").slice(0,120)||"file";}
 
 function clean(value:unknown,max:number){return typeof value==="string"?value.trim().slice(0,max):"";}
@@ -37,6 +48,8 @@ export async function POST(request:Request){
   for(const file of files){
     if(file.size>MAX_FILE_SIZE) return NextResponse.json({error:"حجم كل ملف يجب ألا يتجاوز 4MB."},{status:400});
     if(!ALLOWED_MIME.has(file.type)) return NextResponse.json({error:"نوع ملف غير مدعوم: "+file.name},{status:400});
+    const extension=fileExtension(file.name);
+    if(!extension||!ALLOWED_EXTENSIONS_BY_MIME[file.type]?.has(extension)) return NextResponse.json({error:"امتداد الملف لا يطابق نوعه: "+file.name},{status:400});
     if(file.name.length>180) return NextResponse.json({error:"اسم أحد الملفات طويل جدًا."},{status:400});
   }
   const name=clean(body.customer_name,120),company=clean(body.company_name,160),phone=clean(body.phone,40),whatsapp=clean(body.whatsapp,40),email=clean(body.email,180),city=clean(body.city,120),deadline=clean(body.deadline,20),notes=clean(body.notes,3000);
