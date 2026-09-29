@@ -29,7 +29,7 @@ export const adminSections: Record<string, AdminSection> = {
     fields:[
       {name:"title",label:"العنوان الرئيسي",required:true},{name:"kicker",label:"العنوان الصغير"},
       {name:"subtitle",label:"الوصف",type:"textarea"},{name:"media_url",label:"صورة/فيديو الشريحة",media:"image"},
-      {name:"media_type",label:"نوع الوسائط",type:"select"},{name:"cta_label",label:"نص الزر الرئيسي"},
+      {name:"media_type",label:"نوع الوسائط",type:"select",options:[{value:"image",label:"صورة"},{value:"video",label:"فيديو"}]},{name:"cta_label",label:"نص الزر الرئيسي"},
       {name:"cta_href",label:"رابط الزر الرئيسي"},{name:"secondary_cta_label",label:"نص الزر الثانوي"},
       {name:"secondary_cta_href",label:"رابط الزر الثانوي"},{name:"sort_order",label:"الترتيب",type:"number"},
       {name:"is_published",label:"منشور",type:"boolean"}
