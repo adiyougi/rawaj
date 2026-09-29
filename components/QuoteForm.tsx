@@ -15,8 +15,8 @@ export default function QuoteForm({services,packages}:{services:Option[];package
   const next=Array.from(e.target.files||[]);
   if(next.length>5){setMessage("يمكن إرفاق 5 ملفات كحد أقصى.");e.target.value="";return;}
   const total=next.reduce((sum,file)=>sum+file.size,0);
-  if(next.some(file=>file.size>20*1024*1024)){setMessage("حجم كل ملف يجب ألا يتجاوز 20MB.");e.target.value="";return;}
-  if(total>50*1024*1024){setMessage("إجمالي المرفقات يجب ألا يتجاوز 50MB.");e.target.value="";return;}
+  if(next.some(file=>file.size>4*1024*1024)){setMessage("حجم كل ملف يجب ألا يتجاوز 4MB.");e.target.value="";return;}
+  if(total>4*1024*1024){setMessage("إجمالي المرفقات يجب ألا يتجاوز 4MB.");e.target.value="";return;}
   setMessage("");setFiles(next);
  }
  async function submit(e:FormEvent){e.preventDefault();setSending(true);setMessage("");
@@ -68,7 +68,7 @@ export default function QuoteForm({services,packages}:{services:Option[];package
   <label>أو الباقة<select value={packageId} onChange={e=>{setPackageId(e.target.value);if(e.target.value)setService("");}}><option value="">اختر باقة</option>{packages.map(x=><option value={x.id} key={x.id}>{x.title}</option>)}</select></label></>}
   {!!items.length&&<div className="quote-cart-preview"><strong>الخدمات المختارة ({items.length})</strong>{items.map(x=><p key={x.key}>{x.title} × {x.qty}{x.specs?<small>{x.specs}</small>:null}</p>)}</div>}
   <label>تفاصيل الطلب<textarea maxLength={3000} value={details} onChange={e=>setDetails(e.target.value)} placeholder="المقاسات، الكمية، الخامة، الموعد، أو أي تفاصيل تعرفها..."/></label>
-  <label className="quote-file-field">ملفات أو صور مرجعية <small>اختياري — حتى 5 ملفات</small><input type="file" multiple accept="image/jpeg,image/png,image/webp,application/pdf,application/postscript,image/vnd.adobe.photoshop,application/zip,.ai,.eps,.psd,.zip" onChange={chooseFiles}/>{files.length>0&&<span className="quote-file-list">{files.map(file=><small key={file.name+file.size}>{file.name} · {(file.size/1024/1024).toFixed(1)}MB</small>)}</span>}</label>
+  <label className="quote-file-field">ملفات أو صور مرجعية <small>اختياري — حتى 5 ملفات / 4MB إجمالًا</small><input type="file" multiple accept="image/jpeg,image/png,image/webp,application/pdf,application/postscript,image/vnd.adobe.photoshop,application/zip,.ai,.eps,.psd,.zip" onChange={chooseFiles}/>{files.length>0&&<span className="quote-file-list">{files.map(file=><small key={file.name+file.size}>{file.name} · {(file.size/1024/1024).toFixed(1)}MB</small>)}</span>}<small>للملفات الكبيرة اكتب رابط Drive/WeTransfer في التفاصيل أو أكمل الإرسال عبر واتساب بعد حفظ الطلب.</small></label>
   <button className="btn btn-primary full" disabled={sending} type="submit">{sending?"جارٍ حفظ الطلب…":"إرسال طلب عرض السعر"}</button>
   {message&&<div className="quote-submit-message" role="status">{message}</div>}<small>يُحفظ الطلب أولًا في رواج ثم يفتح واتساب لمتابعة التفاصيل. لا يوجد دفع أو تسعير تلقائي.</small>
  </form>;

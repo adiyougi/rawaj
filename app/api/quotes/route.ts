@@ -6,8 +6,8 @@ type Item={title?:unknown;quantity?:unknown;specifications?:unknown;service_slug
 type QuoteItem={title:string;quantity:number;specifications:Record<string,unknown>;service_slug?:string;package_slug?:string};
 const SUPABASE_URL=process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SERVICE_KEY=process.env.SUPABASE_SERVICE_ROLE_KEY;
-const MAX_FILE_SIZE=20*1024*1024;
-const MAX_TOTAL_SIZE=50*1024*1024;
+const MAX_FILE_SIZE=4*1024*1024;
+const MAX_TOTAL_SIZE=4*1024*1024;
 const ALLOWED_MIME=new Set(["image/jpeg","image/png","image/webp","application/pdf","application/postscript","image/vnd.adobe.photoshop","application/zip","application/x-zip-compressed"]);
 function safeFileName(name:string){return name.normalize("NFKC").replace(/[^a-zA-Z0-9._-]+/g,"-").replace(/^-+|-+$/g,"").slice(0,120)||"file";}
 
@@ -33,9 +33,9 @@ export async function POST(request:Request){
   }
   if(files.length>5) return NextResponse.json({error:"يمكن إرفاق 5 ملفات كحد أقصى."},{status:400});
   const totalSize=files.reduce((sum,file)=>sum+file.size,0);
-  if(totalSize>MAX_TOTAL_SIZE) return NextResponse.json({error:"إجمالي المرفقات يجب ألا يتجاوز 50MB."},{status:400});
+  if(totalSize>MAX_TOTAL_SIZE) return NextResponse.json({error:"إجمالي المرفقات يجب ألا يتجاوز 4MB."},{status:400});
   for(const file of files){
-    if(file.size>MAX_FILE_SIZE) return NextResponse.json({error:"حجم كل ملف يجب ألا يتجاوز 20MB."},{status:400});
+    if(file.size>MAX_FILE_SIZE) return NextResponse.json({error:"حجم كل ملف يجب ألا يتجاوز 4MB."},{status:400});
     if(!ALLOWED_MIME.has(file.type)) return NextResponse.json({error:"نوع ملف غير مدعوم: "+file.name},{status:400});
     if(file.name.length>180) return NextResponse.json({error:"اسم أحد الملفات طويل جدًا."},{status:400});
   }
