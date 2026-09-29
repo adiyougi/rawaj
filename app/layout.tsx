@@ -6,7 +6,7 @@ import CartDrawer from "@/components/CartDrawer";
 import FloatingActions from "@/components/FloatingActions";
 import BottomNav from "@/components/BottomNav";
 
-const siteUrl=process.env.NEXT_PUBLIC_SITE_URL || "https://rawaj.netlify.app";
+const siteUrl=process.env.NEXT_PUBLIC_SITE_URL || "https://rawaj-yemen.netlify.app";
 
 export const metadata:Metadata={
   title:{default:"رواج للطباعة والإعلان والديكور",template:"%s | رواج"},
