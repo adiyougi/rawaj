@@ -21,7 +21,7 @@ export default function SiteHeader() {
     localStorage.setItem("rawaj-theme",dark ? "dark":"light");
   },[dark]);
 
-  const nav=[
+  useEffect(()=>{\n    document.body.style.overflow=open ? "hidden" : "";\n    return()=>{document.body.style.overflow=""};\n  },[open]);\n\n  useEffect(()=>{setOpen(false)},[pathname]);\n\n  const nav=[
     ["الرئيسية","/"],["الخدمات","/services"],["الأقسام","/departments"],["الباقات","/packages"],
     ["أعمالنا","/portfolio"],["عن رواج","/about"],["المدونة","/blog"],["تواصل","/contact"]
   ];
@@ -50,7 +50,7 @@ export default function SiteHeader() {
       </header>
 
       {open && (
-        <div className="mobile-menu">
+        <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="القائمة الرئيسية">
           <div className="mobile-menu-head">
             <div className="brand"><span className="brand-logo-wrap"><img className="brand-logo" src="/rawaj-logo.webp" alt="رواج"/></span><span className="brand-copy"><strong>رواج</strong><small>القائمة الرئيسية</small></span></div>
             <button className="mobile-menu-close" onClick={()=>setOpen(false)}>×</button>
