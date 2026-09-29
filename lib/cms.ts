@@ -230,11 +230,11 @@ export async function getHeroSlides() {
 }
 
 export async function getTickerItems() {
-  const rows = await readTable<{ text: string }>(
-    "ticker_items?select=text&is_published=eq.true&order=sort_order.asc"
+  const rows = await readTable<{ text: string; category:string }>(
+    "ticker_items?select=text,category&is_published=eq.true&order=sort_order.asc"
   );
-  if (rows === null) return ["تصميم فني","صناعة محتوى","طباعة ورقية","طباعة رقمية","لوحات ضوئية","واجهات","حروف بارزة","ليزر وأكريليك","باقات مخصصة","تنفيذ متكامل"];
-  return rows.map((row)=>row.text);
+  if (rows === null) return ["تصميم فني","صناعة محتوى","طباعة ورقية","طباعة رقمية","لوحات ضوئية","واجهات","حروف بارزة","ليزر وأكريليك","باقات مخصصة","تنفيذ متكامل"].map(text=>({text,category:"uncategorized"}));
+  return rows;
 }
 
 export async function getFeatures() {
