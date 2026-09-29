@@ -19,7 +19,9 @@ export default function QuoteForm({services,packages}:{services:Option[];package
   if(total>4*1024*1024){setMessage("إجمالي المرفقات يجب ألا يتجاوز 4MB.");e.target.value="";return;}
   setMessage("");setFiles(next);
  }
- async function submit(e:FormEvent){e.preventDefault();setMessage("");\n  if(!items.length&&!service&&!packageId&&!details.trim()){setMessage("اختر خدمة أو باقة، أو اكتب تفاصيل الطلب قبل الإرسال.");return;}\n  setSending(true);
+ async function submit(e:FormEvent){e.preventDefault();setMessage("");
+  if(!items.length&&!service&&!packageId&&!details.trim()){setMessage("اختر خدمة أو باقة، أو اكتب تفاصيل الطلب قبل الإرسال.");return;}
+  setSending(true);
   try{
    const chosenService=service?services.find(x=>x.id===service):null;
    const chosenPackage=packageId?packages.find(x=>x.id===packageId):null;
