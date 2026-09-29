@@ -36,7 +36,7 @@ export const adminSections: Record<string, AdminSection> = {
   ticker: {
     slug:"ticker", title:"الشريط المتحرك", description:"العناصر النصية المتحركة في الصفحة الرئيسية.",
     table:"ticker_items", orderField:"sort_order", list:["text","href","is_published","sort_order"],
-    fields:[{name:"text",label:"النص",required:true},{name:"href",label:"الرابط"},{name:"sort_order",label:"الترتيب",type:"number"},{name:"is_published",label:"منشور",type:"boolean"}]
+    fields:[{name:"text",label:"النص",required:true},{name:"category",label:"التصنيف"},{name:"href",label:"الرابط"},{name:"sort_order",label:"الترتيب",type:"number"},{name:"is_published",label:"منشور",type:"boolean"}]
   },
   departments: {
     slug:"departments", title:"أقسام المؤسسة", description:"إدارة أقسام رواج وصفحاتها الرئيسية.",
@@ -121,18 +121,18 @@ export const adminSections: Record<string, AdminSection> = {
     table:"clients", orderField:"sort_order", list:["name","is_published","sort_order"],
     fields:[
       {name:"name",label:"اسم العميل",required:true},{name:"logo_url",label:"رابط الشعار"},
-      {name:"website_url",label:"الموقع"},{name:"sort_order",label:"الترتيب",type:"number"},
+      {name:"website_url",label:"الموقع"},{name:"label",label:"التسمية"},{name:"rating",label:"التقييم",type:"number"},{name:"description",label:"الوصف",type:"textarea"},{name:"sort_order",label:"الترتيب",type:"number"},
       {name:"is_published",label:"منشور",type:"boolean"}
     ]
   },
   testimonials: {
     slug:"testimonials", title:"شهادات العملاء", description:"إدارة التقييمات والشهادات الحقيقية.",
-    table:"testimonials", orderField:"sort_order", list:["person_name","rating","is_published","sort_order"],
+    table:"testimonials", orderField:"sort_order", list:["person_name","rating","submission_status","is_published","sort_order"],
     fields:[
       {name:"client_id",label:"العميل",relation:{table:"clients",value:"id",label:"name"}},
       {name:"person_name",label:"اسم الشخص"},{name:"person_title",label:"الصفة"},
       {name:"rating",label:"التقييم",type:"number"},{name:"quote",label:"الشهادة",type:"textarea",required:true},
-      {name:"avatar_url",label:"الصورة"},{name:"sort_order",label:"الترتيب",type:"number"},
+      {name:"avatar_url",label:"الصورة"},{name:"submission_status",label:"حالة المراجعة"},{name:"sort_order",label:"الترتيب",type:"number"},
       {name:"is_published",label:"منشورة",type:"boolean"}
     ]
   },
