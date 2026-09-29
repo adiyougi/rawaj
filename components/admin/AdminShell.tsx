@@ -39,12 +39,13 @@ export default function AdminShell({ children }: { children: ReactNode }) {
       const isQuotes=pathname==="/admin/quotes" || pathname.startsWith("/admin/quotes/");
       const isUsers=pathname==="/admin/users" || pathname.startsWith("/admin/users/");
       const isMessages=pathname==="/admin/messages" || pathname.startsWith("/admin/messages/");
+      const isReviewInbox=pathname==="/admin/testimonial-inbox" || pathname.startsWith("/admin/testimonial-inbox/");
 
       if(currentRole==="sales" && !isQuotes){
         router.replace("/admin/quotes");
         return;
       }
-      if(currentRole==="editor" && (isQuotes || isUsers || isMessages)){
+      if(currentRole==="editor" && (isQuotes || isUsers || isMessages || isReviewInbox)){
         router.replace("/admin");
         return;
       }
@@ -78,7 +79,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
         <nav>
           {adminNav.filter(([,href])=>{
             if(role==="sales") return href==="/admin/quotes";
-            if(role==="editor") return href!=="/admin/users" && href!=="/admin/quotes" && href!=="/admin/messages";
+            if(role==="editor") return href!=="/admin/users" && href!=="/admin/quotes" && href!=="/admin/messages" && href!=="/admin/testimonial-inbox";
             return href!=="/admin/users" || role==="owner";
           }).map(([label,href]) => (
             <Link key={href} href={href} className={pathname === href ? "active" : ""} onClick={() => setMenu(false)}>
