@@ -1,0 +1,1 @@
+import AdminShell from "@/components/admin/AdminShell";import TestimonialInbox from "@/components/admin/TestimonialInbox";export default function Page(){return <AdminShell><TestimonialInbox/></AdminShell>}
