@@ -1,0 +1,1 @@
+insert into public.homepage_modules(slug,label,enabled,sort_order,layout_variant,title,subtitle,settings) values ('portfolio','معرض الأعمال',true,65,'featured-grid','أعمال مختارة','نماذج من مشاريع رواج المنفذة','{}'::jsonb) on conflict(slug) do nothing;
