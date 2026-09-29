@@ -372,3 +372,27 @@ main:not(.app-storefront) .feature-card:hover{background:var(--surface);transfor
  .store-bundles{padding:72px 0}.store-bundle-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px}.store-bundle{min-width:82vw;min-height:430px;scroll-snap-align:center;border-radius:22px;padding:22px}.store-bundle h3{font-size:27px}
  .store-proof,.store-why{padding-top:76px}
 }
+
+
+/* RAWAJ 2026 — isolated mobile navigation + cinematic mobile home */
+.rawaj-menu-overlay{position:fixed!important;inset:0!important;z-index:2147483000!important;width:100vw!important;height:100dvh!important;box-sizing:border-box!important;background:#08090b!important;color:#f7f5f1!important;padding:max(18px,env(safe-area-inset-top)) 20px max(22px,env(safe-area-inset-bottom))!important;display:grid!important;grid-template-rows:auto 1fr auto!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+.rawaj-menu-head{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:14px}
+.rawaj-menu-head .brand{color:#fff}.rawaj-menu-head .brand-logo-wrap{width:46px;height:46px}.rawaj-menu-head .brand-copy small{color:#aaa}
+.rawaj-menu-close{width:46px;height:46px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:#121317;color:#fff;font-size:30px;line-height:1;cursor:pointer}
+.rawaj-menu-overlay nav{display:grid;align-content:center;width:100%;padding:24px 0}
+.rawaj-menu-overlay nav a{display:flex;align-items:center;justify-content:space-between;min-height:62px;border-bottom:1px solid rgba(255,255,255,.09);color:#fff;font-size:clamp(21px,6vw,30px);font-weight:750;letter-spacing:-.02em}
+.rawaj-menu-overlay nav a b{color:var(--red);font-size:18px}
+.rawaj-menu-cta{display:flex;align-items:center;justify-content:center;min-height:56px;border-radius:999px;background:var(--red);color:#fff;font-weight:800}
+@media(min-width:1001px){.rawaj-menu-overlay{display:none!important}}
+@media(max-width:720px){
+ .commerce-home .site-header{height:72px!important;padding:0 16px!important;background:linear-gradient(180deg,rgba(5,5,7,.92),rgba(5,5,7,.52),transparent)!important}
+ .commerce-home .hero{height:auto!important;min-height:100svh!important}
+ .commerce-home .hero-content{min-height:100svh!important;box-sizing:border-box!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important;padding:112px 18px 132px!important}
+ .commerce-home .hero-content h1{max-width:100%!important;font-size:clamp(42px,12vw,62px)!important;line-height:1.03!important;margin:14px 0 18px!important;letter-spacing:-.045em!important}
+ .commerce-home .hero-content p{max-width:94%!important;font-size:16px!important;line-height:1.8!important;margin:0 0 24px!important}
+ .commerce-home .hero-actions{width:100%!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important}
+ .commerce-home .hero-actions .btn{min-width:0!important;padding-inline:10px!important}
+ .commerce-home .hero-controls{bottom:32px!important;padding:0 18px!important}
+ .commerce-home .hero-edge-copy{display:none!important}
+ .commerce-home .commerce-search{margin-top:-1px!important}
+}
