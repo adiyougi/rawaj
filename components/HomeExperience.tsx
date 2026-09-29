@@ -4,7 +4,6 @@ import Link from "next/link";
 import {useEffect,useState} from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import ServiceCard from "@/components/ServiceCard";
 import {CONTACT} from "@/lib/content";
 
 type Slide={kicker:string;title:string;text:string;image:string;href:string;cta:string;secondaryHref?:string;secondaryCta?:string};
@@ -30,14 +29,14 @@ export default function HomeExperience({slides,ticker,departments,services,packa
 
   <div className="marquee"><div className="marquee-track">{[...ticker,...ticker].map((t,i)=><span key={i}>{t}<b>◆</b></span>)}</div></div>
 
-  <section className="about-section section shell"><div className="section-heading"><span className="eyebrow">من نحن</span><h2>خبرة تتقاطع فيها الفكرة مع الصناعة.</h2></div><div className="about-grid">
+  <section className="about-section section shell"><div className="home-manifesto"><span>RAWAJ / SINCE 2008</span><strong>نحن لا نطبع الفكرة فقط.<br/><em>نحوّلها إلى حضور.</em></strong></div><div className="section-heading"><span className="eyebrow">من نحن</span><h2>خبرة تتقاطع فيها الفكرة مع الصناعة.</h2></div><div className="about-grid">
    <div className="about-visual"><div className="about-card-image" style={{backgroundImage:"url("+(slides[0]?.image||"/images/service-placeholder.svg")+")"}}/><div className="year-badge"><strong>2008</strong><span>منذ</span></div></div>
    <div className="about-copy"><p className="lead">رواج للطباعة والإعلان والديكور تجمع التصميم والإنتاج والتنفيذ في مسار واحد، لتمنح العميل نتيجة متماسكة لا مجموعة خدمات منفصلة.</p><div className="vision-grid"><div><span>01</span><h3>الهدف</h3><p>تحويل احتياج العميل إلى منتج بصري وتنفيذي واضح القيمة.</p></div><div><span>02</span><h3>الرؤية</h3><p>حلول إبداعية وتنفيذية متكاملة من نقطة واحدة.</p></div><div><span>03</span><h3>المنهج</h3><p>فهم المتطلبات، ضبط المواصفات، ثم التنفيذ والمتابعة.</p></div></div><Link className="text-link" href="/about">تعرف على رواج ←</Link></div>
   </div></section>
 
   <section className="departments section"><div className="shell section-heading split-heading"><div><span className="eyebrow">أقسام رواج</span><h2>خبرات متخصصة تعمل كمنظومة واحدة.</h2></div><p>كل قسم يقود إلى خدماته، ويمكن جمع خدمات من أكثر من مجال في طلب عرض سعر واحد.</p></div><div className="department-rail">{departments.map((item,index)=><article className="department-card" key={item.slug} style={{backgroundImage:"linear-gradient(180deg,transparent 20%,rgba(7,7,9,.94) 94%),url("+item.image+")"}}><span>0{index+1}</span><div><h3>{item.title}</h3><p>{item.text}</p><Link href={"/departments/"+item.slug}>استكشف القسم ↗</Link></div></article>)}</div></section>
 
-  <section className="services-section section shell"><div className="section-heading split-heading"><div><span className="eyebrow">كتالوج الخدمات</span><h2>من الفكرة إلى مواصفات طلب واضحة.</h2></div><div><p>استكشف الخدمة، راجع تفاصيلها ومواصفاتها، ثم أضفها إلى طلبك للحصول على عرض مناسب.</p><Link className="text-link" href="/services">الكتالوج الكامل ←</Link></div></div><div className="service-grid">{services.slice(0,8).map(item=><ServiceCard key={item.id} item={item}/>)}</div></section>
+  <section className="services-section section shell"><div className="section-heading split-heading"><div><span className="eyebrow">كتالوج الخدمات</span><h2>من الفكرة إلى مواصفات طلب واضحة.</h2></div><div><p>استكشف الخدمة، راجع تفاصيلها ومواصفاتها، ثم أضفها إلى طلبك للحصول على عرض مناسب.</p><Link className="text-link" href="/services">الكتالوج الكامل ←</Link></div></div><div className="home-service-stage">{services.slice(0,6).map((item,index)=><Link className="home-service-story" key={item.id} href={"/services/"+item.id}><span className="home-service-no">0{index+1}</span><div className="home-service-image" style={{backgroundImage:"url("+item.image+")"}}/><div className="home-service-copy"><small>{item.category}</small><h3>{item.title}</h3><p>{item.desc}</p><b>اكتشف الخدمة ↗</b></div></Link>)}</div></section>
 
   <section className="packages-section section"><div className="shell section-heading split-heading"><div><span className="eyebrow">باقات رواج</span><h2>عدة خدمات ضمن طلب واحد.</h2></div><div><p>باقات قابلة للتخصيص تجمع الخدمات المرتبطة بالمشروع في مسار طلب موحد.</p><Link className="text-link" href="/packages">جميع الباقات ←</Link></div></div><div className="package-rail shell">{packages.map((item,index)=><article className="package-card" key={item.id} style={{backgroundImage:"linear-gradient(90deg,rgba(8,8,10,.96),rgba(8,8,10,.24)),url("+item.image+")"}}><span className="package-index">0{index+1}</span><div><small>{item.eyebrow}</small><h3>{item.title}</h3><p>{item.text}</p><Link className="btn btn-light" href={"/quote?package="+item.id}>خصص الباقة</Link></div></article>)}</div></section>
 
