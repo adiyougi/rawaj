@@ -23,6 +23,7 @@ export default function AdminCollection({ config }: { config: AdminSection }) {
   const [saving,setSaving] = useState(false);
   const [showForm,setShowForm] = useState(false);
   const [message,setMessage] = useState("");
+  const [uploadingField,setUploadingField] = useState("");
 
   const primaryKey = config.primaryKey || ["id"];
 
@@ -90,6 +91,12 @@ export default function AdminCollection({ config }: { config: AdminSection }) {
     if (field.relation && value === "") return null;
     if ((field.type === "date" || field.type === "datetime") && value === "") return null;
     return value === "" ? null : value;
+  }
+
+  async function uploadField(field: AdminField,file:File|null) {
+    if(!file)return; if(file.size>25*1024*1024){setMessage("الملف أكبر من 25MB.");return;}
+    setUploadingField(field.name);setMessage("");
+    try{const supabase=getSupabaseBrowser();const clean=file.name.replace(/[^a-zA-Z0-9._-]+/g,"-");const path="cms/"+config.slug+"/"+Date.now()+"-"+clean;const {error}=await supabase.storage.from("rawaj-media").upload(path,file,{upsert:false});if(error)throw error;const url=supabase.storage.from("rawaj-media").getPublicUrl(path).data.publicUrl;setForm(v=>({...v,[field.name]:url}));setMessage("تم رفع الملف وربطه بالحقل.");}catch(error:any){setMessage(error?.message||"تعذر رفع الملف.");}finally{setUploadingField("");}
   }
 
   async function save() {
@@ -211,6 +218,10 @@ export default function AdminCollection({ config }: { config: AdminSection }) {
                     </select>
                   ) : field.type === "textarea" || field.type === "json" || field.type === "lines" ? (
                     <textarea rows={field.type === "json" || field.type === "lines" ? 8 : 5} value={form[field.name] ?? ""} onChange={e=>setForm({...form,[field.name]:e.target.value})} placeholder={field.placeholder} />
+                  ) : field.media ? (
+                    <div className="admin-media-field"><input value={form[field.name] ?? ""} onChange={e=>setForm({...form,[field.name]:e.target.value})} placeholder="رابط الوسائط أو ارفع ملفًا"/><label className="admin-secondary file-button">{uploadingField===field.name?"جارٍ الرفع…":"رفع ملف"}<input type="file" accept={field.media==="image"?"image/*":"image/*,application/pdf,video/mp4,video/webm"} disabled={uploadingField===field.name} onChange={e=>{void uploadField(field,e.target.files?.[0]||null);e.target.value="";}}/></label>{form[field.name]&&<a href={form[field.name]} target="_blank" rel="noreferrer">معاينة ↗</a>}</div>
+                  ) : field.options ? (
+                    <select value={form[field.name] ?? ""} onChange={e=>setForm({...form,[field.name]:e.target.value})}><option value="">— اختر —</option>{field.options.map(option=><option key={option.value} value={option.value}>{option.label}</option>)}</select>
                   ) : field.name === "media_type" ? (
                     <select value={form[field.name] ?? "image"} onChange={e=>setForm({...form,[field.name]:e.target.value})}>
                       <option value="image">صورة</option><option value="video">فيديو</option>
