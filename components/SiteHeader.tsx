@@ -52,15 +52,15 @@ export default function SiteHeader() {
           <button className="header-cart-btn" onClick={()=>setCartOpen(true)}>
             <span>الطلبات</span>{count>0 && <b>{count}</b>}
           </button>
-          <button className="menu-button" onClick={()=>setOpen(true)} aria-label="القائمة"><i/><i/><i/></button>
+          <button className="menu-button" onClick={()=>setOpen(v=>!v)} aria-label="القائمة" aria-expanded={open}><i/><i/><i/></button>
         </div>
       </header>
 
       {open && (
-        <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="القائمة الرئيسية">
-          <div className="mobile-menu-head">
+        <div className="rawaj-menu-overlay" role="dialog" aria-modal="true" aria-label="القائمة الرئيسية">
+          <div className="rawaj-menu-head">
             <div className="brand"><span className="brand-logo-wrap"><img className="brand-logo" src="/rawaj-logo.webp" alt="رواج"/></span><span className="brand-copy"><strong>رواج</strong><small>القائمة الرئيسية</small></span></div>
-            <button className="mobile-menu-close" onClick={()=>setOpen(false)}>×</button>
+            <button className="rawaj-menu-close" onClick={()=>setOpen(false)}>×</button>
           </div>
           <nav>
             {nav.map(([label,href])=>(
@@ -69,7 +69,7 @@ export default function SiteHeader() {
               </Link>
             ))}
           </nav>
-          <Link onClick={()=>setOpen(false)} className="mobile-menu-cta" href="/quote">اطلب عرض سعر</Link>
+          <Link onClick={()=>setOpen(false)} className="rawaj-menu-cta" href="/quote">اطلب عرض سعر</Link>
         </div>
       )}
     </>
