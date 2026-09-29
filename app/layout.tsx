@@ -6,12 +6,12 @@ import CartDrawer from "@/components/CartDrawer";
 import FloatingActions from "@/components/FloatingActions";
 import BottomNav from "@/components/BottomNav";
 
-const siteUrl=process.env.NEXT_PUBLIC_SITE_URL;
+const siteUrl=process.env.NEXT_PUBLIC_SITE_URL || "https://rawaj.netlify.app";
 
 export const metadata:Metadata={
   title:{default:"رواج للطباعة والإعلان والديكور",template:"%s | رواج"},
   description:"تصميم، طباعة، إعلان، واجهات وديكور — من الفكرة حتى التنفيذ.",
-  metadataBase:siteUrl ? new URL(siteUrl):undefined,
+  metadataBase:new URL(siteUrl),
   openGraph:{title:"رواج للطباعة والإعلان والديكور",description:"من الفكرة حتى التنفيذ — حلول تصميم وطباعة وإعلان متكاملة.",locale:"ar_YE",type:"website",siteName:"رواج"},
   robots:{index:true,follow:true},
 };
