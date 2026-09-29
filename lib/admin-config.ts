@@ -149,6 +149,8 @@ export const adminSections: Record<string, AdminSection> = {
       {name:"seo_title",label:"عنوان SEO"},{name:"seo_description",label:"وصف SEO",type:"textarea"}
     ]
   },
+  ads: {slug:"ads",title:"العروض والإعلانات",description:"إدارة مساحات العروض في الرئيسية.",table:"homepage_ads",orderField:"sort_order",list:["title","is_published","sort_order"],fields:[{name:"title",label:"العنوان",required:true},{name:"subtitle",label:"الوصف",type:"textarea"},{name:"media_url",label:"الصورة"},{name:"href",label:"الرابط"},{name:"sort_order",label:"الترتيب",type:"number"},{name:"is_published",label:"منشور",type:"boolean"}]},
+  faqs: {slug:"faqs",title:"الأسئلة الشائعة",description:"إدارة أسئلة وأجوبة الرئيسية.",table:"faqs",orderField:"sort_order",list:["question","category","is_published"],fields:[{name:"question",label:"السؤال",required:true},{name:"answer",label:"الإجابة",type:"textarea",required:true},{name:"category",label:"التصنيف"},{name:"sort_order",label:"الترتيب",type:"number"},{name:"is_published",label:"منشور",type:"boolean"}]},
   settings: {
     slug:"settings", title:"إعدادات الهوية والتواصل", description:"إعدادات الموقع العامة. الحقول التقنية المتقدمة تُدار برمجيًا ولا تظهر للمحرر.",
     table:"site_settings", list:["key","updated_at"],
@@ -170,5 +172,5 @@ export const adminNav = [
   ["الأقسام","/admin/departments"],["التصنيفات","/admin/categories"],["الخدمات","/admin/services"],
   ["الباقات","/admin/packages"],["الأعمال","/admin/portfolio"],
   ["المميزات","/admin/features"],["العملاء","/admin/clients"],["الشهادات","/admin/testimonials"],
-  ["المدونة","/admin/blog"],["الوسائط","/admin/media"],["طلبات السعر","/admin/quotes"],["المستخدمون","/admin/users"],["الإعدادات","/admin/settings"]
+  ["المدونة","/admin/blog"],["العروض والإعلانات","/admin/ads"],["الأسئلة الشائعة","/admin/faqs"],["الوسائط","/admin/media"],["طلبات السعر","/admin/quotes"],["المستخدمون","/admin/users"],["الإعدادات","/admin/settings"]
 ] as const;
