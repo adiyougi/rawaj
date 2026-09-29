@@ -6,7 +6,7 @@ import {getSupabaseBrowser} from "@/lib/supabase-browser";
 type M={slug:string;label:string;enabled:boolean;sort_order:number;layout_variant:string;title:string|null;subtitle:string|null};
 export default function HomepageAdmin(){
  const [items,setItems]=useState<M[]>([]),[saving,setSaving]=useState("");
- useEffect(()=>{getSupabaseBrowser().from("homepage_modules").select("slug,label,enabled,sort_order,layout_variant,title,subtitle").order("sort_order").then(({data})=>setItems((data||[]) as M[]))},[]);
+ useEffect(()=>{getSupabaseBrowser().from("homepage_modules").select("slug,label,enabled,sort_order,layout_variant,title,subtitle").order("sort_order").then((res:any)=>setItems((res.data||[]) as M[]))},[]);
  async function patch(slug:string,values:Partial<M>){setSaving(slug);const sb=getSupabaseBrowser();await sb.from("homepage_modules").update(values).eq("slug",slug);setItems(v=>v.map(x=>x.slug===slug?{...x,...values}:x));setSaving("")}
  function move(i:number,d:number){const j=i+d;if(j<0||j>=items.length)return;const a=items[i],b=items[j];patch(a.slug,{sort_order:b.sort_order});patch(b.slug,{sort_order:a.sort_order});setItems(v=>{const n=[...v];[n[i],n[j]]=[n[j],n[i]];return n})}
  const editors:Record<string,string>={slider:"/admin/hero",ticker:"/admin/ticker",features:"/admin/features",services:"/admin/services",testimonials:"/admin/testimonials",brands:"/admin/clients",blog:"/admin/blog",offers:"/admin/ads",faq:"/admin/faqs",header:"/admin/settings",about:"/admin/settings",contact:"/admin/settings",footer:"/admin/settings"};
