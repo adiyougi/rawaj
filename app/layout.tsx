@@ -14,7 +14,6 @@ export const metadata:Metadata={
   metadataBase:siteUrl ? new URL(siteUrl):undefined,
   openGraph:{title:"رواج للطباعة والإعلان والديكور",description:"من الفكرة حتى التنفيذ — حلول تصميم وطباعة وإعلان متكاملة.",locale:"ar_YE",type:"website",siteName:"رواج"},
   robots:{index:true,follow:true},
-  other:{"rawaj-review-build":"preview-5-2026-09-27"}
 };
 
 export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){
