@@ -207,7 +207,7 @@ export default function AdminCollection({ config }: { config: AdminSection }) {
               {config.fields.map(field => (
                 <label key={field.name} className={field.type === "textarea" || field.type === "json" || field.type === "lines" ? "wide" : ""}>
                   <span>{field.label}{field.required ? " *" : ""}</span>
-                  {field.type === "boolean" ? (
+                  {field.help&&<small className="admin-field-help">{field.help}</small>}{field.type === "boolean" ? (
                     <input type="checkbox" checked={Boolean(form[field.name])} onChange={e => setForm({...form,[field.name]:e.target.checked})} />
                   ) : field.relation ? (
                     <select value={form[field.name] ?? ""} onChange={e=>setForm({...form,[field.name]:e.target.value})}>
