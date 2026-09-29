@@ -64,6 +64,7 @@ export default function AdminDashboard() {
             <h1>لوحة تحكم رواج</h1>
             <p>المحتوى التسويقي، الكتالوج، الأعمال، المدونة والطلبات من مكان واحد.</p>
           </div>
+          <Link className="admin-primary" href="/admin/homepage">تخصيص الصفحة الرئيسية ←</Link>
         </div>
         {loadError&&<div className="admin-message" role="alert">{loadError}</div>}
 
@@ -88,11 +89,9 @@ export default function AdminDashboard() {
           <article><span className="admin-kicker">MASTER CATALOG</span><h2>حالة اعتماد الكتالوج</h2><p>موثقة وتنتظر الاعتماد: <strong>{catalog.verified}</strong> · منشورة ومعتمدة: <strong>{catalog.approved}</strong> · قديمة للمراجعة: <strong>{catalog.legacy}</strong></p><Link className="admin-primary" href="/admin/services">مراجعة الخدمات</Link></article>
           <article>
             <span className="admin-kicker">محتوى الرئيسية</span>
-            <h2>كل موديول أصبح قابلًا للإدارة.</h2>
+            <h2>محرر الصفحة الرئيسية.</h2>
             <p>السلايدر، الشريط المتحرك، الأقسام، الخدمات المميزة، الباقات، الأعمال والمميزات مرتبطة مباشرة بقاعدة البيانات.</p>
-            <div className="admin-quick-links">
-              <Link href="/admin/hero">السلايدر</Link><Link href="/admin/ticker">الشريط</Link><Link href="/admin/features">المميزات</Link>
-            </div>
+            <div className="admin-quick-links"><Link href="/admin/homepage">ترتيب وتخصيص الموديولات</Link><Link href="/admin/hero">السلايدر</Link><Link href="/admin/ticker">الشريط</Link><Link href="/admin/features">المميزات</Link></div>
           </article>
           <article className="dark">
             <span className="admin-kicker">MEDIA</span>
