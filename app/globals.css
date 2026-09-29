@@ -224,3 +224,42 @@ body{background:var(--bg);font-family:"IBM Plex Sans Arabic","Alexandria",system
  main:not(.app-storefront) .department-card{height:470px}
  main:not(.app-storefront) .package-card{min-height:470px}
 }
+
+
+/* RAWAJ HOME — editorial art direction */
+main:not(.app-storefront){background:var(--bg)}
+main:not(.app-storefront) .section{position:relative}
+.home-manifesto{min-height:46vh;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--line);margin-bottom:100px}
+.home-manifesto>span{font-size:10px;letter-spacing:.28em;color:var(--red);font-weight:700;margin-bottom:24px}
+.home-manifesto>strong{font-size:clamp(52px,8vw,118px);line-height:.92;letter-spacing:-.065em;font-weight:600;max-width:1100px}
+.home-manifesto em{font-style:normal;color:var(--red)}
+.home-service-stage{border-top:1px solid var(--line)}
+.home-service-story{min-height:320px;display:grid;grid-template-columns:72px minmax(260px,.75fr) 1.25fr;gap:34px;align-items:center;border-bottom:1px solid var(--line);padding:24px 0;position:relative}
+.home-service-no{font-size:11px;color:var(--red);align-self:start;padding-top:14px}
+.home-service-image{height:270px;border-radius:4px;background-size:cover;background-position:center;filter:saturate(.78);transition:transform .55s cubic-bezier(.2,.8,.2,1),filter .4s}
+.home-service-copy{padding-inline:20px 6vw}
+.home-service-copy small{color:var(--red);font-size:10px;font-weight:700}
+.home-service-copy h3{font-size:clamp(30px,4vw,58px);line-height:1.05;letter-spacing:-.04em;margin:9px 0 14px}
+.home-service-copy p{max-width:540px;color:var(--muted);line-height:1.85;font-size:13px}
+.home-service-copy b{display:inline-block;margin-top:20px;font-size:11px}
+.home-service-story:hover .home-service-image{transform:scale(.985);filter:saturate(1)}
+main:not(.app-storefront) .department-card{transition:flex .5s ease,transform .5s ease}
+main:not(.app-storefront) .portfolio-card{min-height:360px}
+main:not(.app-storefront) .feature-card{transition:background .3s,transform .3s}
+main:not(.app-storefront) .feature-card:hover{background:var(--surface);transform:translateY(-5px)}
+@media(max-width:720px){
+ body:has(main:not(.app-storefront)){padding-bottom:0}
+ .home-manifesto{min-height:54vh;margin-bottom:64px}
+ .home-manifesto>strong{font-size:clamp(46px,14vw,72px);line-height:.94}
+ .home-service-story{grid-template-columns:38px 1fr;gap:10px;padding:22px 0}
+ .home-service-image{grid-column:2;height:54vw;min-height:190px}
+ .home-service-copy{grid-column:2;padding:8px 0 12px}
+ .home-service-copy h3{font-size:32px}
+ .home-service-copy p{font-size:12px}
+ main:not(.app-storefront) .hero{height:100svh;min-height:620px}
+ main:not(.app-storefront) .hero-content{justify-content:flex-end;padding:0 0 120px}
+ main:not(.app-storefront) .hero-content h1{font-size:clamp(46px,13vw,72px);line-height:.94}
+ main:not(.app-storefront) .hero-content p{font-size:13px;line-height:1.7}
+ main:not(.app-storefront) .hero-actions{width:100%;display:grid;grid-template-columns:1fr 1fr}
+ main:not(.app-storefront) .hero-edge-copy{display:none}
+}
