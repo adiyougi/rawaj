@@ -168,9 +168,16 @@ export default function ServiceManager(){
     const existingKeys=new Set(rows.map(row=>String(row.template_key || "")).filter(Boolean));
     const existingSlugs=new Set(rows.map(row=>String(row.slug || "")).filter(Boolean));
     const missing=verifiedTemplates.filter(template=>!existingKeys.has(template.key));
+    const repairable=verifiedTemplates.filter(template=>{
+      const row=rows.find(item=>item.template_key===template.key);
+      if(!row || row.is_published || row.verification_status!=="verified") return false;
+      const specs=Array.isArray(row.specifications)?row.specifications:[];
+      const sources=Array.isArray(row.source_refs)?row.source_refs:[];
+      return specs.length===0 || sources.length===0 || !row.description || !Array.isArray(row.highlights) || row.highlights.length===0 || !Array.isArray(row.faq) || row.faq.length===0;
+    });
 
-    if(!missing.length){
-      setMessage("Master Catalog متزامن بالكامل؛ لا توجد قوالب موثقة ناقصة.");
+    if(!missing.length && !repairable.length){
+      setMessage("Master Catalog متزامن بالكامل؛ لا توجد قوالب ناقصة أو مسودات تحتاج إصلاح.");
       return;
     }
 
@@ -181,6 +188,19 @@ export default function ServiceManager(){
       const maxOrder=rows.reduce((max,row)=>Math.max(max,Number(row.sort_order)||0),0);
       const unresolved:string[]=[];
       const payloads:Record<string,any>[]=[];
+      const repairs:Array<{id:string;payload:Record<string,any>}>=[];
+
+      const normalized=(template:(typeof serviceTemplates)[number])=>cloneSpecs(template.specs).map((spec,index)=>({
+        key:spec.key || "spec-"+index,
+        label:spec.label.trim(),
+        type:spec.type,
+        placeholder:spec.placeholder?.trim() || undefined,
+        unit:spec.unit?.trim() || undefined,
+        group:spec.group?.trim() || "مواصفات الطلب",
+        helpText:spec.helpText?.trim() || undefined,
+        required:Boolean(spec.required),
+        options:spec.type==="select" ? (spec.options || []).map(x=>x.trim()).filter(Boolean):undefined
+      }));
 
       for(const template of missing){
         const department=departments.find(item=>item.slug===template.departmentSlug);
@@ -192,18 +212,6 @@ export default function ServiceManager(){
           unresolved.push(template.label);
           continue;
         }
-
-        const cleanSpecs=cloneSpecs(template.specs).map((spec,index)=>({
-          key:spec.key || "spec-"+index,
-          label:spec.label.trim(),
-          type:spec.type,
-          placeholder:spec.placeholder?.trim() || undefined,
-          unit:spec.unit?.trim() || undefined,
-          group:spec.group?.trim() || "مواصفات الطلب",
-          helpText:spec.helpText?.trim() || undefined,
-          required:Boolean(spec.required),
-          options:spec.type==="select" ? (spec.options || []).map(x=>x.trim()).filter(Boolean):undefined
-        }));
 
         payloads.push({
           slug,
@@ -217,7 +225,7 @@ export default function ServiceManager(){
           badge:template.suggestedBadge || null,
           starting_price:null,
           price_label:null,
-          specifications:cleanSpecs,
+          specifications:normalized(template),
           highlights:[...rich.highlights],
           faq:rich.faq.map(item=>({...item})),
           featured:false,
@@ -237,14 +245,41 @@ export default function ServiceManager(){
         });
       }
 
+      for(const template of repairable){
+        const row=rows.find(item=>item.template_key===template.key);
+        const rich=serviceContent[template.key];
+        if(!row || !rich || !template.specs.length || !template.provenanceDoc){
+          unresolved.push(template.label);
+          continue;
+        }
+        repairs.push({
+          id:row.id,
+          payload:{
+            specifications:normalized(template),
+            description:row.description || rich.description,
+            highlights:Array.isArray(row.highlights)&&row.highlights.length ? row.highlights:[...rich.highlights],
+            faq:Array.isArray(row.faq)&&row.faq.length ? row.faq:rich.faq.map(item=>({...item})),
+            source_refs:Array.isArray(row.source_refs)&&row.source_refs.length ? row.source_refs:[template.provenanceDoc],
+            verification_notes:row.verification_notes || "موثّق في "+template.provenanceDoc,
+            verified_at:row.verified_at || now
+          }
+        });
+      }
+
+      const supabase=getSupabaseBrowser();
       if(payloads.length){
-        const {error}=await getSupabaseBrowser().from("services").insert(payloads);
+        const {error}=await supabase.from("services").insert(payloads);
+        if(error) throw error;
+      }
+      for(const repair of repairs){
+        const {error}=await supabase.from("services").update(repair.payload).eq("id",repair.id).eq("is_published",false);
         if(error) throw error;
       }
 
       await loadAll();
       const parts=[
         payloads.length ? "أضيفت "+payloads.length+" خدمة كمسودات موثقة." : "",
+        repairs.length ? "أُصلحت "+repairs.length+" مسودة موثقة من Master Catalog." : "",
         unresolved.length ? "تحتاج مراجعة ربط: "+unresolved.join("، ")+".":""
       ].filter(Boolean);
       setMessage(parts.join(" "));
@@ -316,9 +351,18 @@ export default function ServiceManager(){
     legacy:rows.filter(row=>!row.template_key).length
   }),[rows]);
 
-  const missingTemplateCount=useMemo(()=>{
+  const catalogSyncCount=useMemo(()=>{
     const existing=new Set(rows.map(row=>String(row.template_key||"")).filter(Boolean));
-    return serviceTemplates.filter(template=>template.verification==="verified"&&!existing.has(template.key)).length;
+    const missing=serviceTemplates.filter(template=>template.verification==="verified"&&!existing.has(template.key)).length;
+    const repairable=serviceTemplates.filter(template=>{
+      if(template.verification!=="verified") return false;
+      const row=rows.find(item=>item.template_key===template.key);
+      if(!row || row.is_published || row.verification_status!=="verified") return false;
+      const specs=Array.isArray(row.specifications)?row.specifications:[];
+      const sources=Array.isArray(row.source_refs)?row.source_refs:[];
+      return specs.length===0 || sources.length===0 || !row.description || !Array.isArray(row.highlights) || row.highlights.length===0 || !Array.isArray(row.faq) || row.faq.length===0;
+    }).length;
+    return missing+repairable;
   },[rows]);
 
   const templateFamilies=useMemo(()=>["الكل",...Array.from(new Set(serviceTemplates.map(t=>t.family)))],[]);
@@ -452,8 +496,8 @@ export default function ServiceManager(){
           <p>كل خدمة تُدار كنموذج طلب عرض سعر مستقل بخاماتها ومواصفاتها وتشطيباتها الصحيحة.</p>
         </div>
         <div className="catalog-head-actions">
-          <button className="admin-secondary catalog-sync-button" onClick={()=>void syncMissingTemplates()} disabled={syncingCatalog||missingTemplateCount===0}>
-            {syncingCatalog ? "جارٍ مزامنة الكتالوج…" : missingTemplateCount ? "↻ مزامنة "+missingTemplateCount+" قالبًا ناقصًا" : "✓ Master Catalog متزامن"}
+          <button className="admin-secondary catalog-sync-button" onClick={()=>void syncMissingTemplates()} disabled={syncingCatalog||catalogSyncCount===0}>
+            {syncingCatalog ? "جارٍ مزامنة الكتالوج…" : catalogSyncCount ? "↻ مزامنة وإصلاح "+catalogSyncCount+" سجل" : "✓ Master Catalog متزامن"}
           </button>
           <button className="admin-primary" onClick={openNew}>+ إضافة خدمة</button>
         </div>

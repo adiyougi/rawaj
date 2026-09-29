@@ -6,15 +6,16 @@ import {getSupabaseBrowser} from "@/lib/supabase-browser";
 type SpecValue=string|number|boolean|null;
 type Item={id:string;title:string;quantity:number;specifications:Record<string,SpecValue>};
 type TeamMember={id:string;email:string;role:string};
+type Attachment={id:string;file_name:string;storage_path:string;mime_type:string;file_size:number;created_at:string};
 type QuoteEvent={id:string;event_type:string;from_status:string|null;to_status:string|null;message:string|null;created_by:string|null;created_at:string};
-type Quote={id:string;customer_name:string|null;company_name:string|null;phone:string|null;whatsapp:string|null;email:string|null;city:string|null;deadline:string|null;assigned_to:string|null;notes:string|null;source:string;status:string;created_at:string;updated_at:string;quote_request_items?:Item[]};
+type Quote={id:string;request_number:string;customer_name:string|null;company_name:string|null;phone:string|null;whatsapp:string|null;email:string|null;city:string|null;deadline:string|null;assigned_to:string|null;notes:string|null;source:string;status:string;created_at:string;updated_at:string;quote_request_items?:Item[];quote_attachments?:Attachment[]};
 
-const STATUS:Record<string,string>={new:"جديد",reviewing:"قيد المراجعة",need_more_info:"نحتاج معلومات",pricing:"قيد التسعير",sent:"تم إرسال العرض",negotiation:"تفاوض",won:"تم الاتفاق",lost:"لم يتم الاتفاق",archived:"مؤرشف"};
-const EVENT_LABELS:Record<string,string>={created:"إنشاء الطلب",status_changed:"تغيير الحالة",assigned:"إسناد",note:"ملاحظة داخلية"};
+const STATUS:Record<string,string>={new:"جديد",reviewing:"قيد المراجعة",need_more_info:"نحتاج معلومات",pricing:"قيد التسعير",quote_ready:"العرض جاهز",sent:"تم إرسال العرض",negotiation:"تفاوض",won:"تم الاتفاق",lost:"لم يتم الاتفاق",cancelled:"ملغي",archived:"مؤرشف"};
+const EVENT_LABELS:Record<string,string>={created:"إنشاء الطلب",status_changed:"تغيير الحالة",assigned:"إسناد",note:"ملاحظة داخلية",attachment:"مرفقات"};
 const SPEC_LABELS:Record<string,string>={size:"المقاس",width:"العرض",height:"الارتفاع",material:"الخامة",paper:"الورق",qty:"الكمية",sides:"الأوجه",finish:"التشطيب",lamination:"السلفنة",binding:"التجليد",fold:"الطي",cut:"القص",lighting:"الإضاءة",installation:"التركيب",install:"التركيب",location:"الموقع",pages:"عدد الصفحات",copies:"النسخ",numbering:"الترقيم",operation:"العملية",thickness:"السماكة",personalization:"التخصيص",usage:"الاستخدام",use:"الاستخدام",design:"التصميم",signage:"اللوحة أو الحروف",scope:"النطاق",status:"حالة العلامة",deadline:"الموعد",platforms:"المنصات",copy:"المحتوى",period:"الفترة",business:"النشاط",item:"المنتج",product:"المنتج",books:"عدد الدفاتر",type:"النوع"};
 function specEntries(specifications:Record<string,SpecValue>|null|undefined){return Object.entries(specifications||{}).filter(([,value])=>value!==null&&value!==""&&value!==false&&value!==undefined&&typeof value!=="object");}
 function waNumber(value:string|null|undefined){const digits=String(value||"").replace(/\D/g,"");if(!digits)return "";return digits.startsWith("0")?"967"+digits.slice(1):digits;}
-function waMessage(row:Quote){return encodeURIComponent("مرحبًا "+(row.customer_name||"")+"، معك فريق رواج للطباعة والإعلان بخصوص طلب عرض السعر رقم "+row.id.slice(0,8)+".");}
+function waMessage(row:Quote){return encodeURIComponent("مرحبًا "+(row.customer_name||"")+"، معك فريق رواج للطباعة والإعلان بخصوص طلب عرض السعر رقم "+row.request_number+".");}
 
 export default function AdminQuotes(){
  const [rows,setRows]=useState<Quote[]>([]),[team,setTeam]=useState<TeamMember[]>([]),[events,setEvents]=useState<QuoteEvent[]>([]);
@@ -27,7 +28,7 @@ export default function AdminQuotes(){
   setLoading(true);setError("");
   const supabase=getSupabaseBrowser();
   const [quotesRes,teamRes]=await Promise.all([
-   supabase.from("quote_requests").select("id,customer_name,company_name,phone,whatsapp,email,city,deadline,assigned_to,notes,source,status,created_at,updated_at,quote_request_items(id,title,quantity,specifications)").order("created_at",{ascending:false}),
+   supabase.from("quote_requests").select("id,request_number,customer_name,company_name,phone,whatsapp,email,city,deadline,assigned_to,notes,source,status,created_at,updated_at,quote_request_items(id,title,quantity,specifications),quote_attachments(id,file_name,storage_path,mime_type,file_size,created_at)").order("created_at",{ascending:false}),
    authFetch("/api/admin/quote-team").then(async r=>r.ok?(await r.json()).users||[]:[]).catch(()=>[])
   ]);
   if(quotesRes.error)setError("تعذر تحميل الطلبات. حاول مرة أخرى.");
@@ -87,7 +88,7 @@ export default function AdminQuotes(){
   <div className="quote-admin-controls"><input aria-label="البحث في طلبات عروض السعر" value={query} onChange={e=>setQuery(e.target.value)} placeholder="ابحث بالعميل، المؤسسة، الجوال أو الخدمة…" /><select aria-label="تصفية الطلبات حسب الحالة" value={filter} onChange={e=>setFilter(e.target.value)}><option value="all">كل الحالات ({counts.all||0})</option>{Object.entries(STATUS).map(([value,label])=><option key={value} value={value}>{label} ({counts[value]||0})</option>)}</select></div>
   {error&&<div className="admin-message" role="alert">{error}</div>}
   {loading?<p>جاري تحميل الطلبات…</p>:!visible.length?<div className="admin-empty"><strong>لا توجد طلبات مطابقة</strong><span>غيّر البحث أو مرشح الحالة لعرض نتائج أخرى.</span></div>:<div className="admin-list quote-admin-list">{visible.map(row=><article key={row.id} className="admin-list-row quote-admin-card">
-   <div className="quote-admin-main"><div className="quote-admin-customer"><div className="quote-customer-title"><strong>{row.customer_name||"عميل بدون اسم"}</strong>{row.company_name&&<span>{row.company_name}</span>}</div><small>{new Date(row.created_at).toLocaleString("ar")} · رقم الطلب {row.id.slice(0,8)}</small><div className="quote-contact-grid">{row.phone&&<span>جوال: <b>{row.phone}</b></span>}{row.email&&<span>بريد: <b>{row.email}</b></span>}{row.city&&<span>المدينة: <b>{row.city}</b></span>}{row.deadline&&<span>الموعد: <b>{row.deadline}</b></span>}</div>{row.notes&&<p>{row.notes}</p>}</div>
+   <div className="quote-admin-main"><div className="quote-admin-customer"><div className="quote-customer-title"><strong>{row.customer_name||"عميل بدون اسم"}</strong>{row.company_name&&<span>{row.company_name}</span>}</div><small>{new Date(row.created_at).toLocaleString("ar")} · {row.request_number}</small><div className="quote-contact-grid">{row.phone&&<span>جوال: <b>{row.phone}</b></span>}{row.email&&<span>بريد: <b>{row.email}</b></span>}{row.city&&<span>المدينة: <b>{row.city}</b></span>}{row.deadline&&<span>الموعد: <b>{row.deadline}</b></span>}</div>{row.notes&&<p>{row.notes}</p>}</div>
    <div className="quote-admin-items">{row.quote_request_items?.map(item=><div key={item.id} className="admin-quote-item"><b>{item.title} × {item.quantity}</b>{specEntries(item.specifications).length>0&&<dl>{specEntries(item.specifications).map(([key,value])=><div key={key}><dt>{SPEC_LABELS[key]||key}</dt><dd>{String(value)}</dd></div>)}</dl>}</div>)}</div></div>
    <div className="quote-admin-side"><label className="quote-status"><span>حالة المتابعة</span><select disabled={saving===row.id} value={row.status} onChange={e=>void setStatus(row.id,e.target.value)}>{Object.entries(STATUS).map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label><label className="quote-status"><span>المسؤول</span><select disabled={saving===row.id} value={row.assigned_to||""} onChange={e=>void assign(row.id,e.target.value)}><option value="">غير مسند</option>{team.map(member=><option key={member.id} value={member.id}>{member.email} — {member.role==="sales"?"مبيعات":member.role==="owner"?"مالك":"مدير"}</option>)}</select></label><button className="admin-secondary quote-details-button" onClick={()=>void openDetails(row)}>فتح التفاصيل والسجل</button></div>
   </article>)}</div>}
@@ -95,14 +96,14 @@ export default function AdminQuotes(){
   {active&&<div className="admin-modal quote-detail-modal">
    <button className="admin-modal-backdrop" onClick={()=>setActive(null)} aria-label="إغلاق تفاصيل الطلب"/>
    <div className="admin-modal-card quote-detail-card">
-    <div className="admin-modal-head"><div><span>RFQ · {active.id.slice(0,8)}</span><h2>{active.customer_name||"طلب عرض سعر"}</h2></div><button onClick={()=>setActive(null)}>×</button></div>
+    <div className="admin-modal-head"><div><span>{active.request_number}</span><h2>{active.customer_name||"طلب عرض سعر"}</h2></div><button onClick={()=>setActive(null)}>×</button></div>
     <div className="quote-detail-grid">
      <div className="quote-detail-primary">
       <section className="quote-detail-section"><div className="quote-detail-section-head"><div><span className="admin-kicker">العميل</span><h3>{active.company_name||active.customer_name||"عميل"}</h3></div><span className={"quote-pipeline-status status-"+active.status}>{STATUS[active.status]||active.status}</span></div>
        <div className="quote-detail-contact">
         {active.phone&&<a href={"tel:"+active.phone}>اتصال · {active.phone}</a>}
         {whatsapp&&<a href={"https://wa.me/"+whatsapp+"?text="+waMessage(active)} target="_blank" rel="noreferrer">واتساب</a>}
-        {active.email&&<a href={"mailto:"+active.email+"?subject="+encodeURIComponent("عرض سعر رواج · "+active.id.slice(0,8))}>بريد إلكتروني</a>}
+        {active.email&&<a href={"mailto:"+active.email+"?subject="+encodeURIComponent("عرض سعر رواج · "+active.request_number)}>بريد إلكتروني</a>}
        </div>
        <dl className="quote-detail-meta">
         {active.city&&<div><dt>المدينة</dt><dd>{active.city}</dd></div>}
@@ -113,6 +114,7 @@ export default function AdminQuotes(){
         <div><dt>آخر نشاط</dt><dd>{new Date(active.updated_at).toLocaleString("ar")}</dd></div>
        </dl>
        {active.notes&&<div className="quote-customer-note"><strong>ملاحظة العميل</strong><p>{active.notes}</p></div>}
+       {!!active.quote_attachments?.length&&<div className="quote-attachments"><strong>المرفقات ({active.quote_attachments.length})</strong><div>{active.quote_attachments.map(file=><button key={file.id} type="button" onClick={async()=>{const {data,error}=await getSupabaseBrowser().storage.from("rawaj-quotes").createSignedUrl(file.storage_path,60);if(error||!data?.signedUrl){setError("تعذر فتح المرفق.");return;}window.open(data.signedUrl,"_blank","noopener,noreferrer");}}><span>{file.file_name}</span><small>{(file.file_size/1024/1024).toFixed(1)}MB</small></button>)}</div></div>}
       </section>
 
       <section className="quote-detail-section"><span className="admin-kicker">نطاق الطلب</span><h3>الخدمات والمواصفات</h3><div className="quote-detail-items">{active.quote_request_items?.map(item=><article key={item.id}><div><strong>{item.title}</strong><span>الكمية: {item.quantity}</span></div>{specEntries(item.specifications).length>0&&<dl>{specEntries(item.specifications).map(([key,value])=><div key={key}><dt>{SPEC_LABELS[key]||key}</dt><dd>{String(value)}</dd></div>)}</dl>}</article>)}</div></section>

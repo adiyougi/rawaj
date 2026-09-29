@@ -208,3 +208,13 @@
 .blog-seo-editor label{display:grid;gap:5px}.blog-seo-editor label span{font-size:8px;font-weight:800}
 @media(max-width:900px){.blog-admin-grid{grid-template-columns:repeat(2,1fr)}.blog-seo-editor{grid-template-columns:1fr}.blog-cover-editor{grid-template-columns:180px 1fr}.blog-cover-editor>img,.blog-cover-editor>div:first-child{width:180px;height:120px}}
 @media(max-width:620px){.blog-admin-grid{grid-template-columns:1fr}.blog-cover-editor{grid-template-columns:1fr}.blog-cover-editor>img,.blog-cover-editor>div:first-child{width:100%;height:190px}}
+
+.quote-pipeline-status.status-quote_ready{background:#fff3cc;color:#7b5a00}
+.quote-pipeline-status.status-cancelled{background:#f7e7e7;color:#8b2f2f}
+
+.quote-file-field input[type=file]{height:auto;padding:11px;background:#faf9f6}
+.quote-file-list{display:grid;gap:4px;margin-top:7px}.quote-file-list small{font-size:9px;color:var(--muted);overflow-wrap:anywhere}
+.quote-attachments{margin-top:14px;display:grid;gap:8px}.quote-attachments>strong{font-size:9px}.quote-attachments>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.quote-attachments button{border:1px solid var(--admin-line);background:#faf9f6;border-radius:10px;padding:9px 10px;text-align:right;display:grid;gap:3px;cursor:pointer;color:var(--admin-ink)}
+.quote-attachments button:hover{border-color:#aaa49a;background:#fff}.quote-attachments button span{font-size:9px;font-weight:800;overflow-wrap:anywhere}.quote-attachments button small{font-size:7px;color:var(--admin-muted)}
+@media(max-width:560px){.quote-attachments>div{grid-template-columns:1fr}}
