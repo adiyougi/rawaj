@@ -188,7 +188,7 @@ export async function getMarketingContent() {
     getServices(),
     getPackages(),
     getPortfolio(),
-    getPosts(), getHomepageModules(), getClients(), getTestimonials(), getHomepageAds(), getFaqs(), getHomeSettings()
+    getPosts()
   ]);
 
   return { departments, services, packages, portfolio, posts };
@@ -274,7 +274,7 @@ export async function getHomepageContent() {
 }
 
 export async function getHomepageModules(){const rows=await readTable<any>("homepage_modules?select=slug,label,enabled,sort_order,layout_variant,title,subtitle,settings&enabled=eq.true&order=sort_order.asc");return rows||[]}
-export async function getClients(){const rows=await readTable<any>("clients?select=id,name,logo_url,website_url&is_published=eq.true&order=sort_order.asc");return rows||[]}
+export async function getClients(){const rows=await readTable<any>("clients?select=id,name,logo_url,website_url,label,rating,description&is_published=eq.true&order=sort_order.asc");return rows||[]}
 export async function getTestimonials(){const rows=await readTable<any>("testimonials?select=id,person_name,person_title,rating,quote,avatar_url&is_published=eq.true&submission_status=eq.approved&order=sort_order.asc");return rows||[]}
 export async function getHomepageAds(){const rows=await readTable<any>("homepage_ads?select=id,title,subtitle,media_url,href&is_published=eq.true&order=sort_order.asc");return rows||[]}
 export async function getHomeSettings(){const rows=await readTable<any>("site_settings?select=key,value&key=in.(brand,homepage_about,homepage_footer)");return Object.fromEntries((rows||[]).map((x:any)=>[x.key,x.value]))}
