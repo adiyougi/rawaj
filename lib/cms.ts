@@ -273,7 +273,7 @@ export async function getHomepageContent() {
   return { slides, ticker, departments, services, packages, features, portfolio, posts, modules, clients, testimonials, ads, faqs, homeSettings };
 }
 
-export async function getHomepageModules(){const rows=await readTable<any>("homepage_modules?select=slug,label,enabled,sort_order,layout_variant,title,subtitle,settings&enabled=eq.true&order=sort_order.asc");return rows||[]}
+export async function getHomepageModules(){const rows=await readTable<any>("homepage_modules?select=slug,label,enabled,sort_order,layout_variant,title,subtitle,settings,settings&enabled=eq.true&order=sort_order.asc");return rows||[]}
 export async function getClients(){const rows=await readTable<any>("clients?select=id,name,logo_url,website_url,label,rating,description&is_published=eq.true&order=sort_order.asc");return rows||[]}
 export async function getTestimonials(){const rows=await readTable<any>("testimonials?select=id,person_name,person_title,rating,quote,avatar_url&is_published=eq.true&submission_status=eq.approved&order=sort_order.asc");return rows||[]}
 export async function getHomepageAds(){const rows=await readTable<any>("homepage_ads?select=id,title,subtitle,media_url,href&is_published=eq.true&order=sort_order.asc");return rows||[]}
