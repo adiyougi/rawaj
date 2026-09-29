@@ -6,11 +6,12 @@ import {getSupabaseBrowser} from "@/lib/supabase-browser";
 type SpecValue=string|number|boolean|null;
 type Item={id:string;title:string;quantity:number;specifications:Record<string,SpecValue>};
 type TeamMember={id:string;email:string;role:string};
+type Attachment={id:string;file_name:string;storage_path:string;mime_type:string;file_size:number;created_at:string};
 type QuoteEvent={id:string;event_type:string;from_status:string|null;to_status:string|null;message:string|null;created_by:string|null;created_at:string};
-type Quote={id:string;request_number:string;customer_name:string|null;company_name:string|null;phone:string|null;whatsapp:string|null;email:string|null;city:string|null;deadline:string|null;assigned_to:string|null;notes:string|null;source:string;status:string;created_at:string;updated_at:string;quote_request_items?:Item[]};
+type Quote={id:string;request_number:string;customer_name:string|null;company_name:string|null;phone:string|null;whatsapp:string|null;email:string|null;city:string|null;deadline:string|null;assigned_to:string|null;notes:string|null;source:string;status:string;created_at:string;updated_at:string;quote_request_items?:Item[];quote_attachments?:Attachment[]};
 
 const STATUS:Record<string,string>={new:"جديد",reviewing:"قيد المراجعة",need_more_info:"نحتاج معلومات",pricing:"قيد التسعير",quote_ready:"العرض جاهز",sent:"تم إرسال العرض",negotiation:"تفاوض",won:"تم الاتفاق",lost:"لم يتم الاتفاق",cancelled:"ملغي",archived:"مؤرشف"};
-const EVENT_LABELS:Record<string,string>={created:"إنشاء الطلب",status_changed:"تغيير الحالة",assigned:"إسناد",note:"ملاحظة داخلية"};
+const EVENT_LABELS:Record<string,string>={created:"إنشاء الطلب",status_changed:"تغيير الحالة",assigned:"إسناد",note:"ملاحظة داخلية",attachment:"مرفقات"};
 const SPEC_LABELS:Record<string,string>={size:"المقاس",width:"العرض",height:"الارتفاع",material:"الخامة",paper:"الورق",qty:"الكمية",sides:"الأوجه",finish:"التشطيب",lamination:"السلفنة",binding:"التجليد",fold:"الطي",cut:"القص",lighting:"الإضاءة",installation:"التركيب",install:"التركيب",location:"الموقع",pages:"عدد الصفحات",copies:"النسخ",numbering:"الترقيم",operation:"العملية",thickness:"السماكة",personalization:"التخصيص",usage:"الاستخدام",use:"الاستخدام",design:"التصميم",signage:"اللوحة أو الحروف",scope:"النطاق",status:"حالة العلامة",deadline:"الموعد",platforms:"المنصات",copy:"المحتوى",period:"الفترة",business:"النشاط",item:"المنتج",product:"المنتج",books:"عدد الدفاتر",type:"النوع"};
 function specEntries(specifications:Record<string,SpecValue>|null|undefined){return Object.entries(specifications||{}).filter(([,value])=>value!==null&&value!==""&&value!==false&&value!==undefined&&typeof value!=="object");}
 function waNumber(value:string|null|undefined){const digits=String(value||"").replace(/\D/g,"");if(!digits)return "";return digits.startsWith("0")?"967"+digits.slice(1):digits;}
@@ -27,7 +28,7 @@ export default function AdminQuotes(){
   setLoading(true);setError("");
   const supabase=getSupabaseBrowser();
   const [quotesRes,teamRes]=await Promise.all([
-   supabase.from("quote_requests").select("id,request_number,customer_name,company_name,phone,whatsapp,email,city,deadline,assigned_to,notes,source,status,created_at,updated_at,quote_request_items(id,title,quantity,specifications)").order("created_at",{ascending:false}),
+   supabase.from("quote_requests").select("id,request_number,customer_name,company_name,phone,whatsapp,email,city,deadline,assigned_to,notes,source,status,created_at,updated_at,quote_request_items(id,title,quantity,specifications),quote_attachments(id,file_name,storage_path,mime_type,file_size,created_at)").order("created_at",{ascending:false}),
    authFetch("/api/admin/quote-team").then(async r=>r.ok?(await r.json()).users||[]:[]).catch(()=>[])
   ]);
   if(quotesRes.error)setError("تعذر تحميل الطلبات. حاول مرة أخرى.");
@@ -113,6 +114,7 @@ export default function AdminQuotes(){
         <div><dt>آخر نشاط</dt><dd>{new Date(active.updated_at).toLocaleString("ar")}</dd></div>
        </dl>
        {active.notes&&<div className="quote-customer-note"><strong>ملاحظة العميل</strong><p>{active.notes}</p></div>}
+       {!!active.quote_attachments?.length&&<div className="quote-attachments"><strong>المرفقات ({active.quote_attachments.length})</strong><div>{active.quote_attachments.map(file=><button key={file.id} type="button" onClick={async()=>{const {data,error}=await getSupabaseBrowser().storage.from("rawaj-quotes").createSignedUrl(file.storage_path,60);if(error||!data?.signedUrl){setError("تعذر فتح المرفق.");return;}window.open(data.signedUrl,"_blank","noopener,noreferrer");}}><span>{file.file_name}</span><small>{(file.file_size/1024/1024).toFixed(1)}MB</small></button>)}</div></div>}
       </section>
 
       <section className="quote-detail-section"><span className="admin-kicker">نطاق الطلب</span><h3>الخدمات والمواصفات</h3><div className="quote-detail-items">{active.quote_request_items?.map(item=><article key={item.id}><div><strong>{item.title}</strong><span>الكمية: {item.quantity}</span></div>{specEntries(item.specifications).length>0&&<dl>{specEntries(item.specifications).map(([key,value])=><div key={key}><dt>{SPEC_LABELS[key]||key}</dt><dd>{String(value)}</dd></div>)}</dl>}</article>)}</div></section>
