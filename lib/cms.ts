@@ -36,7 +36,8 @@ export async function getDepartments() {
     image_url: string | null;
   }>("departments?select=slug,name,summary,image_url&is_published=eq.true&order=sort_order.asc");
 
-  if (!rows?.length) return fallbackDepartments;
+  if (rows === null) return fallbackDepartments;
+  if (!rows.length) return [];
   return rows.map((row) => ({
     slug: row.slug,
     title: row.name,
@@ -101,7 +102,8 @@ export async function getPackages() {
     "packages?select=slug,name,eyebrow,description,hero_url,package_services(note,services(name))&is_published=eq.true&order=sort_order.asc"
   );
 
-  if (!rows?.length) return fallbackPackages;
+  if (rows === null) return fallbackPackages;
+  if (!rows.length) return [];
 
   return rows.map((row) => ({
     id: row.slug,
@@ -138,7 +140,8 @@ export async function getPortfolio() {
     "portfolio_items?select=slug,title,category,summary,description,cover_url,gallery,video_url,project_date,client_name,services&is_published=eq.true&order=sort_order.asc"
   );
 
-  if (!rows?.length) return fallback;
+  if (rows === null) return fallback;
+  if (!rows.length) return [];
 
   return rows.map((row) => ({
     slug: row.slug,
@@ -166,7 +169,8 @@ export async function getPosts() {
     featured:boolean;seo_title:string|null;seo_description:string|null;
   }>("blog_posts?select=slug,title,excerpt,content,category,tags,cover_url,author_name,published_at,reading_minutes,featured,seo_title,seo_description&is_published=eq.true&order=published_at.desc");
 
-  if (!rows?.length) return fallback;
+  if (rows === null) return fallback;
+  if (!rows.length) return [];
 
   return rows.map((row)=>({
     slug:row.slug,title:row.title,tag:row.category||"مدونة رواج",image:row.cover_url||fallback[0].image,
@@ -203,7 +207,7 @@ export async function getHeroSlides() {
     secondary_cta_href: string | null;
   }>("hero_slides?select=title,kicker,subtitle,media_url,cta_label,cta_href,secondary_cta_label,secondary_cta_href&is_published=eq.true&order=sort_order.asc");
 
-  if (!rows?.length) {
+  if (rows === null) {
     return [
       { kicker: "رواج منذ 2008", title: "نحوّل الفكرة إلى حضور لا يُنسى.", text: "تصميم، طباعة، إعلان وديكور — من الفكرة حتى اكتمال المشهد.", image: fallbackPortfolio[0].image, href: "/about", cta: "اكتشف رواج" },
       { kicker: "كتالوج خدمات متكامل", title: "كل ما تحتاجه علامتك. في مكان واحد.", text: "اختر الخدمة كمنتج، حدّد المواصفات، واجمع أكثر من خدمة في طلب واحد.", image: fallbackPosts[1].image, href: "/services", cta: "استكشف الخدمات" },
@@ -211,6 +215,7 @@ export async function getHeroSlides() {
       { kicker: "باقات تسويقية", title: "أكثر من خدمة. صفقة واحدة.", text: "باقات قابلة للتخصيص تجمع التصميم والطباعة والتنفيذ في عرض واحد.", image: fallbackPackages[0].image, href: "/packages", cta: "استكشف الباقات" }
     ];
   }
+  if (!rows.length) return [];
 
   return rows.map((row) => ({
     kicker: row.kicker || "رواج",
@@ -228,22 +233,15 @@ export async function getTickerItems() {
   const rows = await readTable<{ text: string }>(
     "ticker_items?select=text&is_published=eq.true&order=sort_order.asc"
   );
-  return rows?.length
-    ? rows.map((row) => row.text)
-    : ["تصميم فني","صناعة محتوى","طباعة ورقية","طباعة رقمية","لوحات ضوئية","واجهات","حروف بارزة","ليزر وأكريليك","باقات مخصصة","تنفيذ متكامل"];
+  if (rows === null) return ["تصميم فني","صناعة محتوى","طباعة ورقية","طباعة رقمية","لوحات ضوئية","واجهات","حروف بارزة","ليزر وأكريليك","باقات مخصصة","تنفيذ متكامل"];
+  return rows.map((row)=>row.text);
 }
 
 export async function getFeatures() {
   const rows = await readTable<{ title: string; description: string | null }>(
     "features?select=title,description&is_published=eq.true&order=sort_order.asc"
   );
-  return rows?.length
-    ? rows.map((row, index) => ({
-        index: String(index + 1).padStart(2, "0"),
-        title: row.title,
-        text: row.description || ""
-      }))
-    : [
+  if (rows === null) return [
         { index:"01", title:"حل متكامل", text:"تصميم وإنتاج وتنفيذ ضمن تجربة واحدة." },
         { index:"02", title:"خبرة عملية", text:"خبرة ممتدة منذ 2008 ومشاريع في قطاعات متنوعة." },
         { index:"03", title:"مرونة عالية", text:"حلول قابلة للتخصيص بدل القوالب الجاهزة." },
@@ -251,6 +249,7 @@ export async function getFeatures() {
         { index:"05", title:"التزام", text:"وضوح في المراحل ومواعيد الإنجاز." },
         { index:"06", title:"تنوع تقني", text:"طباعة، لوحات، واجهات، ليزر وأكثر." }
       ];
+  return rows.map((row,index)=>({index:String(index+1).padStart(2,"0"),title:row.title,text:row.description||""}));
 }
 
 export async function getHomepageContent() {
