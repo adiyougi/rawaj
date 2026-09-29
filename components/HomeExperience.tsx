@@ -17,7 +17,7 @@ type Post={slug:string;title:string;tag:string;image:string;excerpt:string;date:
 export default function HomeExperience({slides,ticker,departments,services,packages,features,portfolio,posts}:{slides:Slide[];ticker:string[];departments:Department[];services:Service[];packages:Package[];features:Feature[];portfolio:Work[];posts:Post[]}) {
  const [slide,setSlide]=useState(0);
  useEffect(()=>{if(slides.length<2)return;const t=setInterval(()=>setSlide(v=>(v+1)%slides.length),6500);return()=>clearInterval(t)},[slides.length]);
- return <main>
+ return <main className="commerce-home">
   <SiteHeader/>
   <section className="hero" aria-label="السلايدر الرئيسي">
    {slides.map((item,index)=><article key={item.title} className={index===slide?"hero-slide active":"hero-slide"} style={{backgroundImage:"linear-gradient(90deg,rgba(7,7,9,.18),rgba(7,7,9,.82)),url("+item.image+")"}}>
@@ -27,9 +27,9 @@ export default function HomeExperience({slides,ticker,departments,services,packa
    <div className="hero-edge-copy">RAWAJ / PRINT / ADVERTISING / DECORATION</div>
   </section>
 
-  <div className="marquee"><div className="marquee-track">{[...ticker,...ticker].map((t,i)=><span key={i}>{t}<b>◆</b></span>)}</div></div>
+  <section className="commerce-search shell"><Link href="/services" className="commerce-search-box"><span>⌕</span><strong>ما الذي تريد تنفيذه اليوم؟</strong><small>ابحث في خدمات رواج ←</small></Link></section><div className="marquee"><div className="marquee-track">{[...ticker,...ticker].map((t,i)=><span key={i}>{t}<b>◆</b></span>)}</div></div>
 
-  <section className="about-section section shell"><div className="home-manifesto"><span>RAWAJ / SINCE 2008</span><strong>الفكرة لا تكفي.<br/><em>يجب أن تُرى.</em></strong></div><div className="section-heading"><span className="eyebrow">من نحن</span><h2>رواج تصنع حضور علامتك في العالم الحقيقي.</h2></div><div className="about-grid">
+  <section className="about-section section shell commerce-story"><div className="home-manifesto"><span>RAWAJ / SINCE 2008</span><strong>الفكرة لا تكفي.<br/><em>يجب أن تُرى.</em></strong></div><div className="section-heading"><span className="eyebrow">من نحن</span><h2>رواج تصنع حضور علامتك في العالم الحقيقي.</h2></div><div className="about-grid">
    <div className="about-visual"><div className="about-card-image" style={{backgroundImage:"url("+(slides[0]?.image||"/images/service-placeholder.svg")+")"}}/><div className="year-badge"><strong>2008</strong><span>منذ</span></div></div>
    <div className="about-copy"><p className="lead">من الفكرة الأولى إلى القطعة المطبوعة، الواجهة، المساحة والهوية المرئية: رواج تجمع التصميم والإنتاج والتنفيذ في منظومة واحدة حتى تخرج علامتك بصورة متماسكة.</p><div className="vision-grid"><div><span>01</span><h3>الهدف</h3><p>تحويل الفكرة إلى حل بصري قابل للتنفيذ، بمواصفات واضحة من البداية.</p></div><div><span>02</span><h3>الرؤية</h3><p>أن تصبح رواج الوجهة التي تجمع احتياجات العلامة التجارية والمكان في تجربة واحدة.</p></div><div><span>03</span><h3>المنهج</h3><p>نفهم المشروع، نبني المواصفات، ننسّق الإنتاج، ثم نتابع التنفيذ حتى النتيجة.</p></div></div><Link className="text-link" href="/about">تعرف على رواج ←</Link></div>
   </div></section>
