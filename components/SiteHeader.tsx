@@ -21,7 +21,14 @@ export default function SiteHeader() {
     localStorage.setItem("rawaj-theme",dark ? "dark":"light");
   },[dark]);
 
-  useEffect(()=>{\n    document.body.style.overflow=open ? "hidden" : "";\n    return()=>{document.body.style.overflow=""};\n  },[open]);\n\n  useEffect(()=>{setOpen(false)},[pathname]);\n\n  const nav=[
+  useEffect(()=>{
+    document.body.style.overflow=open ? "hidden" : "";
+    return()=>{document.body.style.overflow=""};
+  },[open]);
+
+  useEffect(()=>{setOpen(false)},[pathname]);
+
+  const nav=[
     ["الرئيسية","/"],["الخدمات","/services"],["الأقسام","/departments"],["الباقات","/packages"],
     ["أعمالنا","/portfolio"],["عن رواج","/about"],["المدونة","/blog"],["تواصل","/contact"]
   ];
