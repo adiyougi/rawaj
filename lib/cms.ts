@@ -45,6 +45,13 @@ export async function getDepartments() {
   }));
 }
 
+export async function resolveServiceSlug(slug:string) {
+  const rows=await readTable<{services:{slug:string}|null}>(
+    "service_slug_aliases?select=services(slug)&alias=eq."+encodeURIComponent(slug)+"&limit=1"
+  );
+  return rows?.[0]?.services?.slug || slug;
+}
+
 export async function getServices() {
   const rows = await readTable<{
     slug: string;

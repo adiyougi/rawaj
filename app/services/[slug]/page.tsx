@@ -1,25 +1,28 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import AddToCartButton from "@/components/AddToCartButton";
 import ServiceConfigurator from "@/components/ServiceConfigurator";
 import ServiceCard from "@/components/ServiceCard";
-import { getServices } from "@/lib/cms";
+import { getServices, resolveServiceSlug } from "@/lib/cms";
 import { serviceSpecifications } from "@/lib/service-specs";
 import type { Metadata } from "next";
 
 export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{
   const {slug}=await params;
-  const service=(await getServices()).find(item=>item.id===slug);
+  const canonicalSlug=await resolveServiceSlug(slug);
+  const service=(await getServices()).find(item=>item.id===canonicalSlug);
   if(!service) return {title:"الخدمة غير موجودة | رواج"};
   return {title:service.title+" | رواج",description:service.desc,alternates:{canonical:"/services/"+service.id},openGraph:{title:service.title,description:service.desc,images:service.image?[service.image]:[]}};
 }
 
 export default async function ServiceDetail({params}:{params:Promise<{slug:string}>}){
   const {slug}=await params;
+  const canonicalSlug=await resolveServiceSlug(slug);
+  if(canonicalSlug!==slug) redirect("/services/"+canonicalSlug);
   const services=await getServices();
-  const service=services.find(item=>item.id===slug);
+  const service=services.find(item=>item.id===canonicalSlug);
   if(!service) notFound();
   const dynamicSpecs=("specifications" in service && Array.isArray(service.specifications) && service.specifications.length)
     ? service.specifications
