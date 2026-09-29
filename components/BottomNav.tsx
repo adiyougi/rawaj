@@ -16,7 +16,7 @@ function Icon({name}:{name:"home"|"grid"|"services"|"cart"|"contact"}) {
 export default function BottomNav() {
   const pathname=usePathname();
   const {count,setOpen}=useCart();
-  if(pathname.startsWith("/admin")) return null;
+  if(pathname==="/" || pathname.startsWith("/admin")) return null;
 
   const links=[
     ["الرئيسية","/","home"],
