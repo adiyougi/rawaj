@@ -261,7 +261,13 @@ export async function getHomepageContent() {
     getPackages(),
     getFeatures(),
     getPortfolio(),
-    getPosts()
+    getPosts(),
+    getHomepageModules(),
+    getClients(),
+    getTestimonials(),
+    getHomepageAds(),
+    getFaqs(),
+    getHomeSettings()
   ]);
 
   return { slides, ticker, departments, services, packages, features, portfolio, posts, modules, clients, testimonials, ads, faqs, homeSettings };
